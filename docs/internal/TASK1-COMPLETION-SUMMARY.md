@@ -1,6 +1,4 @@
-# Task Completion Summaries
-
-## Task 1 — v0.1.0-scaffold
+# Task 1 (v0.1.0-scaffold) — Completion Summary
 
 ## Task Intent
 
@@ -257,16 +255,3 @@ Ready to create Rails models (PaymentFile, Transaction, Merchant) and populate w
 - Takes ~1-2 hours
 
 Proceed when ready.
-
-
----
-
-## Task 2 — v0.2.0-data
-
-[Will be added after Task 2 completion]
-
----
-
-## Task 3-7
-
-[Will be added as each task completes]
