@@ -1,42 +1,66 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-6">Payment Files Upload</h1>
+<!-- Enhanced version with better styling -->
+<div class="min-h-screen bg-gray-100">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">Payment Files Upload</h1>
+      <p class="text-gray-600">Manage and reconcile payment files from affiliate networks</p>
+    </div>
 
-  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-    <table class="w-full">
-      <thead class="bg-gray-200">
-        <tr>
-          <th class="px-6 py-3 text-left text-sm font-semibold">Region</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold">Affiliate</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold">Deposit Date</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold">Deposit Amount</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold">Payment ID</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold">File Name</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold">File Status</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @payment_files.each do |file| %>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="px-6 py-4"><%= file.region_display %></td>
-            <td class="px-6 py-4"><%= file.affiliate_network %></td>
-            <td class="px-6 py-4"><%= file.deposit_date %></td>
-            <td class="px-6 py-4"><%= number_to_currency(file.deposit_amount) %></td>
-            <td class="px-6 py-4"><%= file.payment_id %></td>
-            <td class="px-6 py-4 text-sm"><%= file.filename %></td>
-            <td class="px-6 py-4">
-              <span class="px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800">
-                <%= file.status_display %>
-              </span>
-            </td>
-            <td class="px-6 py-4">
-              <% if file.status_parsed? || file.status_full_reconciled? %>
-                <%= link_to 'Display', payment_file_display_path(file), class: 'text-blue-500 hover:text-blue-700' %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <!-- Table Card -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="bg-gradient-to-r from-blue-600 to-blue-700">
+              <th class="px-6 py-4 text-left text-sm font-semibold text-white">Region</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-white">Affiliate</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-white">Deposit Date</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-white">Deposit Amount</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-white">Payment ID</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-white">File Name</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-white">Status</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-white">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <% @payment_files.each do |file| %>
+              <tr class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 text-sm text-gray-900"><%= file.region_display %></td>
+                <td class="px-6 py-4 text-sm text-gray-900"><%= file.affiliate_network %></td>
+                <td class="px-6 py-4 text-sm text-gray-600"><%= file.deposit_date.strftime('%Y-%m-%d') %></td>
+                <td class="px-6 py-4 text-sm font-semibold text-gray-900"><%= number_to_currency(file.deposit_amount) %></td>
+                <td class="px-6 py-4 text-sm text-gray-600"><%= file.payment_id %></td>
+                <td class="px-6 py-4 text-sm text-gray-600 truncate" title="<%= file.filename %>">
+                  <%= file.filename %>
+                </td>
+                <td class="px-6 py-4">
+                  <%= render 'status_badge', status: file.status %>
+                </td>
+                <td class="px-6 py-4 text-sm space-x-2">
+                  <%= render 'action_buttons', file: file %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="grid grid-cols-3 gap-4 mt-8">
+      <div class="bg-white rounded-lg shadow p-6">
+        <p class="text-gray-600 text-sm">Total Files</p>
+        <p class="text-3xl font-bold text-blue-600"><%= @payment_files.count %></p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <p class="text-gray-600 text-sm">Total Amount</p>
+        <p class="text-3xl font-bold text-green-600"><%= number_to_currency(@payment_files.sum(:deposit_amount)) %></p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <p class="text-gray-600 text-sm">Parsed Files</p>
+        <p class="text-3xl font-bold text-purple-600"><%= @payment_files.where(status: 'parsed').count %></p>
+      </div>
+    </div>
   </div>
 </div>

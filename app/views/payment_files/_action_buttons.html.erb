@@ -1,0 +1,13 @@
+<div class="flex gap-2">
+  <% if file.status_parsed? || file.status_full_reconciled? %>
+    <%= link_to 'Display', display_payment_file_path(file), class: 'text-blue-500 hover:text-blue-700 font-medium text-sm' %>
+  <% end %>
+  
+  <% if file.status_new? %>
+    <%= link_to 'Parse', '#', class: 'text-purple-500 hover:text-purple-700 font-medium text-sm' %>
+  <% end %>
+  
+  <% unless file.status_processing? || file.status_new? %>
+    <%= link_to 'Remove', '#', class: 'text-red-500 hover:text-red-700 font-medium text-sm' %>
+  <% end %>
+</div>
