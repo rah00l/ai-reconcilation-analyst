@@ -1,0 +1,135 @@
+<div class="min-h-screen bg-gray-100">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <%= link_to '← Back to Files', payment_files_path, class: 'text-blue-500 hover:text-blue-700 font-medium' %>
+        <h1 class="text-3xl font-bold text-gray-900"><%= @payment_file.filename %></h1>
+        <div class="w-24"></div>
+      </div>
+      <div class="grid grid-cols-4 gap-4 text-sm">
+        <div>
+          <p class="text-gray-600">Region</p>
+          <p class="font-semibold text-gray-900"><%= @payment_file.region_display %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Network</p>
+          <p class="font-semibold text-gray-900"><%= @payment_file.affiliate_network %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Status</p>
+          <p class="font-semibold text-gray-900"><%= @payment_file.status_display %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Deposit Amount</p>
+          <p class="font-semibold text-gray-900"><%= number_to_currency(@payment_file.deposit_amount) %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transaction Summary Table -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-gradient-to-r from-blue-600 to-blue-700">
+              <th class="px-6 py-4 text-left font-semibold text-white">MID</th>
+              <th class="px-6 py-4 text-left font-semibold text-white">Merchant</th>
+              <th class="px-6 py-4 text-right font-semibold text-white">Paid Sales</th>
+              <th class="px-6 py-4 text-right font-semibold text-white">Paid Commission</th>
+              <th class="px-6 py-4 text-right font-semibold text-white">Declined Sales</th>
+              <th class="px-6 py-4 text-right font-semibold text-white">Declined Comm</th>
+              <th class="px-6 py-4 text-right font-semibold text-white">Missing Sales</th>
+              <th class="px-6 py-4 text-right font-semibold text-white">Missing Comm</th>
+              <th class="px-6 py-4 text-right font-semibold text-white">Total</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <% @transactions.group_by(&:mid).each do |mid, txns| %>
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4 font-semibold text-gray-900"><%= mid %></td>
+                <td class="px-6 py-4 text-gray-900"><%= txns.first.merchant_name %></td>
+                <td class="px-6 py-4 text-right text-gray-600">
+                  <%= number_to_currency(txns.select { |t| t.transaction_type == 'paid_sales' }.sum(&:amount)) %>
+                </td>
+                <td class="px-6 py-4 text-right text-gray-600">
+                  <%= number_to_currency(txns.select { |t| t.transaction_type == 'paid_commission' }.sum(&:amount)) %>
+                </td>
+                <td class="px-6 py-4 text-right text-gray-600">
+                  <%= number_to_currency(txns.select { |t| t.transaction_type == 'declined_sales' }.sum(&:amount)) %>
+                </td>
+                <td class="px-6 py-4 text-right text-gray-600">
+                  <%= number_to_currency(txns.select { |t| t.transaction_type == 'declined_commission' }.sum(&:amount)) %>
+                </td>
+                <td class="px-6 py-4 text-right text-gray-600">
+                  <%= number_to_currency(txns.select { |t| t.transaction_type == 'missing_sales' }.sum(&:amount)) %>
+                </td>
+                <td class="px-6 py-4 text-right text-gray-600">
+                  <%= number_to_currency(txns.select { |t| t.transaction_type == 'missing_commission' }.sum(&:amount)) %>
+                </td>
+                <td class="px-6 py-4 text-right font-semibold text-gray-900">
+                  <%= number_to_currency(txns.sum(&:amount)) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot class="bg-gray-100 border-t-2 border-gray-300">
+            <tr>
+              <td colspan="2" class="px-6 py-4 font-bold text-gray-900">TOTAL</td>
+              <td class="px-6 py-4 text-right font-bold text-gray-900">
+                <%= number_to_currency(@transactions.where(transaction_type: 'paid_sales').sum(:amount)) %>
+              </td>
+              <td class="px-6 py-4 text-right font-bold text-gray-900">
+                <%= number_to_currency(@transactions.where(transaction_type: 'paid_commission').sum(:amount)) %>
+              </td>
+              <td class="px-6 py-4 text-right font-bold text-gray-900">
+                <%= number_to_currency(@transactions.where(transaction_type: 'declined_sales').sum(:amount)) %>
+              </td>
+              <td class="px-6 py-4 text-right font-bold text-gray-900">
+                <%= number_to_currency(@transactions.where(transaction_type: 'declined_commission').sum(:amount)) %>
+              </td>
+              <td class="px-6 py-4 text-right font-bold text-gray-900">
+                <%= number_to_currency(@transactions.where(transaction_type: 'missing_sales').sum(:amount)) %>
+              </td>
+              <td class="px-6 py-4 text-right font-bold text-gray-900">
+                <%= number_to_currency(@transactions.where(transaction_type: 'missing_commission').sum(:amount)) %>
+              </td>
+              <td class="px-6 py-4 text-right font-bold text-gray-900">
+                <%= number_to_currency(@transactions.sum(:amount)) %>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="grid grid-cols-4 gap-4 mb-8">
+      <div class="bg-white rounded-lg shadow p-6">
+        <p class="text-gray-600 text-sm mb-2">Tenancy Fee</p>
+        <p class="text-2xl font-bold text-blue-600">£690.0</p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <p class="text-gray-600 text-sm mb-2">Unmatched</p>
+        <p class="text-2xl font-bold text-orange-600">£264.64</p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <p class="text-gray-600 text-sm mb-2">Total Transactions</p>
+        <p class="text-2xl font-bold text-purple-600"><%= @transactions.count %></p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <p class="text-gray-600 text-sm mb-2">Deposit Amount</p>
+        <p class="text-2xl font-bold text-green-600"><%= number_to_currency(@payment_file.deposit_amount) %></p>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex gap-4">
+      <%= link_to 'Download Parsed', '#', class: 'px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium' %>
+      <% if @payment_file.has_errors? %>
+        <%= link_to 'View Missing', payment_file_missing_path(@payment_file), class: 'px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded font-medium' %>
+      <% end %>
+      <%= link_to 'Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
+    </div>
+  </div>
+</div> 
