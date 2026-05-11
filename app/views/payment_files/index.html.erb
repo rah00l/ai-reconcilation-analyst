@@ -1,0 +1,42 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">Payment Files Upload</h1>
+
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <table class="w-full">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-semibold">Region</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold">Affiliate</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold">Deposit Date</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold">Deposit Amount</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold">Payment ID</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold">File Name</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold">File Status</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @payment_files.each do |file| %>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4"><%= file.region_display %></td>
+            <td class="px-6 py-4"><%= file.affiliate_network %></td>
+            <td class="px-6 py-4"><%= file.deposit_date %></td>
+            <td class="px-6 py-4"><%= number_to_currency(file.deposit_amount) %></td>
+            <td class="px-6 py-4"><%= file.payment_id %></td>
+            <td class="px-6 py-4 text-sm"><%= file.filename %></td>
+            <td class="px-6 py-4">
+              <span class="px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800">
+                <%= file.status_display %>
+              </span>
+            </td>
+            <td class="px-6 py-4">
+              <% if file.status_parsed? || file.status_full_reconciled? %>
+                <%= link_to 'Display', payment_file_display_path(file), class: 'text-blue-500 hover:text-blue-700' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
