@@ -1,3 +1,283 @@
+# Task 2 - ALL CODE FILES (Real System Mappings + Fake Data)
+
+## How to Use This Document
+
+1. Copy the code from each section below
+2. Create the file in your project with the exact path shown
+3. Paste the code
+4. Save the file
+5. Move to next file
+
+**NOTE:** 
+- Affiliate networks, error reasons, statuses = **REAL** (from handbook)
+- Merchant names, amounts, MIDs, file names = **COMPLETELY FAKE** (realistic but fictional)
+- Perfect for portfolio - authentic system, zero real client data
+
+---
+
+## FILE 1: app/models/payment_file.rb
+
+**Create file:** `app/models/payment_file.rb`
+
+```ruby
+class PaymentFile < ApplicationRecord
+  has_many :transactions, dependent: :destroy
+
+  # Enums - Real statuses from handbook
+  enum :status, {
+    new: 'new',
+    ready: 'ready',
+    processing: 'processing',
+    parsed: 'parsed',
+    partial_reconciled: 'partial_reconciled',
+    full_reconciled: 'full_reconciled'
+  }, prefix: true
+
+  enum :region, {
+    uk: 'uk',
+    ca: 'ca',
+    us: 'us',
+    au: 'au'
+  }, prefix: true
+
+  # Validations
+  validates :filename, :deposit_amount, :payment_id, presence: true
+  validates :region, inclusion: { in: regions.keys }
+  validates :status, inclusion: { in: statuses.keys }
+
+  # Scopes
+  scope :by_region, ->(region) { where(region: region) if region.present? }
+  scope :by_affiliate, ->(affiliate) { where(affiliate_network: affiliate) if affiliate.present? }
+  scope :parsed, -> { where(status: 'parsed') }
+  scope :with_errors, -> { joins(:transactions).where(transactions: { error_flag: true }).distinct }
+
+  # Constants - Real affiliate networks from handbook
+  AFFILIATE_NETWORKS = [
+    'Commission Junction - UK',
+    'Commission Junction - CA',
+    'Commission Junction - AU',
+    'Linkshare - UK',
+    'Linkshare - CA',
+    'Linkshare - AU',
+    'Qantas - AU',
+    'WebLogic - UK'
+  ].freeze
+
+  REGIONS_DISPLAY = {
+    'uk' => 'UK',
+    'ca' => 'CA',
+    'us' => 'US',
+    'au' => 'AU'
+  }.freeze
+
+  # Instance methods
+  def region_display
+    REGIONS_DISPLAY[region]
+  end
+
+  def status_display
+    status.humanize
+  end
+
+  def file_label
+    "#{filename} - #{deposit_date}"
+  end
+
+  def error_count
+    transactions.where(error_flag: true).count
+  end
+
+  def has_errors?
+    error_count > 0
+  end
+
+  def transaction_count
+    transactions.count
+  end
+end
+```
+
+---
+
+## FILE 2: app/models/transaction.rb
+
+**Create file:** `app/models/transaction.rb`
+
+```ruby
+class Transaction < ApplicationRecord
+  belongs_to :payment_file
+
+  # Enums - Real from handbook
+  enum :transaction_status, {
+    paid: 'paid',
+    declined: 'declined',
+    missing: 'missing',
+    closed: 'closed'
+  }, prefix: true
+
+  enum :transaction_type, {
+    paid_sales: 'paid_sales',
+    paid_commission: 'paid_commission',
+    declined_sales: 'declined_sales',
+    declined_commission: 'declined_commission',
+    missing_sales: 'missing_sales',
+    missing_commission: 'missing_commission',
+    closed_sales: 'closed_sales',
+    closed_commission: 'closed_commission',
+    bonus: 'bonus',
+    tenancy_fee: 'tenancy_fee',
+    transaction: 'transaction'
+  }, prefix: true
+
+  enum :screen_type, {
+    display: 'display',
+    missing: 'missing',
+    tenancy: 'tenancy',
+    summary: 'summary'
+  }, prefix: true
+
+  # Validations
+  validates :mid, :merchant_name, :transaction_type, :amount, presence: true
+  validates :payment_file_id, presence: true
+  validates :amount, numericality: { greater_than_or_equal_to: 0 }
+
+  # Scopes
+  scope :with_errors, -> { where(error_flag: true) }
+  scope :for_screen, ->(screen) { where(screen_type: screen) if screen.present? }
+  scope :locked, -> { where(transaction_locked: true) }
+  scope :by_type, ->(type) { where(transaction_type: type) if type.present? }
+  scope :by_status, ->(status) { where(transaction_status: status) if status.present? }
+
+  # Constants - Real error reasons from handbook
+  ERROR_REASONS = {
+    'COMMISSION_MISMATCH' => 'Commission Mismatch - Amount differs from system',
+    'TRANSACTION_NOT_FOUND' => 'Transaction Not Found - Doesn\'t exist in system',
+    'AGGREGATOR_TRANSACTION_ID_NOT_FOUND' => 'Aggregator Transaction ID Not Found',
+    'AGGREGATOR_MISMATCH' => 'Aggregator Mismatch - Network doesn\'t match',
+    'UNKNOWN_REASON' => 'Unknown Reason - Unable to determine mismatch',
+    'INVALID_DATE' => 'Invalid Date - Incorrectly formatted or missing',
+    'INVALID_SALE_VALUE' => 'Invalid Sale Value - Missing or invalid format',
+    'INVALID_COMMISSION_VALUE' => 'Invalid Commission Value - Zero or invalid format',
+    'TRANSACTION_ALREADY_CLOSED' => 'Transaction Already Closed - Previously settled'
+  }.freeze
+
+  TRANSACTION_TYPE_DISPLAY = {
+    'paid_sales' => 'Paid Sales',
+    'paid_commission' => 'Paid Commission',
+    'declined_sales' => 'Declined Sales',
+    'declined_commission' => 'Declined Commission',
+    'missing_sales' => 'Missing Sales',
+    'missing_commission' => 'Missing Commission',
+    'closed_sales' => 'Closed Sales',
+    'closed_commission' => 'Closed Commission',
+    'bonus' => 'Bonus',
+    'tenancy_fee' => 'Tenancy Fee',
+    'transaction' => 'Transaction'
+  }.freeze
+
+  TRANSACTION_STATUS_DISPLAY = {
+    'paid' => 'PAID',
+    'declined' => 'DECLINED',
+    'missing' => 'MISSING',
+    'closed' => 'CLOSED'
+  }.freeze
+
+  # Instance methods
+  def type_display
+    TRANSACTION_TYPE_DISPLAY[transaction_type]
+  end
+
+  def status_display
+    TRANSACTION_STATUS_DISPLAY[transaction_status]
+  end
+
+  def error_display
+    ERROR_REASONS[error_reason] || error_reason
+  end
+
+  def has_error?
+    error_flag == true
+  end
+
+  def total_commission
+    (commission_initial || 0) + (commission_final || 0)
+  end
+end
+```
+
+---
+
+## FILE 3: db/migrate/[timestamp]_create_payment_files.rb
+
+**Create file:** `db/migrate/20260510000001_create_payment_files.rb`
+
+```ruby
+class CreatePaymentFiles < ActiveRecord::Migration[7.1]
+  def change
+    create_table :payment_files do |t|
+      t.string :filename, null: false
+      t.string :region, null: false
+      t.string :affiliate_network, null: false
+      t.date :deposit_date, null: false
+      t.decimal :deposit_amount, precision: 12, scale: 2, null: false
+      t.string :payment_id, null: false
+      t.string :status, null: false, default: 'new'
+      t.string :file_status_label, default: 'NEW'
+
+      t.timestamps
+    end
+
+    add_index :payment_files, :status
+    add_index :payment_files, :region
+    add_index :payment_files, :affiliate_network
+  end
+end
+```
+
+---
+
+## FILE 4: db/migrate/[timestamp]_create_transactions.rb
+
+**Create file:** `db/migrate/20260510000002_create_transactions.rb`
+
+```ruby
+class CreateTransactions < ActiveRecord::Migration[7.1]
+  def change
+    create_table :transactions do |t|
+      t.references :payment_file, null: false, foreign_key: true
+      t.integer :mid, null: false
+      t.string :merchant_name, null: false
+      t.string :transaction_status, null: false, default: 'paid'
+      t.string :transaction_type, null: false
+      t.decimal :amount, precision: 12, scale: 2, null: false
+      t.boolean :error_flag, default: false
+      t.string :error_reason
+      t.string :screen_type, default: 'display'
+      t.decimal :commission_initial, precision: 12, scale: 2
+      t.decimal :commission_final, precision: 12, scale: 2
+      t.string :tenancy_tranx
+      t.decimal :campaign_amount, precision: 12, scale: 2
+      t.boolean :transaction_locked, default: false
+
+      t.timestamps
+    end
+
+    add_index :transactions, :payment_file_id
+    add_index :transactions, :error_flag
+    add_index :transactions, :screen_type
+    add_index :transactions, :transaction_status
+    add_index :transactions, :mid
+  end
+end
+```
+
+---
+
+## FILE 5: db/seeds.rb
+
+**Replace file:** `db/seeds.rb`
+
+```ruby
 # db/seeds.rb
 # Seed data for Payment Reconciliation Portfolio App
 # NOTE: All data is COMPLETELY FAKE but uses REAL system mappings from handbook
@@ -195,11 +475,11 @@ file3.transactions.create!(
   merchant_name: 'System',
   transaction_status: 'closed',
   transaction_type: 'bonus',
-  amount: 0.01,
+  amount: -0.01,
   error_flag: false,
   screen_type: 'summary',
   commission_initial: 0,
-  commission_final: 0.01,
+  commission_final: -0.01,
   transaction_locked: true
 )
 
@@ -293,3 +573,52 @@ puts "  - CLOSED: #{Transaction.where(transaction_status: 'closed').count}"
 puts ""
 puts "Error Scenarios:"
 puts "  - Total with errors: #{Transaction.where(error_flag: true).count}"
+```
+
+---
+
+## SUMMARY
+
+You now have all 5 code files with **REAL SYSTEM MAPPINGS + FAKE DATA:**
+
+✅ **REAL (from handbook):**
+1. ✅ `app/models/payment_file.rb` - Real affiliate networks & statuses
+2. ✅ `app/models/transaction.rb` - Real error reasons & transaction statuses
+3. ✅ `db/migrate/[timestamp]_create_payment_files.rb` - Real schema
+4. ✅ `db/migrate/[timestamp]_create_transactions.rb` - Real schema with transaction_status
+5. ✅ `db/seeds.rb` - Seed data with REAL error mappings
+
+✅ **FAKE but REALISTIC (for privacy):**
+- Merchant names: StyleHub UK, ShopMax Ltd, etc.
+- MID numbers: 10234, 10567, etc.
+- Amounts: Realistic ranges
+- File names: Real format with fake dates/amounts
+
+✅ **AUTHENTIC SYSTEM FEATURES:**
+- Real affiliate networks: Commission Junction, Linkshare, Qantas
+- Real transaction statuses: PAID, DECLINED, MISSING, CLOSED
+- Real error reasons: COMMISSION_MISMATCH, TRANSACTION_NOT_FOUND, AGGREGATOR_TRANSACTION_ID_NOT_FOUND, etc.
+- Real file statuses: new, ready, processing, parsed, partial_reconciled, full_reconciled
+- Real business rules: DECLINED only from Commission Junction, proper error descriptions
+
+## Next Steps
+
+```bash
+# 1. Copy each file from above to your project
+# 2. Run migrations
+rails db:migrate
+
+# 3. Run seeds
+rails db:seed
+
+# 4. Verify (you should see 6 payment files, 70+ transactions)
+rails console
+> PaymentFile.count
+> Transaction.count
+> Transaction.where(transaction_status: 'paid').count
+> Transaction.where(error_flag: true).count
+```
+
+**Done!** Task 2 with real system mappings + fake data. Perfect for portfolio! ✓
+
+**Ready to implement?** 🚀
