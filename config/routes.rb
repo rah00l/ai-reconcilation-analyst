@@ -11,4 +11,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  root "payment_files#index"
+
+  resources :payment_files, only: [:index] do
+    member do
+      get :display
+      get :missing
+      get :tenancy
+      get :summary
+    end
+  end
 end
