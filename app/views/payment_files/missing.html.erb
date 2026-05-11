@@ -1,0 +1,80 @@
+<div class="min-h-screen bg-gray-100">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <%= link_to '← Back to Files', payment_files_path, class: 'text-blue-500 hover:text-blue-700 font-medium' %>
+        <h1 class="text-3xl font-bold text-gray-900">Missing Transactions</h1>
+        <div class="w-24"></div>
+      </div>
+      <div class="grid grid-cols-4 gap-4 text-sm">
+        <div>
+          <p class="text-gray-600">File</p>
+          <p class="font-semibold text-gray-900"><%= @payment_file.filename %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Network</p>
+          <p class="font-semibold text-gray-900"><%= @payment_file.affiliate_network %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Total Errors</p>
+          <p class="font-semibold text-red-600"><%= @transactions.count %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Total Amount</p>
+          <p class="font-semibold text-gray-900"><%= number_to_currency(@transactions.sum(&:amount)) %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Missing Transactions Table -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-gradient-to-r from-red-600 to-red-700">
+              <th class="px-6 py-4 text-left font-semibold text-white">MID</th>
+              <th class="px-6 py-4 text-left font-semibold text-white">Merchant</th>
+              <th class="px-6 py-4 text-right font-semibold text-white">Amount</th>
+              <th class="px-6 py-4 text-left font-semibold text-white">Error Reason</th>
+              <th class="px-6 py-4 text-left font-semibold text-white">Date</th>
+              <th class="px-6 py-4 text-left font-semibold text-white">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <% if @transactions.any? %>
+              <% @transactions.each do |txn| %>
+                <tr class="bg-red-50 hover:bg-red-100">
+                  <td class="px-6 py-4 font-semibold text-gray-900"><%= txn.mid %></td>
+                  <td class="px-6 py-4 text-gray-900"><%= txn.merchant_name %></td>
+                  <td class="px-6 py-4 text-right font-semibold text-red-600"><%= number_to_currency(txn.amount) %></td>
+                  <td class="px-6 py-4 text-gray-700">
+                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-semibold">
+                      <%= txn.error_reason %>
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-gray-600"><%= txn.created_at.strftime('%Y-%m-%d') %></td>
+                  <td class="px-6 py-4 text-sm space-x-2">
+                    <%= link_to 'Resolve', '#', class: 'text-green-500 hover:text-green-700 font-medium' %>
+                    <%= link_to 'Delete', '#', class: 'text-red-500 hover:text-red-700 font-medium' %>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr class="bg-green-50">
+                <td colspan="6" class="px-6 py-8 text-center text-gray-600">
+                  <p class="text-lg font-semibold text-green-600">✓ No missing transactions!</p>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="flex gap-4">
+      <%= link_to 'Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
+    </div>
+  </div>
+</div>
