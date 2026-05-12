@@ -1,0 +1,218 @@
+<div class="min-h-screen bg-gray-50">
+  <div class="container mx-auto px-4 py-8">
+    
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <%= link_to '← Back to Files', payment_files_path, class: 'text-blue-500 hover:text-blue-700 font-medium' %>
+        <h1 class="text-3xl font-bold text-gray-900">Tenancy Settlement</h1>
+        <div class="w-24"></div>
+      </div>
+      
+      <div class="grid grid-cols-4 gap-4 text-sm mb-4">
+        <div>
+          <p class="text-gray-600">File</p>
+          <p class="font-semibold text-gray-900"><%= @payment_file.filename %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Network</p>
+          <p class="font-semibold text-gray-900"><%= @payment_file.affiliate_network %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Settlement Date</p>
+          <p class="font-semibold text-gray-900"><%= Date.today.strftime('%d-%b-%Y') %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Status</p>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">PENDING</span>
+        </div>
+      </div>
+      
+      <!-- Top Right Summary (NEW) -->
+      <div class="text-right text-sm mb-4">
+        <p class="text-gray-700">
+          <span class="font-bold">Unmatched Remaining:</span> (Tenancy, BMG, Bonus, VAT): £1,499.97
+        </p>
+        <p class="text-gray-700">
+          <span class="font-bold">Unmatched Error:</span> £106.07
+        </p>
+        <p class="text-gray-900 font-bold">
+          <span class="font-bold">Total:</span> £1,606.04
+        </p>
+      </div>
+    </div>
+
+    <!-- Merchant Transaction Table (NEW) -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+      <div class="p-4 bg-gray-50 border-b">
+        <h2 class="text-lg font-bold text-gray-900">Tenancy Transactions</h2>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100 border-b-2 border-gray-300">
+              <th class="px-4 py-3 text-left font-semibold text-gray-900">Affiliate Network</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-900">Merchant</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-900">Tenancy Tranx</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-900">Mapped Campaign</th>
+              <th class="px-4 py-3 text-right font-semibold text-gray-900">Campaign Amount</th>
+              <th class="px-4 py-3 text-right font-semibold text-gray-900">Paid Amount</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-900">Tenancy Type</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-900">Agg Tranx ID</th>
+              <th class="px-4 py-3 text-right font-semibold text-gray-900">Tenancy Split</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-900">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1 -->
+            <tr class="border-b hover:bg-gray-50">
+              <td class="px-4 py-3 text-gray-900">Commission Junction - UK</td>
+              <td class="px-4 py-3 text-gray-900">George at ASDA</td>
+              <td class="px-4 py-3 text-gray-900">WL37017Q42025B</td>
+              <td class="px-4 py-3 text-gray-900">
+                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+                  <option>George at ASDA-14608-WL37017Q42025B-1500.0</option>
+                </select>
+              </td>
+              <td class="px-4 py-3 text-right text-gray-900 font-semibold">1500.00</td>
+              <td class="px-4 py-3 text-right">
+                <input type="text" value="1500.00" disabled class="w-24 px-2 py-1 border rounded bg-gray-50 text-right text-gray-900" />
+              </td>
+              <td class="px-4 py-3">
+                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+                  <option>Tenancy</option>
+                </select>
+              </td>
+              <td class="px-4 py-3 text-gray-900">3682911214</td>
+              <td class="px-4 py-3 text-right text-gray-900"></td>
+              <td class="px-4 py-3 text-right"></td>
+            </tr>
+
+            <!-- Row 2 -->
+            <tr class="border-b hover:bg-gray-50">
+              <td class="px-4 py-3 text-gray-900">Commission Junction - UK</td>
+              <td class="px-4 py-3 text-gray-900">Sainsburys Groceries Online</td>
+              <td class="px-4 py-3 text-gray-900">Browser Adjustment (advertiser: 1024283)</td>
+              <td class="px-4 py-3 text-gray-900">
+                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+                  <option>Sainsburys Groceries Online-8966-WL29432Q42023-2500.0</option>
+                </select>
+              </td>
+              <td class="px-4 py-3 text-right text-gray-900 font-semibold">2500.00</td>
+              <td class="px-4 py-3 text-right">
+                <input type="text" value="1.03" disabled class="w-24 px-2 py-1 border rounded bg-gray-50 text-right text-gray-900" />
+              </td>
+              <td class="px-4 py-3">
+                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+                  <option>Tenancy</option>
+                </select>
+              </td>
+              <td class="px-4 py-3 text-gray-900">0</td>
+              <td class="px-4 py-3 text-right text-gray-900">95 : 5</td>
+              <td class="px-4 py-3 text-right"></td>
+            </tr>
+
+            <!-- Row 3 -->
+            <tr class="border-b hover:bg-gray-50">
+              <td class="px-4 py-3 text-gray-900">Commission Junction - UK</td>
+              <td class="px-4 py-3 text-gray-900">Argos</td>
+              <td class="px-4 py-3 text-gray-900">Browser Adjustment (advertiser: 1024283)</td>
+              <td class="px-4 py-3 text-gray-900">
+                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+                  <option>Argos-10840-WL34738Q22024-4500.0</option>
+                </select>
+              </td>
+              <td class="px-4 py-3 text-right text-gray-900 font-semibold">4500.00</td>
+              <td class="px-4 py-3 text-right">
+                <input type="text" value="84.46" disabled class="w-24 px-2 py-1 border rounded bg-gray-50 text-right text-gray-900" />
+              </td>
+              <td class="px-4 py-3">
+                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+                  <option>Tenancy</option>
+                </select>
+              </td>
+              <td class="px-4 py-3 text-gray-900">0</td>
+              <td class="px-4 py-3 text-right text-gray-900">95 : 5</td>
+              <td class="px-4 py-3 text-right"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="p-4 border-t">
+        <button disabled class="px-4 py-2 bg-gray-300 text-gray-700 rounded font-medium cursor-not-allowed">
+          ADD MORE ITEM
+        </button>
+      </div>
+    </div>
+
+    <!-- Fee Summary Panel (RIGHT SIDE) -->
+    <div class="grid grid-cols-3 gap-8 mb-8">
+      <!-- Empty left column for alignment -->
+      <div></div>
+      <div></div>
+      
+      <!-- Right column - Fee Summary -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-lg font-bold text-gray-900 mb-4">Fee Calculation</h2>
+        
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between items-center border-b pb-2">
+            <p class="text-gray-600">Tenancy Fee / BMG</p>
+            <p class="text-gray-900">
+              <span class="text-gray-500">(1500.00)</span>
+              <span class="font-semibold ml-4">1500.00</span>
+            </p>
+          </div>
+          
+          <div class="flex justify-between items-center border-b pb-2">
+            <p class="text-gray-600">Remaining Bonus</p>
+            <p class="text-gray-900">
+              <span class="text-gray-500">(-0.03)</span>
+              <input type="text" value="-0.03" disabled class="w-20 px-2 py-1 border rounded bg-gray-50 text-right" />
+            </p>
+          </div>
+          
+          <div class="flex justify-between items-center border-b pb-2">
+            <p class="text-gray-600">VAT</p>
+            <input type="text" value="0.00" disabled class="w-20 px-2 py-1 border rounded bg-gray-50 text-right" />
+          </div>
+          
+          <div class="flex justify-between items-center border-b pb-2">
+            <p class="text-gray-600">Unmatched Error</p>
+            <p class="text-gray-900 font-semibold">106.07</p>
+          </div>
+          
+          <div class="flex justify-between items-center bg-gray-100 p-3 rounded font-bold">
+            <p class="text-gray-900">Total Amount:</p>
+            <p class="text-gray-900">1606.04</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex gap-4 mb-8">
+      <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium">
+        TRAN RECONCILE
+      </button>
+      <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium">
+        FULL RECONCILE
+      </button>
+      <button class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium">
+        SAVE
+      </button>
+      <button class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium">
+        DOWNLOAD
+      </button>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="flex gap-4">
+      <%= link_to '← Back: Review', display_payment_file_path(@payment_file), class: 'px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium' %>
+      <%= link_to 'Summary →', summary_payment_file_path(@payment_file), class: 'px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded font-medium' %>
+      <%= link_to '← Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
+    </div>
+  </div>
+</div>

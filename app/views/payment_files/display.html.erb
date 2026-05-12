@@ -77,25 +77,25 @@
             <tr>
               <td colspan="2" class="px-6 py-4 font-bold text-gray-900">TOTAL</td>
               <td class="px-6 py-4 text-right font-bold text-gray-900">
-                <%= number_to_currency(@transactions.where(transaction_type: 'paid_sales').sum(:amount)) %>
+                <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'paid_sales' }.sum(&:amount)) %>
               </td>
               <td class="px-6 py-4 text-right font-bold text-gray-900">
-                <%= number_to_currency(@transactions.where(transaction_type: 'paid_commission').sum(:amount)) %>
+                <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'paid_commission' }.sum(&:amount)) %>
               </td>
               <td class="px-6 py-4 text-right font-bold text-gray-900">
-                <%= number_to_currency(@transactions.where(transaction_type: 'declined_sales').sum(:amount)) %>
+                <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'declined_sales' }.sum(&:amount)) %>
               </td>
               <td class="px-6 py-4 text-right font-bold text-gray-900">
-                <%= number_to_currency(@transactions.where(transaction_type: 'declined_commission').sum(:amount)) %>
+                <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'declined_commission' }.sum(&:amount)) %>
               </td>
               <td class="px-6 py-4 text-right font-bold text-gray-900">
-                <%= number_to_currency(@transactions.where(transaction_type: 'missing_sales').sum(:amount)) %>
+                <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'missing_sales' }.sum(&:amount)) %>
               </td>
               <td class="px-6 py-4 text-right font-bold text-gray-900">
-                <%= number_to_currency(@transactions.where(transaction_type: 'missing_commission').sum(:amount)) %>
+                <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'missing_commission' }.sum(&:amount)) %>
               </td>
               <td class="px-6 py-4 text-right font-bold text-gray-900">
-                <%= number_to_currency(@transactions.sum(:amount)) %>
+                <%= number_to_currency(@transactions.sum(&:amount)) %>
               </td>
             </tr>
           </tfoot>
@@ -126,10 +126,20 @@
     <!-- Action Buttons -->
     <div class="flex gap-4">
       <%= link_to 'Download Parsed', '#', class: 'px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium' %>
-      <% if @payment_file.has_errors? %>
-        <%= link_to 'View Missing', payment_file_missing_path(@payment_file), class: 'px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded font-medium' %>
-      <% end %>
-      <%= link_to 'Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
+      
+      <!-- If has errors, show View Missing -->
+      <%# if @payment_file.has_errors? %>
+        <div class="relative group">
+          <%= link_to 'View Missing', missing_payment_file_path(@payment_file), class: 'px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded font-medium' %>
+          <span class="absolute -top-8 left-0 bg-red-600 text-white px-2 py-1 rounded text-xs whitespace-nowrap">
+            <%= @payment_file.error_count %> Errors
+          </span>
+        </div>
+      <%# end %>
+      
+      <!-- Back button -->
+      <%= link_to '← Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
+    </div>
     </div>
   </div>
 </div> 

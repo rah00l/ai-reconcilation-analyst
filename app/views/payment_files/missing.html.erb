@@ -72,9 +72,12 @@
       </div>
     </div>
 
-    <!-- Back Button -->
-    <div class="flex gap-4">
-      <%= link_to 'Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
+    
+    <!-- Bottom Navigation Buttons -->
+    <div class="flex gap-4 mt-8">
+      <%= link_to '← Back to Review', display_payment_file_path(@payment_file), class: 'px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium' %>
+      <%= link_to 'Next: Settlement →', tenancy_payment_file_path(@payment_file), class: 'px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded font-medium' %>
+      <%= link_to '← Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
     </div>
   </div>
 </div>

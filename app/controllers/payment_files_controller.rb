@@ -13,7 +13,7 @@ class PaymentFilesController < ApplicationController
 
   # Screen 3: Missing Transactions
   def missing
-    @transactions = @payment_file.transactions.where(screen_type: 'missing', error_flag: true)
+    @transactions = @payment_file.transactions.where(error_flag: true)
   end
 
   # Screen 4: Tenancy Settlement
