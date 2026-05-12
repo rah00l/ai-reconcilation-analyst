@@ -1,0 +1,161 @@
+<div class="min-h-screen bg-gray-50">
+  <div class="container mx-auto px-4 py-8">
+    
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <%= link_to '← Back to Files', payment_files_path, class: 'text-blue-500 hover:text-blue-700 font-medium' %>
+        <h1 class="text-3xl font-bold text-gray-900">Reconciliation Summary</h1>
+        <div class="w-24"></div>
+      </div>
+      
+      <p class="text-gray-700 font-semibold mb-4">
+        <%= "#{@payment_file.filename} - #{@payment_file.deposit_date.strftime('%Y-%m-%d %H:%M:%S')} UTC" %>
+      </p>
+    </div>
+
+    <!-- Reconciled Data Summary Table -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+      <div class="p-4 bg-gray-100 border-b">
+        <h2 class="text-lg font-bold text-gray-900">Reconciled Data Summary</h2>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-200 border-b-2 border-gray-400">
+              <th class="px-4 py-3 text-left font-bold text-gray-900">MID</th>
+              <th class="px-4 py-3 text-left font-bold text-gray-900">Merchant Name</th>
+              <th class="px-4 py-3 text-left font-bold text-gray-900">Transaction Type</th>
+              <th class="px-4 py-3 text-right font-bold text-gray-900">Initial Commission</th>
+              <th class="px-4 py-3 text-right font-bold text-gray-900">Consumer</th>
+              <th class="px-4 py-3 text-right font-bold text-gray-900">Final Commission</th>
+              <th class="px-4 py-3 text-right font-bold text-gray-900">Partner Commission</th>
+              <th class="px-4 py-3 text-right font-bold text-gray-900">Internal Commission</th>
+              <th class="px-4 py-3 text-right font-bold text-gray-900">Transaction Locked</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Bonus Transaction (if exists) -->
+            <tr class="border-b hover:bg-gray-50">
+              <td class="px-4 py-3 text-gray-900"></td>
+              <td class="px-4 py-3 text-gray-900"></td>
+              <td class="px-4 py-3 text-gray-900">BONUS</td>
+              <td class="px-4 py-3 text-right text-gray-900">189.00</td>
+              <td class="px-4 py-3 text-right text-gray-900">0.00</td>
+              <td class="px-4 py-3 text-right text-gray-900">189.00</td>
+              <td class="px-4 py-3 text-right text-gray-900">94.50</td>
+              <td class="px-4 py-3 text-right text-gray-900">94.50</td>
+              <td class="px-4 py-3 text-right text-gray-900">1</td>
+            </tr>
+
+            <!-- Merchant Transactions -->
+            <tr class="border-b hover:bg-gray-50">
+              <td class="px-4 py-3 text-gray-900">54719</td>
+              <td class="px-4 py-3 text-gray-900">Ipmobile</td>
+              <td class="px-4 py-3 text-gray-900">TRANSACTION</td>
+              <td class="px-4 py-3 text-right text-gray-900">185.15</td>
+              <td class="px-4 py-3 text-right text-gray-900">185.15</td>
+              <td class="px-4 py-3 text-right text-gray-900">185.15</td>
+              <td class="px-4 py-3 text-right text-gray-900">76.65</td>
+              <td class="px-4 py-3 text-right text-gray-900">0.00</td>
+              <td class="px-4 py-3 text-right text-gray-900">30</td>
+            </tr>
+
+            <tr class="border-b hover:bg-gray-50">
+              <td class="px-4 py-3 text-gray-900">32671</td>
+              <td class="px-4 py-3 text-gray-900">Bench</td>
+              <td class="px-4 py-3 text-gray-900">TRANSACTION</td>
+              <td class="px-4 py-3 text-right text-gray-900">7.33</td>
+              <td class="px-4 py-3 text-right text-gray-900">13.07</td>
+              <td class="px-4 py-3 text-right text-gray-900">7.33</td>
+              <td class="px-4 py-3 text-right text-gray-900">-5.74</td>
+              <td class="px-4 py-3 text-right text-gray-900">0.00</td>
+              <td class="px-4 py-3 text-right text-gray-900">3</td>
+            </tr>
+
+            <tr class="border-b hover:bg-gray-50">
+              <td class="px-4 py-3 text-gray-900">32681</td>
+              <td class="px-4 py-3 text-gray-900">wegottickets.com</td>
+              <td class="px-4 py-3 text-gray-900">TRANSACTION</td>
+              <td class="px-4 py-3 text-right text-gray-900">0.81</td>
+              <td class="px-4 py-3 text-right text-gray-900">11.51</td>
+              <td class="px-4 py-3 text-right text-gray-900">0.81</td>
+              <td class="px-4 py-3 text-right text-gray-900">-6.56</td>
+              <td class="px-4 py-3 text-right text-gray-900">0.00</td>
+              <td class="px-4 py-3 text-right text-gray-900">5</td>
+            </tr>
+
+            <!-- Totals Row -->
+            <tr class="bg-gray-200 border-b-2 border-gray-400 font-bold">
+              <td class="px-4 py-3 text-gray-900">Total</td>
+              <td class="px-4 py-3 text-gray-900"></td>
+              <td class="px-4 py-3 text-gray-900"></td>
+              <td class="px-4 py-3 text-right text-gray-900">382.29</td>
+              <td class="px-4 py-3 text-right text-gray-900">209.73</td>
+              <td class="px-4 py-3 text-right text-gray-900">382.29</td>
+              <td class="px-4 py-3 text-right text-gray-900">158.85</td>
+              <td class="px-4 py-3 text-right text-gray-900">94.50</td>
+              <td class="px-4 py-3 text-right text-gray-900">39</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Download Buttons for Reconciled Data -->
+    <div class="mb-8 flex gap-4">
+      <button class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium">
+        DOWNLOAD SUMMARY
+      </button>
+      <button class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium">
+        DOWNLOAD TRANSACTIONS
+      </button>
+    </div>
+
+    <!-- Unmatched Data Summary Table -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+      <div class="p-4 bg-gray-100 border-b">
+        <h2 class="text-lg font-bold text-gray-900">Unmatched Data Summary</h2>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-200 border-b-2 border-gray-400">
+              <th class="px-4 py-3 text-left font-bold text-gray-900">MID</th>
+              <th class="px-4 py-3 text-left font-bold text-gray-900">Merchant Name</th>
+              <th class="px-4 py-3 text-right font-bold text-gray-900">Commission</th>
+              <th class="px-4 py-3 text-right font-bold text-gray-900">Transaction Locked</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Totals Row (No unmatched data in this example) -->
+            <tr class="bg-gray-100 border-b-2 border-gray-400 font-bold">
+              <td class="px-4 py-3 text-gray-900">Total</td>
+              <td class="px-4 py-3 text-gray-900"></td>
+              <td class="px-4 py-3 text-right text-gray-900">0.00</td>
+              <td class="px-4 py-3 text-right text-gray-900">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Download Buttons for Unmatched Data -->
+    <div class="mb-8 flex gap-4">
+      <button class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium">
+        DOWNLOAD SUMMARY
+      </button>
+      <button class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium">
+        DOWNLOAD TRANSACTIONS
+      </button>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="flex gap-4">
+      <%= link_to '← Back: Review', display_payment_file_path(@payment_file), class: 'px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium' %>
+      <%= link_to '← Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
+    </div>
+  </div>
+</div>
