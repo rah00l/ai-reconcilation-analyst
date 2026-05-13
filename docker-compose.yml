@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  # Service 1: Rails Web Application
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-reconciliation-web
+    ports:
+      - "3000:3000"
+    depends_on:
+      engine:
+        condition: service_started
+    environment:
+      RAILS_ENV: development
+      ENGINE_URL: http://engine:4567
+      RAILS_LOG_TO_STDOUT: 'true'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.git
+    command: bash -c "bundle exec rake db:prepare && bundle exec rails s -b 0.0.0.0"
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Service 2: Sinatra AI Analyst Engine
+  engine:
+    build:
+      context: ../ai-analyst-engine
+      dockerfile: Dockerfile
+    container_name: ai-analyst-engine
+    ports:
+      - "4567:4567"
+    environment:
+      RACK_ENV: development
+      PORT: 4567
+    volumes:
+      - ../ai-analyst-engine:/app
+    command: bundle exec ruby app.rb -o 0.0.0.0
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4567/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  app_network:
+    driver: bridge
