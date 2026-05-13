@@ -1,0 +1,225 @@
+<div id="chat-widget" class="fixed bottom-4 right-4 w-96 h-[500px] bg-white rounded-lg shadow-2xl flex flex-col z-50 border border-gray-200">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-t-lg flex justify-between items-center">
+    <div>
+      <h3 class="font-bold text-lg">AI Analyst Assistant</h3>
+      <p class="text-xs text-blue-100">Ask about reconciliation</p>
+    </div>
+    <button id="chat-close" class="text-white hover:text-blue-200 text-xl">✕</button>
+  </div>
+
+  <!-- Messages Container -->
+  <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+    <!-- Initial message -->
+    <div class="bg-white p-3 rounded-lg shadow-sm">
+      <p class="text-sm text-gray-700 font-medium">Welcome! 👋</p>
+      <p class="text-xs text-gray-600 mt-1">I can help you understand reconciliation statuses, errors, settlements, and more. What would you like to know?</p>
+    </div>
+  </div>
+
+  <!-- Loading indicator (hidden by default) -->
+  <div id="chat-loading" class="hidden px-4 py-2 text-center">
+    <div class="flex items-center justify-center gap-2">
+      <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+      <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+      <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+    </div>
+  </div>
+
+  <!-- Input Section -->
+  <div class="p-4 border-t bg-white rounded-b-lg">
+    <form id="chat-form" class="flex gap-2">
+      <input
+        type="text"
+        id="chat-input"
+        placeholder="Type your question..."
+        class="flex-1 px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+        autocomplete="off"
+      />
+      <button
+        type="submit"
+        id="chat-send"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium transition"
+      >
+        Send
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatLoading = document.getElementById('chat-loading');
+    const chatClose = document.getElementById('chat-close');
+
+    // Session ID for multi-turn conversations
+    let currentSessionId = null;
+
+    // Extract file_id from current page (optional)
+    function getFileId() {
+      // Try multiple ways to get file_id
+      const urlParams = new URLSearchParams(window.location.search);
+      const fileIdFromUrl = urlParams.get('file_id');
+      if (fileIdFromUrl) return fileIdFromUrl;
+
+      const fileIdFromAttr = document.querySelector('[data-file-id]')?.dataset.fileId;
+      if (fileIdFromAttr) return fileIdFromAttr;
+
+      // Extract from current URL path (e.g., /payment_files/11/display)
+      const pathMatch = window.location.pathname.match(/\/payment_files\/(\d+)/);
+      return pathMatch ? pathMatch[1] : null;
+    }
+
+    // Add message to chat
+    function addMessage(text, sender) {
+      const messageEl = document.createElement('div');
+      messageEl.className = sender === 'user'
+        ? 'flex justify-end'
+        : 'flex justify-start';
+
+      const bubbleEl = document.createElement('div');
+      bubbleEl.className = sender === 'user'
+        ? 'bg-blue-600 text-white p-3 rounded-lg max-w-xs shadow-sm'
+        : 'bg-white text-gray-800 p-3 rounded-lg max-w-xs shadow-sm border border-gray-200';
+
+      bubbleEl.innerHTML = `<p class="text-sm">${escapeHtml(text)}</p>`;
+      messageEl.appendChild(bubbleEl);
+      chatMessages.appendChild(messageEl);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Add follow-up buttons
+    function addFollowUpButtons(followUps) {
+      if (!followUps || followUps.length === 0) return;
+
+      const followUpEl = document.createElement('div');
+      followUpEl.className = 'text-xs text-gray-500 px-3 py-2 space-y-1';
+      followUpEl.innerHTML = '<p class="font-medium mb-2 text-gray-600">Try asking:</p>';
+
+      followUps.forEach(followUp => {
+        const btn = document.createElement('button');
+        btn.className = 'block w-full text-left text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-2 py-1 rounded text-xs cursor-pointer transition';
+        btn.textContent = followUp;
+        btn.type = 'button';
+        btn.onclick = (e) => {
+          e.preventDefault();
+          chatInput.value = followUp;
+          chatForm.dispatchEvent(new Event('submit'));
+        };
+        followUpEl.appendChild(btn);
+      });
+
+      chatMessages.appendChild(followUpEl);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Generate unique session ID
+    function generateSessionId() {
+      const timestamp = Date.now();
+      const random = Math.random().toString(36).substr(2, 9);
+      return `session_${timestamp}_${random}`;
+    }
+
+    // Handle form submission
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const question = chatInput.value.trim();
+      if (!question) return;
+
+      // Generate session ID on first request
+      if (!currentSessionId) {
+        currentSessionId = generateSessionId();
+      }
+
+      // Get optional file_id (can be null for stateless questions)
+      const fileId = getFileId();
+
+      // Add user message to chat
+      addMessage(question, 'user');
+      chatInput.value = '';
+      chatLoading.classList.remove('hidden');
+
+      try {
+        // Build request payload
+        const payload = {
+          question: question,
+          session_id: currentSessionId
+        };
+
+        // Add file_id only if available
+        if (fileId) {
+          payload.file_id = fileId;
+        }
+
+        // Call Rails endpoint
+        const response = await fetch('/chat/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        chatLoading.classList.add('hidden');
+
+        // Handle HTTP errors
+        if (!response.ok) {
+          addMessage('Server error. Please try again.', 'assistant');
+          return;
+        }
+
+        const data = await response.json();
+        const status = data?.status || 'unknown';
+
+        // Handle different engine response statuses
+        if (status === 'NOT_DEFINED') {
+          // Engine knows this question is outside its knowledge gates
+          addMessage(
+            data.explanation || 'I cannot answer that question based on my knowledge.',
+            'assistant'
+          );
+        } else if (data.error || status === 'error') {
+          // Error occurred during processing
+          addMessage(
+            data.explanation || 'An error occurred while processing your question.',
+            'assistant'
+          );
+        } else if (data.explanation) {
+          // Success - display explanation
+          addMessage(data.explanation, 'assistant');
+
+          // Show follow-up suggestions if available
+          if (data.follow_ups && data.follow_ups.length > 0) {
+            addFollowUpButtons(data.follow_ups);
+          }
+        } else {
+          // Unexpected response format
+          addMessage('I received an unexpected response. Please try again.', 'assistant');
+        }
+
+        // Store session ID for future requests (already set, but ensure it's updated)
+        if (data.session_id) {
+          currentSessionId = data.session_id;
+        }
+
+      } catch (error) {
+        chatLoading.classList.add('hidden');
+        addMessage(`Network error: ${error.message}`, 'assistant');
+      }
+    });
+
+    // Close chat widget
+    chatClose.addEventListener('click', function() {
+      document.getElementById('chat-widget').style.display = 'none';
+    });
+  });
+</script>
