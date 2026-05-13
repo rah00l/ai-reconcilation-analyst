@@ -21,4 +21,6 @@ Rails.application.routes.draw do
       get :summary
     end
   end
+  # Chat endpoint
+  post '/chat/analyze', to: 'chat#analyze'
 end
