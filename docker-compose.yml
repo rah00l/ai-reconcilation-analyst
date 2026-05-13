@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  # Service 1: Rails Web Application
+  # Rails Web Application
   web:
     build:
       context: .
@@ -11,16 +11,23 @@ services:
       - "3000:3000"
     depends_on:
       engine:
-        condition: service_started
+        condition: service_started  # Changed from service_healthy - web doesn't need to wait for engine health
     environment:
       RAILS_ENV: development
       ENGINE_URL: http://engine:4567
+      ENGINE_TIMEOUT: 30
       RAILS_LOG_TO_STDOUT: 'true'
     volumes:
       - .:/app
       - /app/node_modules
       - /app/.git
-    command: bash -c "bundle exec rake db:prepare && bundle exec rails s -b 0.0.0.0"
+      - /app/tmp
+      - /app/log
+    command: >
+      bash -c "
+        bundle exec rake db:prepare &&
+        bundle exec rails server -b 0.0.0.0 -p 3000
+      "
     networks:
       - app_network
     healthcheck:
@@ -28,8 +35,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
 
-  # Service 2: Sinatra AI Analyst Engine
+  # Sinatra AI Analyst Engine
   engine:
     build:
       context: ../ai-analyst-engine
@@ -42,14 +50,17 @@ services:
       PORT: 4567
     volumes:
       - ../ai-analyst-engine:/app
-    command: bundle exec ruby app.rb -o 0.0.0.0
+    # Explicitly specify path to config.ru (engine has it in sinatra/ subdirectory)
+    command: bundle exec rackup /app/sinatra/config.ru -o 0.0.0.0 -p 4567
     networks:
       - app_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4567/health"]
+      # Tests if the engine can actually process requests
+      test: ["CMD", "curl", "-f", "-X", "POST", "http://localhost:4567/analyze", "-H", "Content-Type: application/json", "-d", "{\"question\":\"test\",\"session_id\":\"health\"}"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 45s  # Changed from 15s to 45s - gives engine time to fully boot
 
 networks:
   app_network:

@@ -58,6 +58,15 @@
     // Session ID for multi-turn conversations
     let currentSessionId = null;
 
+    // Extract CSRF token from meta tag (REQUIRED FOR RAILS SECURITY)
+    function getCsrfToken() {
+      const token = document.querySelector('meta[name="csrf-token"]')?.content;
+      if (!token) {
+        console.warn('CSRF token not found in page - Rails CSRF protection may fail');
+      }
+      return token;
+    }
+
     // Extract file_id from current page (optional)
     function getFileId() {
       // Try multiple ways to get file_id
@@ -162,10 +171,16 @@
           payload.file_id = fileId;
         }
 
-        // Call Rails endpoint
+        // Get CSRF token (CRITICAL FOR RAILS SECURITY)
+        const csrfToken = getCsrfToken();
+
+        // Call Rails endpoint WITH CSRF token in headers
         const response = await fetch('/chat/analyze', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken  // ← REQUIRED: Rails CSRF protection
+          },
           body: JSON.stringify(payload)
         });
 
@@ -173,6 +188,7 @@
 
         // Handle HTTP errors
         if (!response.ok) {
+          console.error('HTTP error:', response.status);
           addMessage('Server error. Please try again.', 'assistant');
           return;
         }
@@ -206,7 +222,7 @@
           addMessage('I received an unexpected response. Please try again.', 'assistant');
         }
 
-        // Store session ID for future requests (already set, but ensure it's updated)
+        // Store session ID for future requests (ensure it's updated)
         if (data.session_id) {
           currentSessionId = data.session_id;
         }
