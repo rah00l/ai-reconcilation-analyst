@@ -9,20 +9,42 @@
 
     <%= yield :head %>
 
+    <!-- Branding & Icons -->
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application" %>
+
+    <!-- Stylesheets (order matters) -->
+    <!-- Tailwind CSS - Main styling framework -->
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application.tailwind", "data-turbo-track": "reload" %>
+    
+    <!-- Global Styles - Custom components and utilities -->
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "globals", "data-turbo-track": "reload" %>
+    
+    <!-- Application Styles - Any additional custom styles -->
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-
-      <!-- AI Chat Widget -->
-      <%= render 'payment_files/chat_widget' %>
+  <body class="bg-white text-gray-900">
+    <!-- Navigation (will be added in A.2) -->
+    
+    <!-- Main Content Area -->
+    <main class="min-h-screen bg-gray-50">
+      <!-- Page Container -->
+      <div class="container-app">
+        <!-- Yield page content here -->
+        <%= yield %>
+      </div>
     </main>
+
+    <!-- AI Chat Widget -->
+    <!-- Rendered on all pages for context-aware assistance -->
+    <%= render 'payment_files/chat_widget' %>
+
+    <!-- Footer (will be added in A.3) -->
   </body>
 </html>
