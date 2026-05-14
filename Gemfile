@@ -1,50 +1,76 @@
 source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+# ============================================================================
+# CORE RAILS & SERVER
+# ============================================================================
+
 gem "rails", "~> 7.2.3", ">= 7.2.3.1"
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
-# Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 1.4"
-# Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
-# Use Redis adapter to run Action Cable in production
-# gem "redis", ">= 4.0.1"
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
-
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
-
-# Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+# ============================================================================
+# DATABASE
+# ============================================================================
+
+gem "sqlite3", ">= 1.4"
+
+# ============================================================================
+# FRONTEND & ASSETS
+# ============================================================================
+
+gem "sprockets-rails"
+gem "tailwindcss-rails", "~> 2.0"
+gem "jbuilder"
+
+# ============================================================================
+# API & HTTP COMMUNICATION
+# ============================================================================
+
+# HTTP client for calling external APIs (AI Analyst Engine)
+# Used in EngineClient to make requests to Sinatra engine
+gem "httparty", "~> 0.24.2"
+
+# ============================================================================
+# CONFIGURATION & UTILITIES
+# ============================================================================
+
+# Environment variable management from .env files
+# Loads ENV variables in development from .env file
+gem "dotenv-rails", "~> 3.2"
+
+# Timezone support for Windows and JRuby
+gem "tzinfo-data", platforms: %i[ windows jruby ]
+
+# ============================================================================
+# DEVELOPMENT & TESTING
+# ============================================================================
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  # Debugging support for Rails console
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  # Security vulnerability scanner
   gem "brakeman", require: false
 
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  # Ruby code style checker (Rails-specific omakase preset)
   gem "rubocop-rails-omakase", require: false
 end
 
+# ============================================================================
+# DEVELOPMENT ONLY
+# ============================================================================
+
 group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
+  # Interactive Rails console enhancements
   gem "web-console"
 end
 
+# ============================================================================
+# PRODUCTION-SPECIFIC (Uncomment when deploying)
+# ============================================================================
 
-gem "tailwindcss-rails", "~> 4.4"
-gem "httparty", "~> 0.24.2"
-gem "dotenv-rails", "~> 3.2"
+# Uncomment for production deployment:
+# gem "redis", ">= 4.0.1"  # For caching and Action Cable in production
+# gem "kredis"            # High-level Redis data structures
+# gem "bcrypt", "~> 3.1.7"  # Password encryption

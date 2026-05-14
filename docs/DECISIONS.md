@@ -31,3 +31,41 @@
 ## Decision 8: Git branching strategy
 **Chosen:** Task 1 direct to main, Tasks 2-7 feature branches
 **Rationale:** Task 1 is foundational (no prior task). Features use branches for professional audit trail.
+
+
+## A.1: Tailwindcss Integration
+
+### Decision: Use tailwindcss-rails v2.x
+
+**Why not v4.4:**
+- v4.4 is designed for Node.js workflows
+- Requires explicit --input/--output CLI parameters
+- Complex manual build process
+- Not Rails-native
+
+**Why v2.x:**
+- Designed specifically for Rails asset pipeline
+- Automatic CSS generation
+- Rails generators integration (rails tailwindcss:install)
+- Simple, professional workflow
+- Industry standard for Rails + Tailwindcss
+
+### Docker-First Development
+
+**Volume Sync:**
+- Local ↔ Container: Automatic via `volumes: - .:/app`
+- One-time generators create files that sync automatically
+- After git commit, files persist across rebuilds
+
+**Workflow:**
+1. Generate in Docker container
+2. Files auto-sync to local (via volumes)
+3. Commit to git
+4. Future rebuilds pull from git (no generator needed)
+
+### Key Learnings
+
+- "Latest version" ≠ "Best version"
+- Check framework compatibility, not just version numbers
+- Docker volumes provide bidirectional sync
+- Generators only need to run once if files are committed
