@@ -213,3 +213,126 @@
     display: none;
   }
 }
+
+/* ===== 1. BUTTON HOVER EFFECTS ===== */
+.btn {
+  transition: all 0.2s ease;
+  cursor: pointer;
+  @apply inline-flex items-center justify-center;
+}
+
+.btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  @apply bg-rails-600; /* Slightly darker blue */
+}
+
+.btn-danger:hover {
+  @apply bg-red-600; /* Slightly darker red */
+}
+
+.btn-secondary:hover {
+  @apply bg-gray-700;
+}
+
+/* ===== 2. LOADING SPINNER ===== */
+.spinner {
+  @apply inline-block;
+  animation: spin 1s linear infinite;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #e8f0f8;
+  border-top-color: #1e5ba8;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn.loading {
+  @apply opacity-70 cursor-not-allowed;
+  pointer-events: none;
+}
+
+/* ===== 3. STATUS INDICATORS ===== */
+.status-badge {
+  @apply flex items-center gap-2;
+  align-items: center;
+}
+
+.status-dot {
+  @apply w-2 h-2 rounded-full inline-block flex-shrink-0;
+}
+
+.status-dot.parsed {
+  @apply bg-green-500;
+}
+
+.status-dot.processing {
+  @apply bg-yellow-500;
+}
+
+.status-dot.error {
+  @apply bg-red-500;
+}
+
+.status-dot.pending {
+  @apply bg-gray-400;
+}
+
+/* ===== 4. TOAST NOTIFICATIONS ===== */
+.toast {
+  @apply fixed bottom-4 right-4 px-md py-sm rounded-md text-white shadow-lg;
+  animation: slideIn 0.3s ease-out;
+  z-index: 1000;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toast.success {
+  @apply bg-green-500;
+}
+
+.toast.error {
+  @apply bg-red-500;
+}
+
+.toast.info {
+  @apply bg-blue-500;
+}
+
+.toast.hidden {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ===== 5. AMOUNT EMPHASIS ===== */
+.amount-large {
+  @apply text-2xl font-bold text-rails-600;
+}
+
+.amount-medium {
+  @apply text-lg font-semibold text-gray-800;
+}
+
+.amount-small {
+  @apply text-base font-medium text-gray-700;
+}
