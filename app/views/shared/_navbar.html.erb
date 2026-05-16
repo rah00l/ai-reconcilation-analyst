@@ -443,7 +443,291 @@
             <!-- RIGHT COLUMN -->
 
           </div>
+
+          <!-- BETA PHASE NOTICE -->
+          <div style="margin-top: 16px; padding: 12px; background: #f0f4ff; border-left: 4px solid #2563eb; border-radius: 6px; color: #111827;">
+            <div style="display: flex; gap: 10px; align-items: flex-start;">
+              <span style="font-size: 18px;">🔬</span>
+              <div style="font-size: 13px; line-height: 1.5;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <strong>Beta Phase - Rule-Based Engine</strong>
+                  <button onclick="openReconciliationGuide()"
+                          style="background: none; border: none; cursor: pointer; font-size: 16px; padding: 0; margin: 0; color: #2563eb; hover: opacity: 0.7;"
+                          title="Learn about payment reconciliation process">
+                    ℹ️
+                  </button>
+                </div>
+                <p style="margin: 0; color: #6b7280;">
+                  For now, it works best with the sample questions above.
+                </p>
+                <p style="margin: 8px 0 0 0; color: #6b7280;">
+                  It’s a reconciliation specialist, not yet a general assistant.
+                  A more advanced AI upgrade is coming soon 🚀
+                </p>
+              </div>
+            </div>
+          </div>
         </details>
+
+        <!-- PAYMENT RECONCILIATION PROCESS GUIDE MODAL -->
+        <div id="reconciliationGuideOverlay"
+             style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+
+          <!-- Guide Modal -->
+          <div style="background: white; border-radius: 12px; padding: 32px; max-width: 700px; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative;">
+
+            <!-- Close Button -->
+            <button onclick="closeReconciliationGuide()"
+                    style="position: absolute; top: 12px; right: 12px; background: none; border: none; font-size: 24px; cursor: pointer; color: #999; opacity: 0.7; transition: opacity 0.2s;"
+                    onmouseover="this.style.opacity='1'"
+                    onmouseout="this.style.opacity='0.7'">
+              ✕
+            </button>
+
+            <!-- Header -->
+            <h2 style="margin: 0 0 12px 0; color: #111827; font-size: 26px; font-weight: 700;">
+              Payment Reconciliation Process 📊 💰
+            </h2>
+            <p style="margin: 0 0 24px 0; color: #6b7280; font-size: 14px;">
+              Understanding the workflow of payment reconciliation in ReconPilot AI
+            </p>
+            <p style="margin: 0 0 20px 0; color: #6b7280; font-size: 14px; line-height: 1.6;">
+              A streamlined workflow to verify, validate, and finalize payment records.
+              Follow these steps as you navigate through the system.
+            </p>
+
+            <!-- Professional Analogy -->
+            <div style="background: #eff6ff; padding: 16px; border-radius: 8px; border-left: 4px solid #2563eb; margin-bottom: 24px;">
+              <p style="margin: 0; color: #1e40af; font-size: 13px; line-height: 1.6;">
+                <strong>🎯 How to Think About It:</strong> Reconciliation is like conducting a quality audit.
+                You receive data, validate its integrity, identify discrepancies, resolve them, and generate
+                a final report confirming everything is correct.
+              </p>
+            </div>
+
+            <!-- Step-by-Step Process -->
+            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+
+              <!-- Step 1 -->
+              <div style="display: flex; gap: 12px;">
+                <div style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
+                  1
+                </div>
+                <div>
+                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
+                    📁 File Upload
+                  </p>
+                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
+                    Upload your payment file (XML, JSON, XLS, XLSX, CSV format). The system validates
+                    the file structure and assigns it a <strong>NEW</strong> status.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div style="display: flex; gap: 12px;">
+                <div style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
+                  2
+                </div>
+                <div>
+                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
+                    ⚙️ Initial Processing
+                  </p>
+                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
+                    File moves to <strong>READY</strong> status once validation passes. The system is now
+                    prepared to parse and process payment data.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div style="display: flex; gap: 12px;">
+                <div style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
+                  3
+                </div>
+                <div>
+                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
+                    🔄 Data Extraction
+                  </p>
+                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
+                    File enters <strong>PROCESSING</strong> status. The system extracts payment details,
+                    payment IDs, amounts, and dates from the file structure.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div style="display: flex; gap: 12px;">
+                <div style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
+                  4
+                </div>
+                <div>
+                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
+                    ✓ Parsing Complete
+                  </p>
+                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
+                    File reaches <strong>PARSED</strong> status. All payment data has been successfully
+                    extracted and structured into individual payment records.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Step 5 -->
+              <div style="display: flex; gap: 12px;">
+                <div style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
+                  5
+                </div>
+                <div>
+                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
+                    🔍 Reconciliation Matching
+                  </p>
+                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
+                    File enters <strong>RECONCILING</strong> status. The system matches parsed payments
+                    against your affiliate network records using Payment ID, amount, and date.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Step 6 -->
+              <div style="display: flex; gap: 12px;">
+                <div style="background: #10b981; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
+                  ✓
+                </div>
+                <div>
+                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
+                    ✅ Reconciliation Complete
+                  </p>
+                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
+                    File reaches <strong>FULL RECONCILED</strong> status. All payments have been matched
+                    successfully with your records. Some files may reach <strong>PARTIAL RECONCILED</strong>
+                    if some payments couldn't be matched (requiring manual review).
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Screen Navigation Flow -->
+            <div style="background: #f9fafb; padding: 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid #e5e7eb;">
+              <p style="margin: 0 0 12px 0; color: #111827; font-weight: 600; font-size: 13px;">
+                📍 Navigation Path
+              </p>
+              <p style="margin: 0; color: #6b7280; font-size: 12px; line-height: 1.8;">
+                <span style="background: #dbeafe; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-right: 4px; margin-bottom: 4px;">
+                  📤 Upload Screen
+                </span>
+                <span style="color: #9ca3af; margin: 0 4px;">→</span>
+                <span style="background: #dbeafe; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-right: 4px; margin-bottom: 4px;">
+                  📊 Summary Screen
+                </span>
+                <span style="color: #9ca3af; margin: 0 4px;">→</span>
+                <span style="background: #dbeafe; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-right: 4px; margin-bottom: 4px;">
+                  ⚠️ Exception Screen
+                </span>
+                <span style="color: #9ca3af; margin: 0 4px;">→</span>
+                <span style="background: #dbeafe; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-right: 4px; margin-bottom: 4px;">
+                  🔧 Settlement Screen
+                </span>
+                <span style="color: #9ca3af; margin: 0 4px;">→</span>
+                <span style="background: #d1fae5; padding: 4px 8px; border-radius: 4px; display: inline-block;">
+                  ✅ Summary Report
+                </span>
+              </p>
+            </div>
+
+            <!-- Status Reference -->
+            <div style="background: #f9fafb; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+              <p style="margin: 0 0 12px 0; color: #111827; font-weight: 600; font-size: 13px;">
+                📋 Status Reference
+              </p>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <div style="font-size: 12px; color: #6b7280; line-height: 1.5;">
+                  <strong style="color: #111827;">NEW:</strong> File uploaded, validation pending<br>
+                  <strong style="color: #111827;">READY:</strong> Validated, awaiting processing<br>
+                  <strong style="color: #111827;">PROCESSING:</strong> Data extraction in progress<br>
+                </div>
+                <div style="font-size: 12px; color: #6b7280; line-height: 1.5;">
+                  <strong style="color: #111827;">PARSED:</strong> Data extracted successfully<br>
+                  <strong style="color: #111827;">RECONCILING:</strong> Matching in progress<br>
+                  <strong style="color: #111827;">FULL/PARTIAL:</strong> Reconciliation complete
+                </div>
+              </div>
+            </div>
+
+            <!-- Key Points -->
+            <div style="background: #effbf8; padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-bottom: 24px;">
+              <p style="margin: 0 0 12px 0; color: #111827; font-weight: 600; font-size: 13px;">
+                ✓ Key Process Points
+              </p>
+              <ul style="margin: 0; padding-left: 20px; color: #6b7280; font-size: 12px; line-height: 1.8;">
+                <li>Each step builds on the previous one—complete them in order</li>
+                <li>The Exception Screen is critical—address all flagged discrepancies</li>
+                <li>Use the Settlement Screen to make corrections and allocations</li>
+                <li>The final report confirms the reconciliation is complete</li>
+                <li>Use Quick Questions if you need guidance at any step</li>
+              </ul>
+            </div>
+
+            <!-- Ready to Start -->
+            <div style="background: #f0f9ff; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+              <p style="margin: 0 0 8px 0; color: #111827; font-weight: 600; font-size: 13px;">
+                🎯 Ready to Begin?
+              </p>
+              <p style="margin: 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
+                Start by uploading your payment file on the Upload Screen. The system will guide you through
+                each step. Use Quick Questions <b>AI Analyst Assistance</b> anytime you need help.
+              </p>
+            </div>
+
+            <!-- Buttons -->
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+              <button onclick="closeReconciliationGuide()"
+                      style="padding: 11px 24px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; transition: background 0.2s;"
+                      onmouseover="this.style.background='#1e40af'"
+                      onmouseout="this.style.background='#2563eb'">
+                Understood 👍
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- JAVASCRIPT FUNCTIONS -->
+        <script>
+          function openReconciliationGuide() {
+            const overlay = document.getElementById('reconciliationGuideOverlay');
+            if (overlay) {
+              overlay.style.display = 'flex';
+              document.body.style.overflow = 'hidden';
+            }
+          }
+
+          function closeReconciliationGuide() {
+            const overlay = document.getElementById('reconciliationGuideOverlay');
+            if (overlay) {
+              overlay.style.display = 'none';
+              document.body.style.overflow = 'auto';
+            }
+          }
+
+          // Close guide when clicking outside modal
+          document.addEventListener('click', function(event) {
+            const overlay = document.getElementById('reconciliationGuideOverlay');
+            if (overlay && overlay.style.display === 'flex') {
+              const modal = overlay.querySelector('div[style*="border-radius: 12px"]');
+              if (modal && !modal.contains(event.target) && event.target === overlay) {
+                closeReconciliationGuide();
+              }
+            }
+          });
+
+          // Close on Escape key
+          document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+              closeReconciliationGuide();
+            }
+          });
+        </script>
 
         <!-- JavaScript for Copy Functionality -->
         <script>
