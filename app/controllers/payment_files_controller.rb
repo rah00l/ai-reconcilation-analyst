@@ -9,21 +9,25 @@ class PaymentFilesController < ApplicationController
   # Screen 2: Display (Merchant Breakdown)
   def display
     @transactions = @payment_file.transactions.where(screen_type: 'display')
+    @page_title = 'Display in Aggregation'
   end
 
   # Screen 3: Missing Transactions
   def missing
     @transactions = @payment_file.transactions.where(error_flag: true)
+    @page_title = 'Missing Transactions'
   end
 
   # Screen 4: Tenancy Settlement
   def tenancy
     @transactions = @payment_file.transactions.where(screen_type: 'tenancy')
+    @page_title = 'Tenancy Settlement'
   end
 
   # Screen 5: Summary
   def summary
     @transactions = @payment_file.transactions.where(screen_type: 'summary')
+    @page_title = 'Reconciliation Summary'
   end
 
   private

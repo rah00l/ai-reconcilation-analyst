@@ -1,0 +1,20 @@
+<!-- STATUS BADGE PARTIAL -->
+<% 
+  status_classes = {
+    'new' => 'bg-blue-100 text-blue-800',
+    'ready' => 'bg-green-100 text-green-800',
+    'processing' => 'bg-purple-100 text-purple-800',
+    'parsed' => 'bg-amber-100 text-amber-800',
+    'reconciling' => 'bg-indigo-100 text-indigo-800',
+    'reconciled' => 'bg-green-100 text-green-800',
+    'full reconciled' => 'bg-green-100 text-green-800',
+    'partial reconciled' => 'bg-orange-100 text-orange-800'
+  }
+  
+  status_key = status.to_s.downcase
+  css_class = status_classes[status_key] || 'bg-gray-100 text-gray-800'
+%>
+
+<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold <%= css_class %> mt-1 whitespace-nowrap">
+  <%= status.to_s.titleize %>
+</span>

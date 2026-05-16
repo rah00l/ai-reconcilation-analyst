@@ -1,31 +1,7 @@
 <div class="min-h-screen bg-gray-100">
   <div class="container mx-auto px-4 py-8">
-    <!-- Header -->
-    <div class="mb-8">
-      <div class="flex items-center justify-between mb-4">
-        <%= link_to '← Back to Files', payment_files_path, class: 'text-blue-500 hover:text-blue-700 font-medium' %>
-        <h1 class="text-3xl font-bold text-gray-900"><%= @payment_file.filename %></h1>
-        <div class="w-24"></div>
-      </div>
-      <div class="grid grid-cols-4 gap-4 text-sm">
-        <div>
-          <p class="text-gray-600">Region</p>
-          <p class="font-semibold text-gray-900"><%= @payment_file.region_display %></p>
-        </div>
-        <div>
-          <p class="text-gray-600">Network</p>
-          <p class="font-semibold text-gray-900"><%= @payment_file.affiliate_network %></p>
-        </div>
-        <div>
-          <p class="text-gray-600">Status</p>
-          <p class="font-semibold text-gray-900"><%= @payment_file.status_display %></p>
-        </div>
-        <div>
-          <p class="text-gray-600">Deposit Amount</p>
-          <p class="font-semibold text-gray-900"><%= number_to_currency(@payment_file.deposit_amount) %></p>
-        </div>
-      </div>
-    </div>
+    <!-- PROFESSIONAL HORIZONTAL HEADER -->
+    <%= render 'shared/header' %>
 
     <!-- Transaction Summary Table -->
     <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">

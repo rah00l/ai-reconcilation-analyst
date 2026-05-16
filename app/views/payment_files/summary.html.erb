@@ -1,18 +1,7 @@
 <div class="min-h-screen bg-gray-50">
   <div class="container mx-auto px-4 py-8">
-    
-    <!-- Header -->
-    <div class="mb-8">
-      <div class="flex items-center justify-between mb-4">
-        <%= link_to '← Back to Files', payment_files_path, class: 'text-blue-500 hover:text-blue-700 font-medium' %>
-        <h1 class="text-3xl font-bold text-gray-900">Reconciliation Summary</h1>
-        <div class="w-24"></div>
-      </div>
-      
-      <p class="text-gray-700 font-semibold mb-4">
-        <%= "#{@payment_file.filename} - #{@payment_file.deposit_date.strftime('%Y-%m-%d %H:%M:%S')} UTC" %>
-      </p>
-    </div>
+    <!-- PROFESSIONAL HORIZONTAL HEADER -->
+    <%= render 'shared/header' %>
 
     <!-- Reconciled Data Summary Table -->
     <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">

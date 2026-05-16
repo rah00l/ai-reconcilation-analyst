@@ -5,7 +5,10 @@
       <h3 class="font-bold text-lg">AI Analyst Assistant</h3>
       <p class="text-xs text-blue-100">Ask about reconciliation</p>
     </div>
-    <button id="chat-close" class="text-white hover:text-blue-200 text-xl">✕</button>
+    <div class="flex gap-2">
+      <button id="chat-minimize" class="text-white hover:text-blue-200 text-xl">−</button>
+      <button id="chat-close" class="text-white hover:text-blue-200 text-xl">✕</button>
+    </div>
   </div>
 
   <!-- Messages Container -->
@@ -47,13 +50,57 @@
   </div>
 </div>
 
+<!-- Minimized Widget -->
+<div id="chat-widget-minimized" class="hidden fixed bottom-4 right-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg shadow-2xl p-3 z-50 cursor-pointer hover:shadow-xl transition w-24 text-center">
+  <div onclick="expandChat()">
+    <p class="text-xl">💬</p>
+    <p class="text-xs font-semibold whitespace-nowrap">AI Asst</p>
+  </div>
+  <button id="chat-minimize-close" class="absolute top-1 right-1 text-white hover:text-blue-100 text-sm" onclick="event.stopPropagation(); closeChat()">✕</button>
+</div>
+
 <script>
+  // ============================================
+  // GLOBAL FUNCTIONS (Available everywhere)
+  // ============================================
+
+  // Minimize chat
+  function minimizeChat() {
+    const chatWidget = document.getElementById('chat-widget');
+    const chatMinimized = document.getElementById('chat-widget-minimized');
+    chatWidget.style.display = 'none';
+    chatMinimized.classList.remove('hidden');
+  }
+
+  // Expand chat
+  function expandChat() {
+    const chatWidget = document.getElementById('chat-widget');
+    const chatMinimized = document.getElementById('chat-widget-minimized');
+    chatMinimized.classList.add('hidden');
+    chatWidget.style.display = 'flex';
+    const input = document.getElementById('chat-input');
+    if (input) input.focus();
+  }
+
+  // Close chat completely
+  function closeChat() {
+    const chatWidget = document.getElementById('chat-widget');
+    const chatMinimized = document.getElementById('chat-widget-minimized');
+    chatWidget.style.display = 'none';
+    chatMinimized.classList.add('hidden');
+  }
+
+  // ============================================
+  // INITIALIZATION (Runs when page loads)
+  // ============================================
+
   document.addEventListener('DOMContentLoaded', function() {
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
     const chatMessages = document.getElementById('chat-messages');
     const chatLoading = document.getElementById('chat-loading');
     const chatClose = document.getElementById('chat-close');
+    const chatMinimizeBtn = document.getElementById('chat-minimize');
 
     // Session ID for multi-turn conversations
     let currentSessionId = null;
@@ -233,9 +280,8 @@
       }
     });
 
-    // Close chat widget
-    chatClose.addEventListener('click', function() {
-      document.getElementById('chat-widget').style.display = 'none';
-    });
+    // BUTTON EVENT LISTENERS
+    chatMinimizeBtn.addEventListener('click', minimizeChat);
+    chatClose.addEventListener('click', closeChat);
   });
 </script>

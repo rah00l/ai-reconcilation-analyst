@@ -1,46 +1,7 @@
 <div class="min-h-screen bg-gray-50">
   <div class="container mx-auto px-4 py-8">
-    
-    <!-- Header -->
-    <div class="mb-8">
-      <div class="flex items-center justify-between mb-4">
-        <%= link_to '← Back to Files', payment_files_path, class: 'text-blue-500 hover:text-blue-700 font-medium' %>
-        <h1 class="text-3xl font-bold text-gray-900">Tenancy Settlement</h1>
-        <div class="w-24"></div>
-      </div>
-      
-      <div class="grid grid-cols-4 gap-4 text-sm mb-4">
-        <div>
-          <p class="text-gray-600">File</p>
-          <p class="font-semibold text-gray-900"><%= @payment_file.filename %></p>
-        </div>
-        <div>
-          <p class="text-gray-600">Network</p>
-          <p class="font-semibold text-gray-900"><%= @payment_file.affiliate_network %></p>
-        </div>
-        <div>
-          <p class="text-gray-600">Settlement Date</p>
-          <p class="font-semibold text-gray-900"><%= Date.today.strftime('%d-%b-%Y') %></p>
-        </div>
-        <div>
-          <p class="text-gray-600">Status</p>
-          <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">PENDING</span>
-        </div>
-      </div>
-      
-      <!-- Top Right Summary (NEW) -->
-      <div class="text-right text-sm mb-4">
-        <p class="text-gray-700">
-          <span class="font-bold">Unmatched Remaining:</span> (Tenancy, BMG, Bonus, VAT): £1,499.97
-        </p>
-        <p class="text-gray-700">
-          <span class="font-bold">Unmatched Error:</span> £106.07
-        </p>
-        <p class="text-gray-900 font-bold">
-          <span class="font-bold">Total:</span> £1,606.04
-        </p>
-      </div>
-    </div>
+    <!-- PROFESSIONAL HORIZONTAL HEADER -->
+    <%= render 'shared/header' %>
 
     <!-- Merchant Transaction Table (NEW) -->
     <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">

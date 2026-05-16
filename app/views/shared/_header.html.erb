@@ -1,0 +1,60 @@
+<!-- REUSABLE HEADER PARTIAL WITH SCREEN NAME -->
+<div class="bg-white border-b border-gray-200 px-6 py-4 mb-8">
+  
+  <!-- Main Header Row -->
+  <div class="flex items-center justify-between gap-8">
+    
+    <!-- Left: Back Link + Screen Name -->
+    <div class="flex items-center gap-8 flex-shrink-0">
+      <!-- Back Link -->
+      <%= link_to '← Back', payment_files_path, 
+          class: 'text-blue-600 hover:text-blue-700 font-medium text-sm transition whitespace-nowrap' %>
+      
+      <!-- Divider -->
+      <div class="w-px h-6 bg-gray-300"></div>
+      
+      <!-- Screen Name -->
+      <div class="text-lg font-bold text-gray-900 uppercase tracking-wide whitespace-nowrap">
+        <%= @page_title || action_name.titleize %>
+      </div>
+    </div>
+
+    <!-- Center: Filename (Flexible) -->
+    <div class="flex-1 min-w-0 px-4">
+      <h1 class="text-sm font-bold text-gray-900 truncate">
+        <%= @payment_file.filename %>
+      </h1>
+    </div>
+
+    <!-- Right: Info Items (Fixed Width) -->
+    <div class="flex items-center gap-8 flex-shrink-0">
+      
+      <!-- Region -->
+      <div class="text-right">
+        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Region</p>
+        <p class="text-sm font-bold text-gray-900"><%= @payment_file.region || 'N/A' %></p>
+      </div>
+
+      <!-- Network -->
+      <div class="text-right">
+        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Network</p>
+        <p class="text-sm font-bold text-gray-900"><%= truncate(@payment_file.affiliate_network, length: 20) %></p>
+      </div>
+
+      <!-- Status -->
+      <div class="text-right">
+        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Status</p>
+        <%= render 'shared/status_badge', status: @payment_file.status %>
+      </div>
+
+      <!-- Amount -->
+      <div class="text-right">
+        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Amount</p>
+        <p class="text-sm font-bold text-purple-600"><%= number_to_currency(@transactions.sum(&:amount)) %></p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
