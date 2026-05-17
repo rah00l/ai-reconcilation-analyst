@@ -1,4 +1,7 @@
-<div id="chat-widget" class="fixed bottom-4 right-4 w-96 h-[500px] bg-white rounded-lg shadow-2xl flex flex-col z-50 border border-gray-200">
+<div id="chat-widget" class="fixed bottom-4 right-4 w-96 h-[500px] bg-white rounded-lg shadow-2xl flex flex-col z-50 border border-gray-200" style="
+    height: 602px;
+    width: 452px;
+">
   <!-- Header -->
   <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-t-lg flex justify-between items-center">
     <div>
@@ -6,17 +9,19 @@
       <p class="text-xs text-blue-100">Ask about reconciliation</p>
     </div>
     <div class="flex gap-2">
-      <button id="chat-minimize" class="text-white hover:text-blue-200 text-xl">−</button>
-      <button id="chat-close" class="text-white hover:text-blue-200 text-xl">✕</button>
+      <button id="chat-minimize" class="text-white hover:text-blue-200 text-xl transition">−</button>
+      <button id="chat-close" class="text-white hover:text-blue-200 text-xl transition">✕</button>
     </div>
   </div>
 
   <!-- Messages Container -->
   <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
-    <!-- Initial message -->
-    <div class="bg-white p-3 rounded-lg shadow-sm">
-      <p class="text-sm text-gray-700 font-medium">Welcome! 👋</p>
-      <p class="text-xs text-gray-600 mt-1">I can help you understand reconciliation statuses, errors, settlements, and more. What would you like to know?</p>
+    <!-- Initial welcome message -->
+    <div class="flex justify-start">
+      <div class="bg-white text-gray-800 p-3 rounded-lg max-w-sm shadow-sm border border-gray-200">
+        <p class="text-sm font-medium text-gray-700">Welcome! 👋</p>
+        <p class="text-xs text-gray-600 mt-2">I can help you understand reconciliation statuses, errors, settlements, and more. What would you like to know?</p>
+      </div>
     </div>
   </div>
 
@@ -61,10 +66,36 @@
 
 <script>
   // ============================================
-  // GLOBAL FUNCTIONS (Available everywhere)
+  // GLOBAL UTILITY FUNCTIONS
   // ============================================
 
-  // Minimize chat
+  /**
+   * Escape HTML to prevent XSS attacks
+   * Converts special characters to HTML entities
+   */
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  /**
+   * Generate unique session ID for multi-turn conversations
+   * Format: session_timestamp_randomHex
+   */
+  function generateSessionId() {
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substr(2, 9);
+    return `session_${timestamp}_${random}`;
+  }
+
+  // ============================================
+  // UI CONTROL FUNCTIONS
+  // ============================================
+
+  /**
+   * Minimize chat widget to bottom bar
+   */
   function minimizeChat() {
     const chatWidget = document.getElementById('chat-widget');
     const chatMinimized = document.getElementById('chat-widget-minimized');
@@ -72,17 +103,22 @@
     chatMinimized.classList.remove('hidden');
   }
 
-  // Expand chat
+  /**
+   * Expand minimized chat widget
+   */
   function expandChat() {
     const chatWidget = document.getElementById('chat-widget');
     const chatMinimized = document.getElementById('chat-widget-minimized');
     chatMinimized.classList.add('hidden');
     chatWidget.style.display = 'flex';
+    // Focus input for better UX
     const input = document.getElementById('chat-input');
     if (input) input.focus();
   }
 
-  // Close chat completely
+  /**
+   * Close chat widget completely
+   */
   function closeChat() {
     const chatWidget = document.getElementById('chat-widget');
     const chatMinimized = document.getElementById('chat-widget-minimized');
@@ -91,80 +127,127 @@
   }
 
   // ============================================
-  // INITIALIZATION (Runs when page loads)
+  // INITIALIZATION
   // ============================================
 
   document.addEventListener('DOMContentLoaded', function() {
+    // ========================================
+    // DOM ELEMENTS
+    // ========================================
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
     const chatMessages = document.getElementById('chat-messages');
     const chatLoading = document.getElementById('chat-loading');
-    const chatClose = document.getElementById('chat-close');
     const chatMinimizeBtn = document.getElementById('chat-minimize');
+    const chatCloseBtn = document.getElementById('chat-close');
 
-    // Session ID for multi-turn conversations
+    // ========================================
+    // STATE
+    // ========================================
     let currentSessionId = null;
 
-    // Extract CSRF token from meta tag (REQUIRED FOR RAILS SECURITY)
+    // ========================================
+    // HELPER FUNCTIONS
+    // ========================================
+
+    /**
+     * Get CSRF token from meta tag
+     * Required for Rails security (CSRF protection)
+     * @returns {string} CSRF token or empty string
+     */
     function getCsrfToken() {
       const token = document.querySelector('meta[name="csrf-token"]')?.content;
       if (!token) {
-        console.warn('CSRF token not found in page - Rails CSRF protection may fail');
+        console.warn('CSRF token not found - Rails CSRF protection may not work');
       }
-      return token;
+      return token || '';
     }
 
-    // Extract file_id from current page (optional)
+    /**
+     * Extract file_id from current page URL
+     * Supports multiple URL formats:
+     * - /payment_files/123
+     * - /payment_files/123/display
+     * - /payment_files/123/show
+     * @returns {string|null} File ID or null if not found
+     */
     function getFileId() {
-      // Try multiple ways to get file_id
+      // Try URL search params first
       const urlParams = new URLSearchParams(window.location.search);
       const fileIdFromUrl = urlParams.get('file_id');
       if (fileIdFromUrl) return fileIdFromUrl;
 
+      // Try data attribute
       const fileIdFromAttr = document.querySelector('[data-file-id]')?.dataset.fileId;
       if (fileIdFromAttr) return fileIdFromAttr;
 
-      // Extract from current URL path (e.g., /payment_files/11/display)
+      // Try extracting from pathname
       const pathMatch = window.location.pathname.match(/\/payment_files\/(\d+)/);
       return pathMatch ? pathMatch[1] : null;
     }
 
-    // Add message to chat
-    function addMessage(text, sender) {
+    /**
+     * Add message to chat
+     * @param {string} text - Message text or HTML
+     * @param {string} sender - 'user' or 'assistant'
+     * @param {boolean} isHtml - If true, treat text as HTML; if false, escape it
+     */
+    function addMessage(text, sender, isHtml = false) {
+      if (!text) return;
+
       const messageEl = document.createElement('div');
-      messageEl.className = sender === 'user'
-        ? 'flex justify-end'
-        : 'flex justify-start';
+      messageEl.className = sender === 'user' ? 'flex justify-end' : 'flex justify-start';
 
       const bubbleEl = document.createElement('div');
-      bubbleEl.className = sender === 'user'
-        ? 'bg-blue-600 text-white p-3 rounded-lg max-w-xs shadow-sm'
-        : 'bg-white text-gray-800 p-3 rounded-lg max-w-xs shadow-sm border border-gray-200';
 
-      bubbleEl.innerHTML = `<p class="text-sm">${escapeHtml(text)}</p>`;
+      if (sender === 'user') {
+        // User message: blue background, white text
+        bubbleEl.className = 'bg-blue-600 text-white p-3 rounded-lg max-w-sm shadow-sm';
+      } else {
+        // Assistant message: white background, gray text
+        bubbleEl.className = 'bg-white text-gray-800 p-3 rounded-lg max-w-sm shadow-sm border border-gray-200';
+      }
+
+      // Handle HTML vs plain text
+      if (isHtml) {
+        // If isHtml is true, use innerHTML (for formatted responses)
+        bubbleEl.innerHTML = text;
+      } else {
+        // If isHtml is false, escape and use textContent (for plain text)
+        bubbleEl.innerHTML = `<p class="text-sm">${escapeHtml(text)}</p>`;
+      }
+
       messageEl.appendChild(bubbleEl);
       chatMessages.appendChild(messageEl);
+
+      // Auto-scroll to bottom
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // Add follow-up buttons
+    /**
+     * Add follow-up suggestion buttons
+     * These are clickable buttons that populate the input and send
+     * @param {array} followUps - Array of suggestion strings
+     */
     function addFollowUpButtons(followUps) {
       if (!followUps || followUps.length === 0) return;
 
       const followUpEl = document.createElement('div');
       followUpEl.className = 'text-xs text-gray-500 px-3 py-2 space-y-1';
-      followUpEl.innerHTML = '<p class="font-medium mb-2 text-gray-600">Try asking:</p>';
+      followUpEl.innerHTML = '<p class="font-medium mb-2 text-gray-600">💡 Try asking:</p>';
 
       followUps.forEach(followUp => {
         const btn = document.createElement('button');
         btn.className = 'block w-full text-left text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-2 py-1 rounded text-xs cursor-pointer transition';
         btn.textContent = followUp;
         btn.type = 'button';
+
         btn.onclick = (e) => {
           e.preventDefault();
           chatInput.value = followUp;
           chatForm.dispatchEvent(new Event('submit'));
         };
+
         followUpEl.appendChild(btn);
       });
 
@@ -172,24 +255,14 @@
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // Escape HTML to prevent XSS
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
+    // ========================================
+    // FORM SUBMISSION HANDLER
+    // ========================================
 
-    // Generate unique session ID
-    function generateSessionId() {
-      const timestamp = Date.now();
-      const random = Math.random().toString(36).substr(2, 9);
-      return `session_${timestamp}_${random}`;
-    }
-
-    // Handle form submission
     chatForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      // Get question from input
       const question = chatInput.value.trim();
       if (!question) return;
 
@@ -198,16 +271,22 @@
         currentSessionId = generateSessionId();
       }
 
-      // Get optional file_id (can be null for stateless questions)
+      // Get optional file_id
       const fileId = getFileId();
 
       // Add user message to chat
-      addMessage(question, 'user');
+      addMessage(question, 'user', false);
       chatInput.value = '';
+      chatInput.focus();
+
+      // Show loading indicator
       chatLoading.classList.remove('hidden');
 
       try {
-        // Build request payload
+        // ====================================
+        // BUILD REQUEST PAYLOAD
+        // ====================================
+
         const payload = {
           question: question,
           session_id: currentSessionId
@@ -218,70 +297,123 @@
           payload.file_id = fileId;
         }
 
-        // Get CSRF token (CRITICAL FOR RAILS SECURITY)
+        // ====================================
+        // FETCH FROM CONTROLLER
+        // ====================================
+
         const csrfToken = getCsrfToken();
 
-        // Call Rails endpoint WITH CSRF token in headers
         const response = await fetch('/chat/analyze', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken  // ← REQUIRED: Rails CSRF protection
+            'X-CSRF-Token': csrfToken
           },
           body: JSON.stringify(payload)
         });
 
+        // Hide loading indicator
         chatLoading.classList.add('hidden');
 
-        // Handle HTTP errors
+        // ====================================
+        // HANDLE HTTP ERRORS
+        // ====================================
+
         if (!response.ok) {
-          console.error('HTTP error:', response.status);
-          addMessage('Server error. Please try again.', 'assistant');
+          console.error(`HTTP ${response.status}:`, response.statusText);
+          addMessage('Server error. Please try again.', 'assistant', false);
           return;
         }
 
+        // ====================================
+        // PARSE RESPONSE
+        // ====================================
+
         const data = await response.json();
-        const status = data?.status || 'unknown';
 
-        // Handle different engine response statuses
-        if (status === 'NOT_DEFINED') {
-          // Engine knows this question is outside its knowledge gates
-          addMessage(
-            data.explanation || 'I cannot answer that question based on my knowledge.',
-            'assistant'
-          );
-        } else if (data.error || status === 'error') {
-          // Error occurred during processing
-          addMessage(
-            data.explanation || 'An error occurred while processing your question.',
-            'assistant'
-          );
-        } else if (data.explanation) {
-          // Success - display explanation
-          addMessage(data.explanation, 'assistant');
-
-          // Show follow-up suggestions if available
-          if (data.follow_ups && data.follow_ups.length > 0) {
-            addFollowUpButtons(data.follow_ups);
-          }
-        } else {
-          // Unexpected response format
-          addMessage('I received an unexpected response. Please try again.', 'assistant');
+        if (!data) {
+          addMessage('No response received. Please try again.', 'assistant', false);
+          return;
         }
 
-        // Store session ID for future requests (ensure it's updated)
+        // ====================================
+        // DISPLAY FORMATTED RESPONSE
+        // ====================================
+
+        console.log('=== CHAT RESPONSE DEBUG ===');
+        console.log('Response status:', data.status);
+        console.log('Full response object:', data);
+        console.log('Has formatted_html:', !!data.formatted_html);
+        console.log('formatted_html length:', data.formatted_html ? data.formatted_html.length : 'N/A');
+        console.log('Has explanation:', !!data.explanation);
+        console.log('=== END DEBUG ===');
+
+        // Validate response structure
+        if (!data || typeof data !== 'object') {
+          console.error('Invalid response structure:', data);
+          addMessage('Invalid response from server.', 'assistant', false);
+          return;
+        }
+
+        // Key change: Use formatted_html from controller
+        let responseAdded = false;
+
+        if (data.formatted_html && data.formatted_html.trim()) {
+          // formatted_html is already beautiful HTML from helper
+          console.log('Adding formatted HTML response');
+          addMessage(data.formatted_html, 'assistant', true);
+          responseAdded = true;
+        } else if (data.explanation && data.explanation.trim()) {
+          // Fallback to explanation if no formatted HTML
+          console.log('Adding explanation fallback');
+          addMessage(data.explanation, 'assistant', false);
+          responseAdded = true;
+        } else {
+          // Last resort fallback
+          console.warn('No formatted_html or explanation found');
+          console.warn('Response keys:', Object.keys(data));
+          addMessage('No response content available.', 'assistant', false);
+          responseAdded = true;
+        }
+
+        if (!responseAdded) {
+          console.error('Failed to add response');
+        }
+
+        // ====================================
+        // SHOW FOLLOW-UP SUGGESTIONS
+        // ====================================
+
+        if (data.follow_ups && Array.isArray(data.follow_ups) && data.follow_ups.length > 0) {
+          addFollowUpButtons(data.follow_ups);
+        }
+
+        // ====================================
+        // UPDATE SESSION ID FOR FOLLOW-UPS
+        // ====================================
+
         if (data.session_id) {
           currentSessionId = data.session_id;
         }
 
       } catch (error) {
+        // Hide loading indicator
         chatLoading.classList.add('hidden');
-        addMessage(`Network error: ${error.message}`, 'assistant');
+
+        // Display error message
+        console.error('Chat error:', error);
+        addMessage(`Network error: ${error.message}`, 'assistant', false);
       }
     });
 
+    // ========================================
     // BUTTON EVENT LISTENERS
+    // ========================================
+
     chatMinimizeBtn.addEventListener('click', minimizeChat);
-    chatClose.addEventListener('click', closeChat);
+    chatCloseBtn.addEventListener('click', closeChat);
+
+    // Optional: Auto-focus input on load
+    chatInput.focus();
   });
 </script>
