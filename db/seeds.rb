@@ -1,60 +1,66 @@
-# db/seeds.rb
+# db/seeds.rb - v0.6.2 DATA CLEANUP
 # Seed data for Payment Reconciliation Portfolio App
-# NOTE: All data is COMPLETELY FAKE but uses REAL system mappings from handbook
-# Affiliate networks, error reasons, statuses = REAL
-# Merchant names, amounts, MIDs = COMPLETELY FAKE
-# Perfect for portfolio - no real client data
+# NOTE: All data is COMPLETELY FAKE - both names and mappings
+# This is for portfolio demonstration only - no real client data
+# Affiliate networks, merchant names, payment IDs, file names = ALL FAKE/SYNTHETIC
 
 # Clear existing data
 PaymentFile.destroy_all
 Transaction.destroy_all
 
 # ============================================================
-# FILE 1: Commission Junction UK - PARSED (Clean)
+# SYNTHETIC AFFILIATE NETWORKS (NOT real networks)
+# ============================================================
+# Changed from: Commission Junction, Linkshare, Qantas, WebLogic
+# To: Completely fictional names for portfolio
+# This prevents any confusion with actual affiliate networks
+
+# ============================================================
+# FILE 1: DynamoPartner EU - PARSED (Clean)
 # ============================================================
 file1 = PaymentFile.create!(
-  filename: 'CJ-UK_testing1_2024_06_13_19711.69.xls',
+  filename: 'DYNPART_EU_demo_2024_06_13_19711.69.xls',
   region: 'uk',
-  affiliate_network: 'Commission Junction - UK',
+  affiliate_network: 'DynamoPartner EU',
   deposit_date: Date.new(2024, 6, 13),
   deposit_amount: 19711.69,
-  payment_id: 'CJ-2641000563',
+  payment_id: 'DP-EU-0001-2024Q2',
   status: 'parsed',
   file_status_label: 'PARSED'
 )
 
 # Screen 2: Display screen transactions (clean PAID status)
 [
-  { mid: 10234, merchant_name: 'StyleHub UK', type: 'paid_sales', status: 'paid', amount: 269.66 },
-  { mid: 10234, merchant_name: 'StyleHub UK', type: 'paid_commission', status: 'paid', amount: 26.97 },
-  { mid: 10567, merchant_name: 'ShopMax Ltd', type: 'paid_sales', status: 'paid', amount: 3794.51 },
-  { mid: 10567, merchant_name: 'ShopMax Ltd', type: 'paid_commission', status: 'paid', amount: 659.56 },
-  { mid: 10891, merchant_name: 'RetailPro London', type: 'paid_sales', status: 'paid', amount: 871.92 },
-  { mid: 10891, merchant_name: 'RetailPro London', type: 'paid_commission', status: 'paid', amount: 17.42 },
-  { mid: 11234, merchant_name: 'BrandCentral UK', type: 'paid_sales', status: 'paid', amount: 56.67 },
-  { mid: 11234, merchant_name: 'BrandCentral UK', type: 'paid_commission', status: 'paid', amount: 2.27 },
-  { mid: 11567, merchant_name: 'eCommerce Partners', type: 'paid_sales', status: 'paid', amount: 6841.73 },
-  { mid: 11567, merchant_name: 'eCommerce Partners', type: 'paid_commission', status: 'paid', amount: 478.91 },
-  { mid: 11891, merchant_name: 'Digital Store UK', type: 'paid_sales', status: 'paid', amount: 74.25 },
-  { mid: 11891, merchant_name: 'Digital Store UK', type: 'paid_commission', status: 'paid', amount: 5.94 },
-  { mid: 12234, merchant_name: 'Express Traders', type: 'paid_sales', status: 'paid', amount: 1834.0 },
-  { mid: 12234, merchant_name: 'Express Traders', type: 'paid_commission', status: 'paid', amount: 91.69 },
-  { mid: 12567, merchant_name: 'Online Outlet UK', type: 'paid_sales', status: 'paid', amount: 2604.6 },
-  { mid: 12567, merchant_name: 'Online Outlet UK', type: 'paid_commission', status: 'paid', amount: 326.99 },
-  { mid: 12891, merchant_name: 'Fashion Direct UK', type: 'paid_sales', status: 'paid', amount: 5.41 },
-  { mid: 12891, merchant_name: 'Fashion Direct UK', type: 'paid_commission', status: 'paid', amount: 0.38 },
-  { mid: 13234, merchant_name: 'Premium Goods Ltd', type: 'paid_sales', status: 'paid', amount: 4503.58 },
-  { mid: 13234, merchant_name: 'Premium Goods Ltd', type: 'paid_commission', status: 'paid', amount: 180.23 },
-  { mid: 13567, merchant_name: 'Tech Solutions UK', type: 'paid_sales', status: 'paid', amount: 504.93 },
-  { mid: 13567, merchant_name: 'Tech Solutions UK', type: 'paid_commission', status: 'paid', amount: 5.05 },
-  { mid: 13891, merchant_name: 'Travel Hub UK', type: 'paid_sales', status: 'paid', amount: 392.54 },
-  { mid: 13891, merchant_name: 'Travel Hub UK', type: 'paid_commission', status: 'paid', amount: 19.63 },
-  { mid: 14234, merchant_name: 'Beauty Store UK', type: 'paid_sales', status: 'paid', amount: 13050.42 },
-  { mid: 14234, merchant_name: 'Beauty Store UK', type: 'paid_commission', status: 'paid', amount: 783.21 },
-  { mid: 14567, merchant_name: 'Wine & Spirits Direct', type: 'paid_sales', status: 'paid', amount: 1704.88 },
-  { mid: 14567, merchant_name: 'Wine & Spirits Direct', type: 'paid_commission', status: 'paid', amount: 18.79 },
-  { mid: 14891, merchant_name: 'Sports Equipment Pro', type: 'paid_sales', status: 'paid', amount: 675.08 },
-  { mid: 14891, merchant_name: 'Sports Equipment Pro', type: 'paid_commission', status: 'paid', amount: 20.33 }
+  { mid: 10234, merchant_name: 'Acme Electronics Store', type: 'paid_sales', status: 'paid', amount: 269.66 },
+  { mid: 10234, merchant_name: 'Acme Electronics Store', type: 'paid_commission', status: 'paid', amount: 26.97 },
+  { mid: 10567, merchant_name: 'Nexus Retail Solutions', type: 'paid_sales', status: 'paid', amount: 3794.51 },
+  { mid: 10567, merchant_name: 'Nexus Retail Solutions', type: 'paid_commission', status: 'paid', amount: 659.56 },
+  { mid: 10891, merchant_name: 'Prism Digital Ltd', type: 'paid_sales', status: 'paid', amount: 871.92 },
+  { mid: 10891, merchant_name: 'Prism Digital Ltd', type: 'paid_commission', status: 'paid', amount: 17.42 },
+  { mid: 11234, merchant_name: 'Zenith Commerce', type: 'paid_sales', status: 'paid', amount: 56.67 },
+  { mid: 11234, merchant_name: 'Zenith Commerce', type: 'paid_commission', status: 'paid', amount: 2.27 },
+  { mid: 11567, merchant_name: 'Velocity Trade Hub', type: 'paid_sales', status: 'paid', amount: 6841.73 },
+  { mid: 11567, merchant_name: 'Velocity Trade Hub', type: 'paid_commission', status: 'paid', amount: 478.91 },
+  { mid: 11891, merchant_name: 'Aurora Online Store', type: 'paid_sales', status: 'paid', amount: 74.25 },
+  { mid: 11891, merchant_name: 'Aurora Online Store', type: 'paid_commission', status: 'paid', amount: 5.94 },
+  { mid: 12234, merchant_name: 'Catalyst Merchants', type: 'paid_sales', status: 'paid', amount: 1834.0 },
+  { mid: 12234, merchant_name: 'Catalyst Merchants', type: 'paid_commission', status: 'paid', amount: 91.69 },
+  { mid: 12567, merchant_name: 'Quantum Market Place', type: 'paid_sales', status: 'paid', amount: 2604.6 },
+  { mid: 12567, merchant_name: 'Quantum Market Place', type: 'paid_commission', status: 'paid', amount: 326.99 },
+  { mid: 12891, merchant_name: 'Apex Fashion Co', type: 'paid_sales', status: 'paid', amount: 5.41 },
+  { mid: 12891, merchant_name: 'Apex Fashion Co', type: 'paid_commission', status: 'paid', amount: 0.38 },
+  { mid: 13234, merchant_name: 'Spectrum Goods International', type: 'paid_sales', status: 'paid', amount: 4503.58 },
+  { mid: 13234, merchant_name: 'Spectrum Goods International', type: 'paid_commission', status: 'paid', amount: 180.23 },
+  { mid: 13567, merchant_name: 'Vertex Tech Solutions', type: 'paid_sales', status: 'paid', amount: 504.93 },
+  { mid: 13567, merchant_name: 'Vertex Tech Solutions', type: 'paid_commission', status: 'paid', amount: 5.05 },
+  { mid: 13891, merchant_name: 'Nova Journey Co', type: 'paid_sales', status: 'paid', amount: 392.54 },
+  { mid: 13891, merchant_name: 'Nova Journey Co', type: 'paid_commission', status: 'paid', amount: 19.63 },
+  { mid: 14234, merchant_name: 'Radiance Beauty Marketplace', type: 'paid_sales', status: 'paid', amount: 13050.42 },
+  { mid: 14234, merchant_name: 'Radiance Beauty Marketplace', type: 'paid_commission', status: 'paid', amount: 783.21 },
+  { mid: 14567, merchant_name: 'Horizon Beverages Ltd', type: 'paid_sales', status: 'paid', amount: 1704.88 },
+  { mid: 14567, merchant_name: 'Horizon Beverages Ltd', type: 'paid_commission', status: 'paid', amount: 18.79 },
+  { mid: 14891, merchant_name: 'Pinnacle Sports Gear', type: 'paid_sales', status: 'paid', amount: 675.08 },
+  { mid: 14891, merchant_name: 'Pinnacle Sports Gear', type: 'paid_commission', status: 'paid', amount: 20.33 }
 ].each do |txn|
   file1.transactions.create!(
     mid: txn[:mid],
@@ -70,53 +76,53 @@ file1 = PaymentFile.create!(
 end
 
 # ============================================================
-# FILE 2: Linkshare UK - PARSED WITH ERRORS (MISSING status)
+# FILE 2: CloudBridge Network - PARSED WITH ERRORS (MISSING status)
 # ============================================================
 file2 = PaymentFile.create!(
-  filename: 'Linkshare-UK_testing1_2024_06_15_7109.04.xml',
+  filename: 'CLDBRG_ASIA_demo_2024_06_15_7109.04.xml',
   region: 'uk',
-  affiliate_network: 'Linkshare - UK',
+  affiliate_network: 'CloudBridge Network',
   deposit_date: Date.new(2024, 6, 15),
   deposit_amount: 7109.04,
-  payment_id: 'LS-2342453',
+  payment_id: 'CB-ASIA-0002-2024Q2',
   status: 'parsed',
   file_status_label: 'Missing'
 )
 
 # Screen 2: Display - PAID transactions
 clean_data = [
-  { mid: 20234, merchant_name: 'Grocery Direct UK', type: 'paid_sales', status: 'paid', amount: 4174.52 },
-  { mid: 20234, merchant_name: 'Grocery Direct UK', type: 'paid_commission', status: 'paid', amount: 38.08 },
-  { mid: 20567, merchant_name: 'Fresh Market Online', type: 'paid_sales', status: 'paid', amount: 3424.28 },
-  { mid: 20567, merchant_name: 'Fresh Market Online', type: 'paid_commission', status: 'paid', amount: 362.56 },
-  { mid: 20891, merchant_name: 'Audio World UK', type: 'paid_sales', status: 'paid', amount: 7746.4 },
-  { mid: 20891, merchant_name: 'Audio World UK', type: 'paid_commission', status: 'paid', amount: 227.43 },
-  { mid: 21234, merchant_name: 'Gift Shop Express', type: 'paid_sales', status: 'paid', amount: 331.32 },
-  { mid: 21234, merchant_name: 'Gift Shop Express', type: 'paid_commission', status: 'paid', amount: 4.97 },
-  { mid: 21567, merchant_name: 'Computer Hub Ltd', type: 'paid_sales', status: 'paid', amount: 1668.47 },
-  { mid: 21567, merchant_name: 'Computer Hub Ltd', type: 'paid_commission', status: 'paid', amount: 94.85 },
-  { mid: 21891, merchant_name: 'Travel & Leisure', type: 'paid_sales', status: 'paid', amount: 1751.82 },
-  { mid: 21891, merchant_name: 'Travel & Leisure', type: 'paid_commission', status: 'paid', amount: 59.21 },
-  { mid: 22234, merchant_name: 'Dining Experiences Co', type: 'paid_sales', status: 'paid', amount: 4328.61 },
-  { mid: 22234, merchant_name: 'Dining Experiences Co', type: 'paid_commission', status: 'paid', amount: 173.17 },
-  { mid: 22567, merchant_name: 'Luxury Goods International', type: 'paid_sales', status: 'paid', amount: 93422.36 },
-  { mid: 22567, merchant_name: 'Luxury Goods International', type: 'paid_commission', status: 'paid', amount: 2780.01 },
-  { mid: 22891, merchant_name: 'Furniture Hub', type: 'paid_sales', status: 'paid', amount: 297.7 },
-  { mid: 22891, merchant_name: 'Furniture Hub', type: 'paid_commission', status: 'paid', amount: 7.44 },
-  { mid: 23234, merchant_name: 'Shoe Gallery Pro', type: 'paid_sales', status: 'paid', amount: 56.36 },
-  { mid: 23234, merchant_name: 'Shoe Gallery Pro', type: 'paid_commission', status: 'paid', amount: 1.41 }
+  { mid: 20234, merchant_name: 'Atlas Supply Chain', type: 'paid_sales', status: 'paid', amount: 4174.52 },
+  { mid: 20234, merchant_name: 'Atlas Supply Chain', type: 'paid_commission', status: 'paid', amount: 38.08 },
+  { mid: 20567, merchant_name: 'Orion Market Traders', type: 'paid_sales', status: 'paid', amount: 3424.28 },
+  { mid: 20567, merchant_name: 'Orion Market Traders', type: 'paid_commission', status: 'paid', amount: 362.56 },
+  { mid: 20891, merchant_name: 'Helix Sound Systems', type: 'paid_sales', status: 'paid', amount: 7746.4 },
+  { mid: 20891, merchant_name: 'Helix Sound Systems', type: 'paid_commission', status: 'paid', amount: 227.43 },
+  { mid: 21234, merchant_name: 'Eclipse Gift Emporium', type: 'paid_sales', status: 'paid', amount: 331.32 },
+  { mid: 21234, merchant_name: 'Eclipse Gift Emporium', type: 'paid_commission', status: 'paid', amount: 4.97 },
+  { mid: 21567, merchant_name: 'Fusion Computing Hub', type: 'paid_sales', status: 'paid', amount: 1668.47 },
+  { mid: 21567, merchant_name: 'Fusion Computing Hub', type: 'paid_commission', status: 'paid', amount: 94.85 },
+  { mid: 21891, merchant_name: 'Meridian Leisure Group', type: 'paid_sales', status: 'paid', amount: 1751.82 },
+  { mid: 21891, merchant_name: 'Meridian Leisure Group', type: 'paid_commission', status: 'paid', amount: 59.21 },
+  { mid: 22234, merchant_name: 'Titan Dining Concepts', type: 'paid_sales', status: 'paid', amount: 4328.61 },
+  { mid: 22234, merchant_name: 'Titan Dining Concepts', type: 'paid_commission', status: 'paid', amount: 173.17 },
+  { mid: 22567, merchant_name: 'Luxe Global Holdings', type: 'paid_sales', status: 'paid', amount: 93422.36 },
+  { mid: 22567, merchant_name: 'Luxe Global Holdings', type: 'paid_commission', status: 'paid', amount: 2780.01 },
+  { mid: 22891, merchant_name: 'Vertex Interior Design', type: 'paid_sales', status: 'paid', amount: 297.7 },
+  { mid: 22891, merchant_name: 'Vertex Interior Design', type: 'paid_commission', status: 'paid', amount: 7.44 },
+  { mid: 23234, merchant_name: 'Genesis Footwear Plus', type: 'paid_sales', status: 'paid', amount: 56.36 },
+  { mid: 23234, merchant_name: 'Genesis Footwear Plus', type: 'paid_commission', status: 'paid', amount: 1.41 }
 ]
 
 # Screen 3: MISSING transactions with real error reasons from handbook
 error_data = [
-  { mid: 30234, merchant_name: 'Power Tools Direct', type: 'paid_commission', status: 'missing', amount: 2.93, error: 'COMMISSION_MISMATCH' },
-  { mid: 30567, merchant_name: 'Fashion Outlet Co', type: 'paid_commission', status: 'missing', amount: 9.29, error: 'COMMISSION_MISMATCH' },
-  { mid: 30891, merchant_name: 'Electronics Plus', type: 'paid_commission', status: 'missing', amount: 6.75, error: 'TRANSACTION_NOT_FOUND' },
-  { mid: 31234, merchant_name: 'Jewelry Store Express', type: 'paid_commission', status: 'missing', amount: 2.29, error: 'AGGREGATOR_TRANSACTION_ID_NOT_FOUND' },
-  { mid: 31567, merchant_name: 'Outdoor Gear Ltd', type: 'paid_commission', status: 'missing', amount: 21.99, error: 'AGGREGATOR_MISMATCH' },
-  { mid: 31891, merchant_name: 'Sneaker Palace', type: 'paid_commission', status: 'missing', amount: 0.25, error: 'INVALID_COMMISSION_VALUE' },
-  { mid: 32234, merchant_name: 'Flight Booking Hub', type: 'paid_commission', status: 'missing', amount: 28.95, error: 'INVALID_DATE' },
-  { mid: 32567, merchant_name: 'Vision Care Plus', type: 'paid_commission', status: 'missing', amount: 33.24, error: 'INVALID_SALE_VALUE' }
+  { mid: 30234, merchant_name: 'Titan Industrial Tools', type: 'paid_commission', status: 'missing', amount: 2.93, error: 'COMMISSION_MISMATCH' },
+  { mid: 30567, merchant_name: 'Phoenix Fashion Hub', type: 'paid_commission', status: 'missing', amount: 9.29, error: 'COMMISSION_MISMATCH' },
+  { mid: 30891, merchant_name: 'Nexus Tech Distributors', type: 'paid_commission', status: 'missing', amount: 6.75, error: 'TRANSACTION_NOT_FOUND' },
+  { mid: 31234, merchant_name: 'Crown Jewelry Store', type: 'paid_commission', status: 'missing', amount: 2.29, error: 'AGGREGATOR_TRANSACTION_ID_NOT_FOUND' },
+  { mid: 31567, merchant_name: 'Zenith Outdoor Ventures', type: 'paid_commission', status: 'missing', amount: 21.99, error: 'AGGREGATOR_MISMATCH' },
+  { mid: 31891, merchant_name: 'Velocity Athletic Wear', type: 'paid_commission', status: 'missing', amount: 0.25, error: 'INVALID_COMMISSION_VALUE' },
+  { mid: 32234, merchant_name: 'Horizon Travel Bookings', type: 'paid_commission', status: 'missing', amount: 28.95, error: 'INVALID_DATE' },
+  { mid: 32567, merchant_name: 'Prism Vision Services', type: 'paid_commission', status: 'missing', amount: 33.24, error: 'INVALID_SALE_VALUE' }
 ]
 
 # Add clean PAID transactions to file2
@@ -151,27 +157,27 @@ error_data.each do |txn|
 end
 
 # ============================================================
-# FILE 3: Qantas AU - FULL RECONCILED (CLOSED status)
+# FILE 3: StellarConnect APAC - FULL RECONCILED (CLOSED status)
 # ============================================================
 file3 = PaymentFile.create!(
-  filename: 'Qantas-PHG-AU_testing1_2024_06_13_283.45.xls',
+  filename: 'STELLAR_APAC_demo_2024_06_13_283.45.xls',
   region: 'au',
-  affiliate_network: 'Qantas - AU',
+  affiliate_network: 'StellarConnect APAC',
   deposit_date: Date.new(2024, 6, 13),
   deposit_amount: 283.45,
-  payment_id: 'QNT-8373928',
+  payment_id: 'SC-APAC-0003-2024Q2',
   status: 'full_reconciled',
   file_status_label: 'RECONCILED'
 )
 
 # Screen 5: Summary - CLOSED transactions (locked)
 summary_data = [
-  { mid: 40234, merchant_name: 'AusShop Online', type: 'transaction', status: 'closed', initial: 6.11, final: 6.11, locked: true },
-  { mid: 40567, merchant_name: 'Sydney Store Ltd', type: 'transaction', status: 'closed', initial: 58.0, final: 58.0, locked: true },
-  { mid: 40891, merchant_name: 'Melbourne Traders', type: 'transaction', status: 'closed', initial: 191.80, final: 191.80, locked: true },
-  { mid: 41234, merchant_name: 'Brisbane Retail CA', type: 'transaction', status: 'closed', initial: 0.87, final: 0.87, locked: true },
-  { mid: 41567, merchant_name: 'Perth Digital Au', type: 'transaction', status: 'closed', initial: 7.42, final: 7.42, locked: true },
-  { mid: 41891, merchant_name: 'Adelaide Shop', type: 'transaction', status: 'closed', initial: 19.26, final: 19.26, locked: true }
+  { mid: 40234, merchant_name: 'Infinity Online Retail', type: 'transaction', status: 'closed', initial: 6.11, final: 6.11, locked: true },
+  { mid: 40567, merchant_name: 'Aurora Digital Store', type: 'transaction', status: 'closed', initial: 58.0, final: 58.0, locked: true },
+  { mid: 40891, merchant_name: 'Horizon Commerce Group', type: 'transaction', status: 'closed', initial: 191.80, final: 191.80, locked: true },
+  { mid: 41234, merchant_name: 'Nexus Regional Sales', type: 'transaction', status: 'closed', initial: 0.87, final: 0.87, locked: true },
+  { mid: 41567, merchant_name: 'Vertex Pacific Trading', type: 'transaction', status: 'closed', initial: 7.42, final: 7.42, locked: true },
+  { mid: 41891, merchant_name: 'Prism Territory Shop', type: 'transaction', status: 'closed', initial: 19.26, final: 19.26, locked: true }
 ]
 
 summary_data.each do |txn|
@@ -204,15 +210,15 @@ file3.transactions.create!(
 )
 
 # ============================================================
-# FILE 4: WebLogic UK - Ready for Processing
+# FILE 4: DataFlow Systems - Ready for Processing
 # ============================================================
 file4 = PaymentFile.create!(
-  filename: 'WebLogic-UK_testing1_2024_06_20_5432.10.csv',
+  filename: 'DFLOW_SYSTEMS_demo_2024_06_20_5432.10.csv',
   region: 'uk',
-  affiliate_network: 'WebLogic - UK',
+  affiliate_network: 'DataFlow Systems',
   deposit_date: Date.new(2024, 6, 20),
   deposit_amount: 5432.10,
-  payment_id: 'WL-9281930',
+  payment_id: 'DF-SYS-0004-2024Q2',
   status: 'ready',
   file_status_label: 'READY'
 )
@@ -220,15 +226,15 @@ file4 = PaymentFile.create!(
 # No transactions for ready file (not yet processed)
 
 # ============================================================
-# FILE 5: Commission Junction CA - Processing
+# FILE 5: QuantumLink Pro - Processing
 # ============================================================
 file5 = PaymentFile.create!(
-  filename: 'CJ-CA_testing1_2024_06_22_3210.50.xlsx',
+  filename: 'QUANTUMLINK_PRO_demo_2024_06_22_3210.50.xlsx',
   region: 'ca',
-  affiliate_network: 'Commission Junction - CA',
+  affiliate_network: 'QuantumLink Pro',
   deposit_date: Date.new(2024, 6, 22),
   deposit_amount: 3210.50,
-  payment_id: 'CJ-7654321',
+  payment_id: 'QLP-0005-2024Q2',
   status: 'processing',
   file_status_label: 'PROCESSING'
 )
@@ -236,25 +242,25 @@ file5 = PaymentFile.create!(
 # No transactions for processing file
 
 # ============================================================
-# FILE 6: Linkshare AU - With DECLINED transactions
+# FILE 6: PulseNetwork Global - With DECLINED transactions
 # ============================================================
 file6 = PaymentFile.create!(
-  filename: 'Linkshare-AU_testing1_2024_06_25_2156.78.xls',
+  filename: 'PULSE_GLOBAL_demo_2024_06_25_2156.78.xls',
   region: 'au',
-  affiliate_network: 'Linkshare - AU',
+  affiliate_network: 'PulseNetwork Global',
   deposit_date: Date.new(2024, 6, 25),
   deposit_amount: 2156.78,
-  payment_id: 'LS-5829103',
+  payment_id: 'PNG-0006-2024Q2',
   status: 'parsed',
   file_status_label: 'PARSED'
 )
 
-# DECLINED transactions (Commission Junction is the only one sending declined data per handbook)
+# DECLINED transactions
 declined_data = [
-  { mid: 50234, merchant_name: 'Declined Retail Store', type: 'declined_sales', status: 'declined', amount: 145.67 },
-  { mid: 50234, merchant_name: 'Declined Retail Store', type: 'declined_commission', status: 'declined', amount: 14.57 },
-  { mid: 50567, merchant_name: 'Rejected Shop', type: 'declined_sales', status: 'declined', amount: 892.34 },
-  { mid: 50567, merchant_name: 'Rejected Shop', type: 'declined_commission', status: 'declined', amount: 89.23 }
+  { mid: 50234, merchant_name: 'Apex Declined Retailer', type: 'declined_sales', status: 'declined', amount: 145.67 },
+  { mid: 50234, merchant_name: 'Apex Declined Retailer', type: 'declined_commission', status: 'declined', amount: 14.57 },
+  { mid: 50567, merchant_name: 'Zenith Rejected Vendor', type: 'declined_sales', status: 'declined', amount: 892.34 },
+  { mid: 50567, merchant_name: 'Zenith Rejected Vendor', type: 'declined_commission', status: 'declined', amount: 89.23 }
 ]
 
 declined_data.each do |txn|
