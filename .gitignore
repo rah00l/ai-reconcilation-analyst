@@ -42,3 +42,5 @@
 .env
 /docs/internal/
 config/credentials.yml.enc
+RAILWAY_ENV_VARS.txt 
+git-summary.md
