@@ -11,6 +11,7 @@
 .env                    # ← Ignore actual values (secrets)
 .env.local
 .env.*.local
+.env.production
 
 # Ignore all logfiles and tempfiles.
 /log/*
