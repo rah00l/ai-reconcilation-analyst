@@ -77,15 +77,21 @@ docker run --rm -p 3000:3000 ai-reconciliation-analyst:latest
 ## Project Structure
 
 ```
-.
-├── app/                    # Rails views, controllers, models
-├── config/                 # Rails configuration
-├── db/                     # Database schema & seeds
-├── Gemfile                 # Ruby dependencies
-├── Dockerfile              # Container definition
-├── docker-compose.yml      # Multi-service orchestration
-├── .env.example            # Environment template
-└── README.md               # This file
+app/
+├── controllers/      # Rails controllers
+├── models/          # Data models
+├── views/           # HTML templates
+└── javascript/      # Stimulus JS
+config/
+├── database.yml     # PostgreSQL config
+├── puma.rb         # Server config (production-ready)
+└── environments/   # Dev/test/prod settings
+db/
+├── migrate/        # Migrations
+├── seeds.rb        # Sample data
+└── schema.rb       # Current schema
+Dockerfile          # Container image
+docker-compose.yml  # Services orchestration
 ```
 
 ## Dependencies
@@ -102,15 +108,31 @@ docker run --rm -p 3000:3000 ai-reconciliation-analyst:latest
   - Endpoint: `POST /analyze`
   - Returns: ExplanationContract JSON
 
-## Environment Variables
+  ## Features
 
-```bash
-# .env (copy from .env.example)
-ENGINE_URL=http://engine:4567
-RAILS_ENV=development
-RAILS_LOG_TO_STDOUT=true
-OPENAI_API_KEY=your-key-here  # For future LLM fallback
-```
+  - ✅ Real-time chat with Hotwire Turbo Streams
+  - ✅ PostgreSQL backend (production-ready)
+  - ✅ HTTP Basic Auth + environment-based config
+  - ✅ Independent AI reasoning engine (reusable)
+  - ✅ Docker containerized (dev ≈ prod)
+  - ✅ Health checks for monitoring
+  - ✅ Ready for Railway.app deployment
+
+  ## Environment Setup
+
+  ```bash
+  # Copy template
+  cp .env.example .env
+
+  # Required variables
+  RAILS_ENV=production
+  SECRET_KEY_BASE=<generated>
+  RAILS_MASTER_KEY=<generated>
+  HTTP_AUTH_USER=<username>
+  HTTP_AUTH_PASSWORD=<password>
+  ENGINE_URL=http://engine:4567
+  DATABASE_URL=postgresql://...  # Railway provides
+  ```
 
 ## Testing
 
@@ -155,6 +177,21 @@ docker compose -f docker-compose.yml up -d
 4. **Read-only** — UI doesn't mutate reconciliation state
 5. **Self-contained** — Engine is independent, can be swapped
 
+## Security
+
+- **No secrets in code** — All credentials via environment variables
+- **HTTP Basic Auth** — Built-in Rails authentication
+- **.gitignore** — Protects `.env`, `config/master.key`, `credentials.yml.enc`
+- **Connection pooling** — PostgreSQL pool=5 for concurrency
+- **HTTPS ready** — Enforced in production.rb
+
+## Performance
+
+- **Threads** — Configurable via RAILS_MAX_THREADS (default: 3)
+- **Database** — PostgreSQL with connection pool (default: 5)
+- **Caching** — Ready for Redis integration
+- **Scaling** — Horizontal (container replicas) + Vertical (thread scaling)
+
 ## Related
 
 - **Engine Repo:** [ai-analyst-engine](https://github.com/rah00l/ai-analyst-engine)
@@ -165,18 +202,6 @@ docker compose -f docker-compose.yml up -d
 ## License
 
 MIT
-
-## Status
-
-**v0.1.0-scaffold** — Foundation complete. Features in development.
-
-- [x] Rails 7.1 scaffold
-- [x] Hotwire + Tailwind
-- [ ] Payment reconciliation models (Task 2)
-- [ ] UI screens (Tasks 3-4)
-- [ ] Engine integration (Task 5)
-- [ ] Chat widget (Task 6)
-- [ ] Production deployment (Task 7)
 
 ## Support
 
