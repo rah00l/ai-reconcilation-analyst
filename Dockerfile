@@ -8,6 +8,8 @@ RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
       build-essential \
       libsqlite3-dev \
+      libpq-dev \
+      postgresql-client \
       curl \
       ca-certificates && \
     apt-get clean && \
@@ -23,13 +25,7 @@ RUN bundle install --jobs 4 --retry 3
 # Copy application code
 COPY . .
 
-# ============================================
-# IMPORTANT: Run Rails generators in Docker
-# ============================================
-# This ensures generated files are in image
-# and available for development
-
-# Only run if config doesn't exist (prevents re-running)
+# Run Rails generators in Docker
 RUN if [ ! -f config/tailwind.config.js ]; then \
       bundle exec rails tailwindcss:install; \
     fi
@@ -40,5 +36,5 @@ EXPOSE 3000
 # Use ENTRYPOINT for consistency
 ENTRYPOINT ["bundle", "exec"]
 
-# Default command (can be overridden in docker-compose)
+# Default command
 CMD ["rails", "server", "-b", "0.0.0.0"]
