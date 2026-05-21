@@ -2,6 +2,7 @@ FROM ruby:3.2-bookworm
 
 WORKDIR /app
 
+# Install all dependencies including Node.js for asset compilation
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
       build-essential \
@@ -9,7 +10,9 @@ RUN apt-get update -qq && \
       libpq-dev \
       postgresql-client \
       curl \
-      ca-certificates && \
+      ca-certificates \
+      npm \
+      nodejs && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -24,12 +27,14 @@ RUN if [ ! -f config/tailwind.config.js ]; then \
       bundle exec rails tailwindcss:install; \
     fi
 
+# CRITICAL: Precompile assets for production
+# This must be done at build time, not runtime
+RUN bundle exec rails assets:precompile
+
 EXPOSE 8080
 
 ENV RAILS_ENV=production
 ENV PORT=8080
 
-# Rails web server - runs migrations on startup
-# Listens on port 8080 for Railway health checks
-# No rackup command - that's for Sinatra engine (different repo)
+# Run migrations and start server
 CMD bash -c "sleep 5 && bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0 -p ${PORT:-8080}"
