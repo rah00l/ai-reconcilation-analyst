@@ -2,7 +2,6 @@ FROM ruby:3.2-bookworm
 
 WORKDIR /app
 
-# Install all dependencies including Node.js for asset compilation
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
       build-essential \
@@ -23,12 +22,16 @@ RUN bundle install --jobs 4 --retry 3
 
 COPY . .
 
-RUN if [ ! -f config/tailwind.config.js ]; then \
-      bundle exec rails tailwindcss:install; \
-    fi
+# CRITICAL: Force Tailwind installation with --force to ensure complete setup
+# --force overwrites if exists, || true ignores error if already configured
+RUN bundle exec rails tailwindcss:install --force || true
 
-# CRITICAL: Precompile assets for production
-# This must be done at build time, not runtime
+# CRITICAL: Remove old/incomplete assets before precompilation
+# This ensures clean compilation with all files
+RUN bundle exec rails assets:clobber
+
+# CRITICAL: Precompile assets for production deployment
+# This creates all CSS/JS files in public/assets/ with correct manifest
 RUN bundle exec rails assets:precompile
 
 EXPOSE 8080
