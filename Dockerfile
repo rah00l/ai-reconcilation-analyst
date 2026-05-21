@@ -24,9 +24,12 @@ RUN if [ ! -f config/tailwind.config.js ]; then \
       bundle exec rails tailwindcss:install; \
     fi
 
-EXPOSE 3000
+EXPOSE 8080
 
 ENV RAILS_ENV=production
+ENV PORT=8080
 
-# NO STARTUP SCRIPT - Just run migrations and server directly in CMD
-CMD bash -c "sleep 5 && bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0 -p 3000"
+# Rails web server - runs migrations on startup
+# Listens on port 8080 for Railway health checks
+# No rackup command - that's for Sinatra engine (different repo)
+CMD bash -c "sleep 5 && bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0 -p ${PORT:-8080}"
