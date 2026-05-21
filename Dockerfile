@@ -37,6 +37,7 @@ EXPOSE 8080
 
 ENV RAILS_ENV=production
 ENV PORT=8080
+ENV RAILS_SERVE_STATIC_FILES=true
 
 # Run migrations and start server
 CMD bash -c "sleep 5 && bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0 -p ${PORT:-8080}"
