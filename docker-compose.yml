@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_USER: ${DATABASE_USER:-postgres}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
-      POSTGRES_DB: ${DATABASE_NAME:-reconciliation_development}
+      POSTGRES_DB: ${DATABASE_NAME:-reconciliation_production}
     ports:
       - "5432:5432"
     volumes:
@@ -36,13 +36,13 @@ services:
       engine:
         condition: service_started
     environment:
-      RAILS_ENV: ${RAILS_ENV:-development}
-      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:5432/reconciliation_development}
+      RAILS_ENV: ${RAILS_ENV:-production}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:5432/reconciliation_production}
       ENGINE_URL: http://engine:4567
       ENGINE_TIMEOUT: 30
       RAILS_LOG_TO_STDOUT: 'true'
-      HTTP_AUTH_USER: ${HTTP_AUTH_USER:-demo}
-      HTTP_AUTH_PASSWORD: ${HTTP_AUTH_PASSWORD:-demo123}
+      HTTP_AUTH_USER: ${HTTP_AUTH_USER:-test.user}
+      HTTP_AUTH_PASSWORD: ${HTTP_AUTH_PASSWORD:-Password123}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE:-development-secret-key}
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-}
     volumes:
@@ -51,15 +51,8 @@ services:
       - /app/.git
       - /app/tmp
       - /app/log
-    command: >
-      bash -c "
-        echo 'Waiting for database...' &&
-        sleep 5 &&
-        echo 'Running migrations...' &&
-        bundle exec rake db:prepare &&
-        echo 'Starting Rails...' &&
-        bundle exec rails server -b 0.0.0.0 -p 3000
-      "
+    # Migrations now run inside Docker via startup script
+    # No need for command override - uses Dockerfile CMD
     networks:
       - app_network
     healthcheck:
@@ -78,16 +71,14 @@ services:
     ports:
       - "4567:4567"
     environment:
-      RACK_ENV: ${RAILS_ENV:-development}
+      RACK_ENV: ${RAILS_ENV:-production}
       PORT: 4567
     volumes:
       - ../ai-analyst-engine:/app
-    # Explicitly specify path to config.ru (engine has it in sinatra/ subdirectory)
     command: bundle exec rackup /app/sinatra/config.ru -o 0.0.0.0 -p 4567
     networks:
       - app_network
     healthcheck:
-      # Tests if the engine can actually process requests
       test: ["CMD", "curl", "-f", "-X", "POST", "http://localhost:4567/analyze", "-H", "Content-Type: application/json", "-d", "{\"question\":\"test\",\"session_id\":\"health\"}"]
       interval: 10s
       timeout: 5s

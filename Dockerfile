@@ -1,9 +1,7 @@
 FROM ruby:3.2-bookworm
 
-# Set working directory early
 WORKDIR /app
 
-# Install system dependencies
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
       build-essential \
@@ -15,26 +13,20 @@ RUN apt-get update -qq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy Gemfile first for better caching
 COPY Gemfile ./
 COPY Gemfile.lock* ./
 
-# Install Ruby gems
 RUN bundle install --jobs 4 --retry 3
 
-# Copy application code
 COPY . .
 
-# Run Rails generators in Docker
 RUN if [ ! -f config/tailwind.config.js ]; then \
       bundle exec rails tailwindcss:install; \
     fi
 
-# Expose port
 EXPOSE 3000
 
-# Use ENTRYPOINT for consistency
-ENTRYPOINT ["bundle", "exec"]
+ENV RAILS_ENV=production
 
-# Default command
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# NO STARTUP SCRIPT - Just run migrations and server directly in CMD
+CMD bash -c "sleep 5 && bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0 -p 3000"
