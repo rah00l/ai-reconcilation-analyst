@@ -22,9 +22,8 @@ RUN bundle install --jobs 4 --retry 3
 
 COPY . .
 
-# CRITICAL: Force Tailwind installation with --force to ensure complete setup
-# --force overwrites if exists, || true ignores error if already configured
-RUN bundle exec rails tailwindcss:install --force || true
+# Setup Tailwind always run
+RUN bundle exec rails tailwindcss:install || true
 
 # CRITICAL: Remove old/incomplete assets before precompilation
 # This ensures clean compilation with all files
