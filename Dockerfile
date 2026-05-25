@@ -9,9 +9,7 @@ RUN apt-get update -qq && \
       libpq-dev \
       postgresql-client \
       curl \
-      ca-certificates \
-      npm \
-      nodejs && \
+      ca-certificates && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
