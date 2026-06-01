@@ -3,7 +3,7 @@
   <head>
     <title><%= "AI Reconciliation Analyst" || "App" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -15,99 +15,32 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <!-- Stylesheets (order matters) -->
-    <!-- Tailwind CSS - Main styling framework -->
+    <!-- Stylesheets -->
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application.tailwind", "data-turbo-track": "reload" %>
-    
-    <!-- Global Styles - Custom components and utilities -->
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "globals", "data-turbo-track": "reload" %>
-    
-    <!-- Application Styles - Any additional custom styles -->
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
   <body class="bg-white text-gray-900">
-    <!-- Navigation (will be added in A.2) -->
+    <!-- Navigation -->
     <%= render 'shared/navbar' %>
+
     <!-- Main Content Area -->
     <main class="min-h-screen bg-gray-50">
-      <!-- Page Container -->
       <div class="w-full md:container md:mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-6">
-        
-        <!-- Yield page content here -->
         <%= yield %>
       </div>
     </main>
 
-    <!-- AI Chat Widget -->
-    <!-- Rendered on all pages for context-aware assistance -->
+    <!-- AI Chat Widget — rendered ONCE, handles all breakpoints internally -->
     <%= render 'shared/chat_widget' %>
 
-    <!-- Footer (will be added in A.3) -->
+    <!-- Footer -->
     <footer class="w-full bg-gray-50 border-t border-gray-200 mt-12 py-6">
       <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
         <p class="text-xs sm:text-sm text-gray-600">© 2026 ReconPilot AI - AI Payment Platform</p>
       </div>
     </footer>
-
-    <!-- ===== CHAT WIDGET - DESKTOP SIDEBAR (1024px+) ===== -->
-    <!-- Fixed on right side for desktop, hidden on mobile -->
-    <div id="chat-desktop-widget" class="hidden md:block fixed right-0 bottom-0 z-30">
-      <%= render 'shared/chat_widget' %>
-    </div>
-
-    <!-- ===== CHAT WIDGET - MOBILE MODAL (< 768px) ===== -->
-    <!-- Modal overlay + button for mobile -->
-    <div id="chat-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden flex items-end">
-      <div class="w-full h-4/5 bg-white rounded-t-2xl shadow-2xl overflow-hidden">
-        <%= render 'shared/chat_widget' %>
-      </div>
-    </div>
-
-    <!-- ===== CHAT FAB BUTTON - MOBILE ONLY (< 768px) ===== -->
-    <!-- Floating Action Button for mobile -->
-    <button 
-      id="chat-fab"
-      class="fixed bottom-6 right-6 md:hidden w-14 h-14 rounded-full shadow-lg z-30 flex items-center justify-center text-2xl font-bold text-white transition-all hover:scale-110 active:scale-95"
-      style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);"
-      onclick="toggleChatWidget()"
-      title="Chat with AI Assistant">
-      💬
-    </button>
-
-    <!-- ===== CHAT TOGGLE SCRIPT ===== -->
-    <script>
-      function toggleChatWidget() {
-        const modal = document.getElementById('chat-modal');
-        if (modal) {
-          if (modal.classList.contains('hidden')) {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-          } else {
-            closeChatWidget();
-          }
-        }
-      }
-
-      function closeChatWidget() {
-        const modal = document.getElementById('chat-modal');
-        if (modal) {
-          modal.classList.add('hidden');
-          modal.classList.remove('flex');
-          document.body.style.overflow = 'auto';
-        }
-      }
-
-      // Close on Escape key
-      document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-          closeChatWidget();
-        }
-      });
-    </script>
   </body>
 </html>
