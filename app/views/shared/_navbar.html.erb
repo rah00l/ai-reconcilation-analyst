@@ -21,19 +21,7 @@
         </div>
       </div>
 
-      <!-- CENTER: Quick Questions Button - DESKTOP ONLY (md+) -->
-      <div class="hidden md:flex flex-1 justify-center px-4 lg:px-12">
-        <button
-          onclick="toggleNavQuestions()"
-          class="flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 transition-all"
-          style="color: #1e40af; font-size: 14px; font-weight: 600;"
-          title="Browse quick questions for AI Assistant">
-          ❓ Quick Questions
-          <span id="nav-questions-arrow" style="font-size: 11px; transition: transform 0.2s;">▼</span>
-        </button>
-      </div>
-
-      <!-- RIGHT: Icons -->
+      <!-- RIGHT: Icons (all breakpoints) -->
       <div class="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
 
         <!-- User Avatar -->
@@ -44,6 +32,19 @@
           aria-label="User Profile">
           👤
         </div>
+
+        <!-- Quick Questions Icon — desktop only, top-right -->
+        <button
+          id="nav-questions-btn"
+          class="hidden md:flex transition-all p-2 sm:p-2.5 md:p-3 rounded-lg items-center justify-center"
+          style="color: #4b5563;"
+          onmouseover="this.style.color='#2563eb'; this.style.backgroundColor='#f0f4ff';"
+          onmouseout="this.style.color='#4b5563'; this.style.backgroundColor='transparent';"
+          onclick="toggleNavQuestions()"
+          title="Quick Questions for AI Assistant"
+          aria-label="Quick Questions">
+          <span class="text-2xl sm:text-2xl md:text-3xl">❓</span>
+        </button>
 
         <!-- Notifications -->
         <button
@@ -68,13 +69,13 @@
           <span class="text-2xl sm:text-2xl md:text-3xl">⚙️</span>
         </button>
 
-        <!-- MOBILE FAB BUTTON - ONLY ON MOBILE (< 768px) -->
+        <!-- MOBILE FAB — bottom-right bubble, mobile only (< 768px) -->
         <button
           id="fab-questions-btn"
           class="fixed bottom-6 right-6 md:hidden w-14 h-14 rounded-full shadow-lg transition-all hover:scale-110 flex items-center justify-center text-2xl font-bold text-white"
           style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); z-index: 40;"
-          title="Sample Questions"
-          aria-label="Sample Questions"
+          title="Quick Questions"
+          aria-label="Quick Questions"
           onclick="toggleMobileQuestions()">
           ❓
         </button>
@@ -87,12 +88,12 @@
 <!-- Horizontal Color Bar -->
 <div class="w-full h-1 sm:h-2 shadow-md" style="background: linear-gradient(to right, #2563eb, #3b82f6, #1e40af);"></div>
 
-<!-- DESKTOP QUESTIONS DROPDOWN — same chip style as chat widget -->
+<!-- DESKTOP QUESTIONS DROPDOWN — 2-column, no horizontal scroll -->
 <div
   id="nav-questions-dropdown"
   class="hidden w-full bg-white border-b border-blue-100 shadow-md"
   style="position: relative; z-index: 39;">
-  <div class="max-w-5xl mx-auto px-6 py-5">
+  <div class="max-w-3xl mx-auto px-6 py-5">
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
       <p style="font-size: 14px; font-weight: 700; color: #1e40af; margin: 0;">❓ Quick Questions for AI Assistant</p>
@@ -100,12 +101,11 @@
               style="background: none; border: none; cursor: pointer; color: #6b7280; font-size: 18px; padding: 2px 8px;"
               title="Close">✕</button>
     </div>
-    <p style="font-size: 12px; color: #6b7280; margin: 0 0 14px 0;">Click any question to open the AI chat with that question ready to send.</p>
+    <p style="font-size: 12px; color: #6b7280; margin: 0 0 14px 0;">Click any question to paste it into the AI chat.</p>
 
-    <!-- 4-column grid — categories collapsed by default, matching chat widget -->
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+    <!-- 2-column grid — fits all desktop widths without scrolling -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
 
-      <!-- Status Definitions -->
       <details class="nq-category">
         <summary class="nq-summary">📋 Status Definitions</summary>
         <div class="nq-questions">
@@ -118,7 +118,6 @@
         </div>
       </details>
 
-      <!-- Mapping Errors -->
       <details class="nq-category">
         <summary class="nq-summary">📋 Mapping Errors</summary>
         <div class="nq-questions">
@@ -128,7 +127,6 @@
         </div>
       </details>
 
-      <!-- Follow-Up Chains -->
       <details class="nq-category">
         <summary class="nq-summary">📋 Follow-Up Chains</summary>
         <div class="nq-questions">
@@ -139,7 +137,6 @@
         </div>
       </details>
 
-      <!-- Lifecycle Reasoning -->
       <details class="nq-category">
         <summary class="nq-summary">📋 Lifecycle Reasoning</summary>
         <div class="nq-questions">
@@ -153,7 +150,7 @@
   </div>
 </div>
 
-<!-- MOBILE QUESTIONS MODAL — same chip style as chat widget -->
+<!-- MOBILE QUESTIONS MODAL — full-width bottom sheet, stacked categories -->
 <div
   id="mobile-questions-modal"
   class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-end"
@@ -162,18 +159,16 @@
 
   <div class="w-full bg-white rounded-t-2xl shadow-2xl overflow-y-auto" style="max-height: 85vh;">
 
-    <!-- Modal Header -->
     <div class="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-4 flex items-center justify-between rounded-t-2xl">
       <p style="font-size: 15px; font-weight: 700; color: white; margin: 0;">❓ Quick Questions</p>
       <button onclick="toggleMobileQuestions()"
               style="background: none; border: none; cursor: pointer; color: white; font-size: 20px; padding: 2px 6px;">✕</button>
     </div>
 
-    <!-- Modal Body — same chips as chat widget -->
     <div style="padding: 14px;">
       <p style="font-size: 12px; color: #6b7280; margin: 0 0 12px 0;">Tap any question to open the AI chat with it ready to send.</p>
 
-      <!-- Status Definitions -->
+      <!-- Single column stacked — fits all mobile widths -->
       <details class="nq-category">
         <summary class="nq-summary">📋 Status Definitions</summary>
         <div class="nq-questions">
@@ -186,7 +181,6 @@
         </div>
       </details>
 
-      <!-- Mapping Errors -->
       <details class="nq-category">
         <summary class="nq-summary">📋 Mapping Errors</summary>
         <div class="nq-questions">
@@ -196,7 +190,6 @@
         </div>
       </details>
 
-      <!-- Follow-Up Chains -->
       <details class="nq-category">
         <summary class="nq-summary">📋 Follow-Up Chains</summary>
         <div class="nq-questions">
@@ -207,7 +200,6 @@
         </div>
       </details>
 
-      <!-- Lifecycle Reasoning -->
       <details class="nq-category">
         <summary class="nq-summary">📋 Lifecycle Reasoning</summary>
         <div class="nq-questions">
@@ -222,24 +214,20 @@
 </div>
 
 <script>
-  // ── Desktop navbar dropdown ────────────────────────────
+  // ── Desktop ❓ dropdown ─────────────────────────────────
   function toggleNavQuestions() {
     const dropdown = document.getElementById('nav-questions-dropdown');
-    const arrow = document.getElementById('nav-questions-arrow');
     const isHidden = dropdown.classList.contains('hidden');
     dropdown.classList.toggle('hidden', !isHidden);
-    if (arrow) arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
   }
 
-  // Pastes question into chat input and opens widget if needed
+  // Paste question into chat input, open widget if needed, close panels
   function openChatWithQuestion(text) {
-    // Close nav dropdown
+    // Close desktop dropdown
     const dropdown = document.getElementById('nav-questions-dropdown');
     if (dropdown) dropdown.classList.add('hidden');
-    const arrow = document.getElementById('nav-questions-arrow');
-    if (arrow) arrow.style.transform = 'rotate(0deg)';
 
-    // Close mobile modal if open
+    // Close mobile modal
     const modal = document.getElementById('mobile-questions-modal');
     if (modal && !modal.classList.contains('hidden')) {
       modal.classList.add('hidden');
@@ -250,11 +238,9 @@
     // Ensure chat widget is visible
     const chatWidget = document.getElementById('chat-widget');
     const chatMinimized = document.getElementById('chat-widget-minimized');
-    if (chatWidget) {
-      if (chatWidget.style.display === 'none' || chatWidget.style.display === '') {
-        if (chatMinimized) chatMinimized.style.display = 'none';
-        chatWidget.style.display = 'flex';
-      }
+    if (chatWidget && (chatWidget.style.display === 'none' || chatWidget.style.display === '')) {
+      if (chatMinimized) chatMinimized.style.display = 'none';
+      chatWidget.style.display = 'flex';
     }
 
     // Paste into input and focus
@@ -262,8 +248,6 @@
     if (input) {
       input.value = text;
       input.focus();
-      // Scroll chat widget into view on mobile
-      chatWidget && chatWidget.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }
 
@@ -282,29 +266,38 @@
   }
 
   // Escape key closes both
-  document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-      const modal = document.getElementById('mobile-questions-modal');
-      if (modal && !modal.classList.contains('hidden')) toggleMobileQuestions();
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
       const dropdown = document.getElementById('nav-questions-dropdown');
       if (dropdown && !dropdown.classList.contains('hidden')) toggleNavQuestions();
+      const modal = document.getElementById('mobile-questions-modal');
+      if (modal && !modal.classList.contains('hidden')) toggleMobileQuestions();
+    }
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('nav-questions-dropdown');
+    const btn = document.getElementById('nav-questions-btn');
+    if (dropdown && !dropdown.classList.contains('hidden')) {
+      if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
+        dropdown.classList.add('hidden');
+      }
     }
   });
 </script>
 
 <style>
-  /* ── Pulse animation ── */
   @keyframes pulse {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+    50%       { opacity: 0.7; }
   }
   .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 
-  /* ── Logo hover ── */
   nav img { transition: filter 0.3s ease; }
   nav:hover img { filter: drop-shadow(0 8px 12px rgba(0,0,0,0.15)); }
 
-  /* ── Question category — collapsible, matches chat widget .qw-category ── */
+  /* ── Collapsible category — matches chat widget .qw-category ── */
   details.nq-category {
     margin-bottom: 8px;
     background: white;
@@ -315,9 +308,9 @@
 
   .nq-summary {
     font-weight: 600;
-    font-size: 12px;
+    font-size: 13px;
     cursor: pointer;
-    padding: 8px 10px;
+    padding: 9px 12px;
     color: #1e40af;
     user-select: none;
     list-style: none;
@@ -339,7 +332,7 @@
     padding: 8px 10px;
   }
 
-  /* ── Question chip button — matches .qw-btn in chat widget ── */
+  /* ── Question chip — matches chat widget .qw-btn ── */
   .nq-btn {
     display: block;
     width: 100%;
@@ -354,10 +347,10 @@
     transition: background 0.15s, border-color 0.15s;
     line-height: 1.4;
   }
-  .nq-btn:hover { background: #dbeafe; border-color: #93c5fd; }
+  .nq-btn:hover  { background: #dbeafe; border-color: #93c5fd; }
   .nq-btn:active { background: #bfdbfe; transform: scale(0.99); }
 
-  /* ── Mobile modal slide-up animation ── */
+  /* ── Mobile modal slide-up ── */
   @media (max-width: 767px) {
     #mobile-questions-modal.flex > div {
       animation: slideUp 0.3s ease-out;
