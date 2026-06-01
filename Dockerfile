@@ -21,7 +21,7 @@ RUN bundle install --jobs 4 --retry 3
 COPY . .
 
 # Setup Tailwind always run
-RUN bundle exec rails tailwindcss:install || true
+RUN bundle exec rails tailwindcss:build
 
 # CRITICAL: Remove old/incomplete assets before precompilation
 # This ensures clean compilation with all files
