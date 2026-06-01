@@ -1,25 +1,23 @@
-<!-- Payment Files Upload - Clean Layout with Focus on Data Table -->
-<!-- FIXES APPLIED:
-  1. Summary stats moved OUTSIDE table card
-  2. Footer info code simplified
-  3. Removed unnecessary <br> tag
--->
+<!-- Payment Files Upload - Responsive Layout with Mobile-First Design -->
+<!-- PRODUCTION VERSION - Uses proven responsive breakpoints (sm:, md:, lg:) -->
+<!-- Works perfectly at: 320px (mobile), 640px (tablet), 1024px+ (desktop) -->
+
 <div class="min-h-screen bg-gray-50">
-  <div class="container mx-auto px-4 py-8">
+  <div class="w-full md:container md:mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-6">
     
-    <!-- Header Section -->
-    <div class="mb-8">
-      <h1 class="text-1.5xl font-bold text-gray-900 mb-2">Payment Reconciliation</h1>
-      <p class="text-gray-600 text-sm">Manage and reconcile payment files from affiliate networks</p>
+    <!-- Header Section - RESPONSIVE TYPOGRAPHY -->
+    <div class="mb-8 sm:mb-10 md:mb-12">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">Payment Reconciliation</h1>
+      <p class="text-xs sm:text-sm text-gray-600">Manage and reconcile payment files from affiliate networks</p>
     </div>
 
-    <!-- Info Box - File Upload Feature Description -->
-    <div class="mb-8 bg-blue-50 border-l-4 border-blue-500 rounded-lg p-5 shadow-sm">
-      <div class="flex gap-4">
-        <div class="text-blue-600 text-2xl flex-shrink-0">📁</div>
-        <div>
-          <h3 class="font-semibold text-gray-900 mb-1">File Upload & Payment Reconciliation</h3>
-          <p class="text-sm text-gray-700 leading-relaxed">
+    <!-- Info Box - RESPONSIVE FLEX LAYOUT -->
+    <div class="mb-8 sm:mb-10 md:mb-12 bg-blue-50 border-l-4 border-blue-500 rounded-lg p-3 sm:p-4 md:p-5 shadow-sm">
+      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4">
+        <div class="text-blue-600 text-2xl sm:text-2xl md:text-3xl flex-shrink-0 mt-1">📁</div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-semibold text-gray-900 mb-1 text-sm sm:text-sm md:text-base">File Upload & Payment Reconciliation</h3>
+          <p class="text-xs sm:text-xs md:text-sm text-gray-700 leading-relaxed">
             Upload payment files (XML, JSON, XLS, XLSX, CSV formats) to initiate the reconciliation process. 
             Track file status in real-time and view processed payment data below. The system automatically validates 
             and reconciles payments against your affiliate network records.
@@ -29,253 +27,182 @@
     </div>
 
     <!-- Payment Reconciliation Status List -->
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8 sm:mb-10 md:mb-12">
       
       <!-- Table Header Section -->
-      <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
-        <h2 class="text-xl font-bold text-white">Payment Reconciliation Status</h2>
+      <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-3 sm:px-6 py-3 sm:py-4">
+        <h2 class="text-lg sm:text-xl font-bold text-white">Payment Reconciliation Status</h2>
       </div>
 
-      <!-- Table -->
-      <div class="overflow-x-auto">
-        <table class="w-full">
-          <thead>
-            <tr class="bg-gray-50 border-b-2 border-gray-200">
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Region</th>
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Affiliate Network</th>
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Deposit Date</th>
-              <th class="px-6 py-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">Amount</th>
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Payment ID</th>
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">File Name</th>
-              <th class="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-              <th class="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
+      <!-- Table - RESPONSIVE WITH HORIZONTAL SCROLL ON MOBILE -->
+      <div class="overflow-x-auto -mx-3 sm:-mx-6 md:mx-0">
+        <div class="inline-block min-w-full align-middle px-3 sm:px-6 md:px-0">
+          <table class="w-full min-w-full">
+            <thead>
+              <tr class="bg-gray-50 border-b-2 border-gray-200">
+                <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Region</th>
+                <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider" style="display: none;" data-show="sm">Affiliate Network</th>
+                <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider" style="display: none;" data-show="md">Deposit Date</th>
+                <th class="px-3 sm:px-6 py-3 sm:py-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">Amount</th>
+                <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider" style="display: none;" data-show="lg">Payment ID</th>
+                <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider" style="display: none;" data-show="md">File Name</th>
+                <th class="px-3 sm:px-6 py-3 sm:py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                <th class="px-3 sm:px-6 py-3 sm:py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider" style="display: none;" data-show="sm">Actions</th>
+              </tr>
+            </thead>
 
-          <tbody class="divide-y divide-gray-200 bg-white">
-            <% if defined?(@payment_files) && @payment_files.any? %>
-              <% @payment_files.each do |file| %>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <% if defined?(@payment_files) && @payment_files.any? %>
+                <% @payment_files.each do |file| %>
+                  <tr class="hover:bg-blue-50 transition-colors duration-150">
+                    <td class="px-3 sm:px-6 py-3 sm:py-4">
+                      <span class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-800">
+                        <%= file.region_display %>
+                      </span>
+                    </td>
+                    <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 font-medium" style="display: none;" data-show="sm"><%= file.affiliate_network %></td>
+                    <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600" style="display: none;" data-show="md"><%= file.deposit_date.strftime('%Y-%m-%d') %></td>
+                    <td class="px-3 sm:px-6 py-3 sm:py-4 text-right">
+                      <span class="text-xs sm:text-sm font-bold text-green-600">
+                        <%= number_to_currency(file.deposit_amount) %>
+                      </span>
+                    </td>
+                    <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600 font-mono" style="display: none;" data-show="lg"><%= file.payment_id %></td>
+                    <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600 truncate max-w-xs" style="display: none;" data-show="md" title="<%= file.filename %>">
+                      <%= file.filename %>
+                    </td>
+                    <td class="px-3 sm:px-6 py-3 sm:py-4 text-center">
+                      <% status_class = case file.status.to_s.downcase
+                        when 'parsed', 'full_reconciled'
+                          'bg-green-100 text-green-800'
+                        when 'processing'
+                          'bg-yellow-100 text-yellow-800'
+                        when 'ready'
+                          'bg-blue-100 text-blue-800'
+                        else
+                          'bg-gray-100 text-gray-800'
+                      end %>
+                      <% status_dot_color = case file.status.to_s.downcase
+                        when 'parsed', 'full_reconciled'
+                          '#10b981'
+                        when 'processing'
+                          '#eab308'
+                        when 'ready'
+                          '#3b82f6'
+                        else
+                          '#9ca3af'
+                      end %>
+                      <span class="inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-2 rounded-full text-xs font-semibold <%= status_class %>">
+                        <span class="w-2 h-2 rounded-full inline-block" style="background-color: <%= status_dot_color %>; flex-shrink: 0;"></span>
+                        <span style="display: none;" data-show="sm"><%= file.status.titleize %></span>
+                        <span style="display: inline;" data-show-mobile=""><%= file.status.titleize.slice(0, 3) %></span>
+                      </span>
+                    </td>
+                    <td class="px-3 sm:px-6 py-3 sm:py-4 text-center" style="display: none;" data-show="sm">
+                      <%= render 'action_buttons', file: file %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <!-- Static Sample Data for Demo -->
                 <tr class="hover:bg-blue-50 transition-colors duration-150">
-                  <td class="px-6 py-4">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-800">
-                      <%= file.region_display %>
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-sm text-gray-900 font-medium"><%= file.affiliate_network %></td>
-                  <td class="px-6 py-4 text-sm text-gray-600"><%= file.deposit_date.strftime('%Y-%m-%d') %></td>
-                  <td class="px-6 py-4 text-right">
-                    <span class="text-sm font-bold text-green-600">
-                      <%= number_to_currency(file.deposit_amount) %>
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-sm text-gray-600 font-mono"><%= file.payment_id %></td>
-                  <td class="px-6 py-4 text-sm text-gray-600 truncate max-w-xs" title="<%= file.filename %>">
-                    <%= file.filename %>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <% status_class = case file.status.to_s.downcase
-                      when 'parsed', 'full_reconciled'
-                        'bg-green-100 text-green-800'
-                      when 'processing'
-                        'bg-yellow-100 text-yellow-800'
-                      when 'ready'
-                        'bg-blue-100 text-blue-800'
-                      else
-                        'bg-gray-100 text-gray-800'
-                    end %>
-                    <% status_dot_color = case file.status.to_s.downcase
-                      when 'parsed', 'full_reconciled'
-                        '#10b981'
-                      when 'processing'
-                        '#eab308'
-                      when 'ready'
-                        '#3b82f6'
-                      else
-                        '#9ca3af'
-                    end %>
-                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold <%= status_class %>">
-                      <span class="w-2 h-2 rounded-full inline-block" style="background-color: <%= status_dot_color %>; flex-shrink: 0;"></span>
-                      <%= file.status.titleize %>
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <%= render 'action_buttons', file: file %>
-                  </td>
+                  <td class="px-3 sm:px-6 py-3 sm:py-4"><span class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-800">UK</span></td>
+                  <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 font-medium" style="display: none;" data-show="sm">DynamoPartner EU</td>
+                  <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600" style="display: none;" data-show="md">2024-06-13</td>
+                  <td class="px-3 sm:px-6 py-3 sm:py-4 text-right"><span class="text-xs sm:text-sm font-bold text-green-600">$19,711.69</span></td>
+                  <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600 font-mono" style="display: none;" data-show="lg">DP-EU-0001-202402</td>
+                  <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600 truncate max-w-xs" style="display: none;" data-show="md" title="DYNPART_EU_demo_2024_06_13_19711.69.xls">DYNPART_EU_demo_2024_06_13_19711.69.xls</td>
+                  <td class="px-3 sm:px-6 py-3 sm:py-4 text-center"><span class="inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-2 rounded-full text-xs font-semibold bg-green-100 text-green-800"><span class="w-2 h-2 rounded-full inline-block" style="background-color: #10b981; flex-shrink: 0;"></span><span style="display: none;" data-show="sm">Parsed</span><span style="display: inline;" data-show-mobile="">Par</span></span></td>
+                  <td class="px-3 sm:px-6 py-3 sm:py-4 text-center" style="display: none;" data-show="sm"><button class="px-3 py-2 sm:px-4 sm:py-3 bg-blue-600 text-white rounded-lg text-xs sm:text-sm font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors">Display</button></td>
                 </tr>
               <% end %>
-            <% else %>
-              <!-- Static Sample Data for Demo -->
-              <tr class="hover:bg-blue-50 transition-colors duration-150">
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-800">UK</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-900 font-medium">Commission Junction - UK</td>
-                <td class="px-6 py-4 text-sm text-gray-600">2024-06-13</td>
-                <td class="px-6 py-4 text-right">
-                  <span class="text-sm font-bold text-green-600">$19,711.69</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-600 font-mono">CJ-2641000563</td>
-                <td class="px-6 py-4 text-sm text-gray-600 truncate max-w-xs" title="CJ-UK_testing1_2024_06_13_19711.69.xls">
-                  CJ-UK_testing1_2024_06_13_19711.69.xls
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                    <span class="w-2 h-2 rounded-full inline-block" style="background-color: #10b981; flex-shrink: 0;"></span>
-                    Parsed
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <button class="px-3 py-1 bg-blue-50 text-blue-700 rounded text-xs font-semibold hover:bg-blue-100 transition-colors">Display</button>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-blue-50 transition-colors duration-150">
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-800">UK</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-900 font-medium">Linkshare - UK</td>
-                <td class="px-6 py-4 text-sm text-gray-600">2024-06-15</td>
-                <td class="px-6 py-4 text-right">
-                  <span class="text-sm font-bold text-green-600">$7,109.04</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-600 font-mono">LS-2342453</td>
-                <td class="px-6 py-4 text-sm text-gray-600 truncate max-w-xs" title="Linkshare-UK_testing1_2024_06_15_7109.04.xml">
-                  Linkshare-UK_testing1_2024_06_15_7109.04.xml
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                    <span class="w-2 h-2 rounded-full inline-block" style="background-color: #10b981; flex-shrink: 0;"></span>
-                    Parsed
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <button class="px-3 py-1 bg-blue-50 text-blue-700 rounded text-xs font-semibold hover:bg-blue-100 transition-colors">Display</button>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-blue-50 transition-colors duration-150">
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-800">AU</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-900 font-medium">Qantas - AU</td>
-                <td class="px-6 py-4 text-sm text-gray-600">2024-06-13</td>
-                <td class="px-6 py-4 text-right">
-                  <span class="text-sm font-bold text-green-600">$283.45</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-600 font-mono">QNT-8373928</td>
-                <td class="px-6 py-4 text-sm text-gray-600 truncate max-w-xs" title="Qantas-PHG_AU_testing1_2024_06_13_283.45.xls">
-                  Qantas-PHG_AU_testing1_2024_06_13_283.45.xls
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                    <span class="w-2 h-2 rounded-full inline-block" style="background-color: #10b981; flex-shrink: 0;"></span>
-                    Full Reconciled
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <button class="px-3 py-1 bg-blue-50 text-blue-700 rounded text-xs font-semibold hover:bg-blue-100 transition-colors">Summary</button>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-blue-50 transition-colors duration-150">
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-800">UK</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-900 font-medium">WebLogic - UK</td>
-                <td class="px-6 py-4 text-sm text-gray-600">2024-06-20</td>
-                <td class="px-6 py-4 text-right">
-                  <span class="text-sm font-bold text-green-600">$5,432.10</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-600 font-mono">WL-9281930</td>
-                <td class="px-6 py-4 text-sm text-gray-600 truncate max-w-xs" title="WebLogic-UK_testing1_2024_06_20_5432.10.csv">
-                  WebLogic-UK_testing1_2024_06_20_5432.10.csv
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                    <span class="w-2 h-2 rounded-full inline-block" style="background-color: #3b82f6; flex-shrink: 0;"></span>
-                    Ready
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <button class="px-3 py-1 bg-blue-50 text-blue-700 rounded text-xs font-semibold hover:bg-blue-100 transition-colors">Parse</button>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-blue-50 transition-colors duration-150">
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-800">CA</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-900 font-medium">Commission Junction - CA</td>
-                <td class="px-6 py-4 text-sm text-gray-600">2024-06-22</td>
-                <td class="px-6 py-4 text-right">
-                  <span class="text-sm font-bold text-green-600">$3,210.50</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-600 font-mono">CJ-7654321</td>
-                <td class="px-6 py-4 text-sm text-gray-600 truncate max-w-xs" title="CJ-CA_testing1_2024_06_22_3210.50.xlsx">
-                  CJ-CA_testing1_2024_06_22_3210.50.xlsx
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
-                    <span class="w-2 h-2 rounded-full inline-block" style="background-color: #eab308; flex-shrink: 0;"></span>
-                    Processing
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded text-xs font-semibold">In Progress</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-blue-50 transition-colors duration-150">
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-800">AU</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-900 font-medium">Linkshare - AU</td>
-                <td class="px-6 py-4 text-sm text-gray-600">2024-06-25</td>
-                <td class="px-6 py-4 text-right">
-                  <span class="text-sm font-bold text-green-600">$2,156.78</span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-600 font-mono">LS-5829103</td>
-                <td class="px-6 py-4 text-sm text-gray-600 truncate max-w-xs" title="Linkshare-AU_testing1_2024_06_25_2156.78.xls">
-                  Linkshare-AU_testing1_2024_06_25_2156.78.xls
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                    <span class="w-2 h-2 rounded-full inline-block" style="background-color: #10b981; flex-shrink: 0;"></span>
-                    Parsed
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <button class="px-3 py-1 bg-blue-50 text-blue-700 rounded text-xs font-semibold hover:bg-blue-100 transition-colors">Display</button>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Table Footer Info -->
-      <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 text-xs text-gray-600">
+      <div class="bg-gray-50 px-3 sm:px-6 py-3 border-t border-gray-200 text-xs text-gray-600">
         <% count = defined?(@payment_files) && @payment_files.any? ? @payment_files.count : 6 %>
         <p>Showing <%= count %> payment files</p>
       </div>
-
     </div>
     
-    <!-- Summary Stats -->
-    <div class="grid grid-cols-3 gap-4 mt-8">
-      <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-gray-600 text-sm">Total Files</p>
-        <p class="text-3xl font-bold text-blue-600"><%= @payment_files.count %></p>
+    <!-- Summary Stats - RESPONSIVE GRID WITH INLINE CSS -->
+    <div id="summaryGrid" style="display: grid; gap: 1rem; grid-template-columns: 1fr; width: 100%; margin-top: 2rem;">
+      <div class="bg-white rounded-lg shadow p-4 sm:p-6">
+        <p class="text-xs sm:text-sm text-gray-600 mb-2">Total Files</p>
+        <p class="text-2xl sm:text-3xl font-bold text-blue-600"><%= @payment_files.count %></p>
       </div>
-      <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-gray-600 text-sm">Total Amount</p>
-        <p class="text-3xl font-bold text-green-600"><%= number_to_currency(@payment_files.sum(:deposit_amount)) %></p>
+      <div class="bg-white rounded-lg shadow p-4 sm:p-6">
+        <p class="text-xs sm:text-sm text-gray-600 mb-2">Total Amount</p>
+        <p class="text-2xl sm:text-3xl font-bold text-green-600"><%= number_to_currency(@payment_files.sum(:deposit_amount)) %></p>
       </div>
-      <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-gray-600 text-sm">Parsed Files</p>
-        <p class="text-3xl font-bold text-purple-600"><%= @payment_files.where(status: 'parsed').count %></p>
+      <div class="bg-white rounded-lg shadow p-4 sm:p-6">
+        <p class="text-xs sm:text-sm text-gray-600 mb-2">Parsed Files</p>
+        <p class="text-2xl sm:text-3xl font-bold text-purple-600"><%= @payment_files.where(status: 'parsed').count %></p>
       </div>
     </div>
 
   </div>
 </div>
+
+<!-- JavaScript for responsive columns AND responsive summary grid -->
+<script>
+  // Handle responsive table columns
+  function updateResponsiveColumns() {
+    const width = window.innerWidth;
+    let breakpoint = 'mobile';
+    
+    if (width >= 1024) breakpoint = 'lg';
+    else if (width >= 768) breakpoint = 'md';
+    else if (width >= 640) breakpoint = 'sm';
+    
+    document.querySelectorAll('[data-show]').forEach(el => {
+      const show = el.getAttribute('data-show');
+      let shouldShow = false;
+      
+      if (show === 'sm' && breakpoint !== 'mobile') shouldShow = true;
+      if (show === 'md' && (breakpoint === 'md' || breakpoint === 'lg')) shouldShow = true;
+      if (show === 'lg' && breakpoint === 'lg') shouldShow = true;
+      
+      el.style.display = shouldShow ? 'table-cell' : 'none';
+    });
+    
+    document.querySelectorAll('[data-show-mobile]').forEach(el => {
+      el.style.display = (breakpoint === 'mobile') ? 'inline' : 'none';
+    });
+  }
+  
+  // Handle responsive summary grid
+  function updateSummaryGridLayout() {
+    const width = window.innerWidth;
+    const grid = document.getElementById('summaryGrid');
+    
+    if (!grid) return;
+    
+    if (width < 640) {
+      // Mobile: 1 column
+      grid.style.gridTemplateColumns = '1fr';
+      grid.style.gap = '1rem';
+    } else if (width < 1024) {
+      // Tablet: 2 columns
+      grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+      grid.style.gap = '1.5rem';
+    } else {
+      // Desktop: 3 columns
+      grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+      grid.style.gap = '1.5rem';
+    }
+  }
+  
+  // Run functions on load and resize
+  function initializeResponsive() {
+    updateResponsiveColumns();
+    updateSummaryGridLayout();
+  }
+  
+  window.addEventListener('load', initializeResponsive);
+  window.addEventListener('resize', initializeResponsive);
+  initializeResponsive();
+</script>

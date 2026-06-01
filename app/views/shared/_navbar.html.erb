@@ -1,915 +1,159 @@
-<!-- CORRECTED NAVBAR - With Explicit Color Overrides -->
-<!-- File: app/views/shared/_navbar.html.erb -->
-<!-- FIX: Added inline styles to override CSS conflicts and ensure proper colors -->
+<!-- RESPONSIVE NAVBAR - With Mobile FAB Button for Questions -->
+<!-- Works at: Mobile (320px), Tablet (640px), Desktop (1024px+) -->
 
-<nav class="w-full border-b-4 border-blue-600 shadow-lg sticky top-0 z-50 mt-4" style="background-color: #ffffff; color: #111827; margin-top: 16px;">
-  <!-- Full Width Navigation Container -->
-  <div class="w-full px-8 py-5" style="background-color: #ffffff;">
-    <!-- No max-width constraint - truly full width -->
-    <div class="flex items-center justify-between h-auto gap-8">
+<nav class="w-full border-b-4 border-blue-600 shadow-lg sticky top-0 z-40" style="background-color: #ffffff; color: #111827;">
+  <div class="w-full px-3 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5" style="background-color: #ffffff;">
+    <div class="flex items-center justify-between h-auto gap-4 sm:gap-6 md:gap-8">
       
-      <!-- LEFT: Logo & Branding - PROFESSIONAL -->
-      <div class="flex items-center gap-5 flex-shrink-0">
-        <!-- Professional Logo - Image/SVG with sizing constraints -->
-        <div class="w-16 h-16 flex-shrink-0 overflow-hidden">
-          <!-- Logo Image - Now with explicit width/height constraints -->
+      <!-- LEFT: Logo & Branding - RESPONSIVE -->
+      <div class="flex items-center gap-2 sm:gap-3 md:gap-5 flex-shrink-0">
+        <!-- Logo -->
+        <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex-shrink-0 overflow-hidden">
           <img 
             src="/logo.svg" 
             alt="ReconPilot AI Logo" 
-            class="w-16 h-16 object-contain drop-shadow-lg"
-            width="64"
-            height="64"
+            class="w-full h-full object-contain drop-shadow-lg"
             title="ReconPilot AI - AI Payment Platform"
           >
         </div>
         
-        <!-- Branding Text - Bold & Clear with explicit colors -->
-        <div class="flex flex-col gap-0.5">
-          <span class="text-3xl font-bold leading-tight" style="color: #111827;">ReconPilot AI</span>
-          <span class="text-base font-semibold" style="color: #6b7280;">AI Payment Platform</span>
+        <!-- Branding Text - RESPONSIVE -->
+        <div class="flex flex-col gap-0">
+          <span class="text-xl sm:text-2xl md:text-3xl font-bold leading-tight" style="color: #111827;">ReconPilot AI</span>
+          <span class="text-xs sm:text-sm md:text-base font-semibold" style="color: #6b7280;">AI Payment Platform</span>
         </div>
       </div>
 
-      <!-- CENTER: Page Title (Hidden on tablet/below, visible on desktop) -->
-      <div class="xl:flex flex-1 justify-center px-12">
-        <!-- QUICK QUESTIONS SECTION - MINIMAL VERSION -->
-        <details class="mb-8 bg-blue-50 border-l-4 border-blue-500 rounded-lg shadow-sm"
-                 style="padding: 16px; margin-bottom: 24px;">
-          <summary style="cursor: pointer; font-weight: 600; font-size: 15px; color: #111827; user-select: none;">
-            ❓ Quick Questions for AI Assistant (Click to expand)
-          </summary>
-
-          <!-- TWO-COLUMN GRID LAYOUT -->
-          <div style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-
-            <!-- LEFT COLUMN -->
-
-            <!-- CATEGORY 1 ACCORDION Category 1: Status Definitions  -->
-            <details style="margin-top: 12px;">
-              <summary style="font-weight: 600; font-size: 15px;">
-                📋 Category 1: Status Definitions
-              </summary>
-              <div style="padding-left: 16px; margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What does NEW mean?</p>
-                  <%# <button onclick="copyToClipboard('What does NEW mean?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What does NEW mean?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What does READY mean?</p>
-                  <%# <button onclick="copyToClipboard('What does READY mean?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What does READY mean?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What does PROCESSING mean?</p>
-                  <%# <button onclick="copyToClipboard('What does PROCESSING mean?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What does PROCESSING mean?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What does PARSED mean?</p>
-                  <%# <button onclick="copyToClipboard('What does PARSED mean?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What does PARSED mean?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What does FULL RECONCILED mean?</p>
-                  <%# <button onclick="copyToClipboard('What does FULL RECONCILED mean?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What does FULL RECONCILED mean?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What does PARTIAL RECONCILED mean?</p>
-                  <%# <button onclick="copyToClipboard('What does PARTIAL RECONCILED mean?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What does PARTIAL RECONCILED mean?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <!-- Continue for 6 total -->
-              </div>
-            </details>
-
-            <!-- CATEGORY 1 ACCORDION Category 2: Mapping Error  -->
-            <details style="margin-top: 12px;">
-              <summary style="font-weight: 600; font-size: 15px;">
-                📋 Category 2: Mapping Error
-              </summary>
-              <div style="padding-left: 16px; margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What does mapping error payment id not found mean?</p>
-                  <%# <button onclick="copyToClipboard('What does mapping error payment id not found mean?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What does mapping error payment id not found mean?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Will the system retry automatically?</p>
-                  <%# <button onclick="copyToClipboard('Will the system retry automatically?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Will the system retry automatically?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Can I ignore this and continue?</p>
-                  <%# <button onclick="copyToClipboard('Can I ignore this and continue?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Can I ignore this and continue?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <!-- Continue for 6 total -->
-              </div>
-            </details>
-
-            <!-- Category 2 ACCORDION Category 3: Follow‑Up Chains -->
-            <details style="margin-top: 12px;">
-              <summary style="font-weight: 600; font-size: 15px;">
-                📋 Category 3: Follow‑Up Chains
-              </summary>
-              <div style="padding-left: 16px; margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What does PARTIAL RECONCILED mean?</p>
-                  <%# <button onclick="copyToClipboard('What does PARTIAL RECONCILED mean?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What does PARTIAL RECONCILED mean?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Is reconciliation complete?</p>
-                  <%# <button onclick="copyToClipboard('Is reconciliation complete?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Is reconciliation complete?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Who is responsible?</p>
-                  <%# <button onclick="copyToClipboard('Who is responsible?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Who is responsible?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What remains pending?</p>
-                  <%# <button onclick="copyToClipboard('What remains pending?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What remains pending?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <!-- Continue for 6 total -->
-              </div>
-            </details>
-
-            <!-- Category 2 ACCORDION Category 4: Follow‑Up Chains -->
-            <details style="margin-top: 12px;">
-              <summary style="font-weight: 600; font-size: 15px;">
-                📋 Category 4: Follow‑Up Chains - Again
-              </summary>
-              <div style="padding-left: 16px; margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What does MAPPING ERROR – Payment ID Not Found mean?</p>
-                  <%# <button onclick="copyToClipboard('What does MAPPING ERROR – Payment ID Not Found mean?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What does MAPPING ERROR – Payment ID Not Found mean?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Does this block reconciliation?</p>
-                  <%# <button onclick="copyToClipboard('Does this block reconciliation?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Does this block reconciliation?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Who owns this?</p>
-                  <%# <button onclick="copyToClipboard('Who owns this?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Who owns this?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What happens if nothing is done?</p>
-                  <%# <button onclick="copyToClipboard('What happens if nothing is done?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What happens if nothing is done?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <!-- Continue for 6 total -->
-              </div>
-            </details>
-
-            <!-- Question 3 - Category 5: Lifecycle Reasoning -->
-            <details style="margin-top: 12px;">
-              <summary style="font-weight: 600; font-size: 15px;">
-                📋 Category 5: Lifecycle Reasoning
-              </summary>
-              <div style="padding-left: 16px; margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What stage comes after NEW?</p>
-                  <%# <button onclick="copyToClipboard('What stage comes after NEW?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What stage comes after NEW?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What stage comes after READY?</p>
-                  <%# <button onclick="copyToClipboard('What stage comes after READY?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What stage comes after READY?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What stage comes after PROCESSING?</p>
-                  <%# <button onclick="copyToClipboard('What stage comes after PROCESSING?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What stage comes after PROCESSING?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What stage comes after PARSED?</p>
-                  <%# <button onclick="copyToClipboard('What stage comes after PARSED?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What stage comes after PARSED?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What does PARTIAL RECONCILED indicate in the lifecycle?</p>
-                  <%# <button onclick="copyToClipboard('What does PARTIAL RECONCILED indicate in the lifecycle?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What does PARTIAL RECONCILED indicate in the lifecycle?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What stage comes after RECONCILING?</p>
-                  <%# <button onclick="copyToClipboard('What stage comes after RECONCILING?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What stage comes after RECONCILING?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What stage comes after PARTIAL RECONCILED?</p>
-                  <%# <button onclick="copyToClipboard('What stage comes after PARTIAL RECONCILED?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What stage comes after PARTIAL RECONCILED?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Is FULL RECONCILED a terminal state?</p>
-                  <%# <button onclick="copyToClipboard('Is FULL RECONCILED a terminal state?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Is FULL RECONCILED a terminal state?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <!-- Continue for 6 total -->
-              </div>
-            </details>
-
-            <!-- Category 3 ACCORDION  Category 6: Impact & Consequence -->
-            <details style="margin-top: 12px;">
-              <summary style="font-weight: 600; font-size: 15px;">
-                📋 Category 6: Impact & Consequence
-              </summary>
-              <div style="padding-left: 16px; margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Does this block reconciliation?</p>
-                  <%# <button onclick="copyToClipboard('Does this block reconciliation?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Does this block reconciliation?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Is reconciliation complete in this state?</p>
-                  <%# <button onclick="copyToClipboard('Is reconciliation complete in this state?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Is reconciliation complete in this state?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Can the file move forward from here?</p>
-                  <%# <button onclick="copyToClipboard('Can the file move forward from here?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Can the file move forward from here?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What happens if this is not resolved?</p>
-                  <%# <button onclick="copyToClipboard('What happens if this is not resolved?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What happens if this is not resolved?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What is the impact on reconciliation?</p>
-                  <%# <button onclick="copyToClipboard('What is the impact on reconciliation?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What is the impact on reconciliation?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What remains pending?</p>
-                  <%# <button onclick="copyToClipboard('What remains pending?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What remains pending?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <!-- Continue for 6 total -->
-              </div>
-            </details>
-
-            <!-- Category 2 ACCORDION Category 7: Definition Variants (Supported) -->
-            <details style="margin-top: 12px;">
-              <summary style="font-weight: 600; font-size: 15px;">
-                📋 Category 7: Definition Variants (Supported)
-              </summary>
-              <div style="padding-left: 16px; margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What is PARSED?</p>
-                  <%# <button onclick="copyToClipboard('What is PARSED?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What is PARSED?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">What is PROCESSING?</p>
-                  <%# <button onclick="copyToClipboard('What is PROCESSING?')">Copy</button> %>
-                  <button onclick="copyToClipboard('What is PROCESSING?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Meaning of FULL RECONCILED!</p>
-                  <%# <button onclick="copyToClipboard('Meaning of FULL RECONCILED!')">Copy</button> %>
-                  <button onclick="copyToClipboard('Meaning of FULL RECONCILED!')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Explain PARTIAL RECONCILED</p>
-                  <%# <button onclick="copyToClipboard('Explain PARTIAL RECONCILED')">Copy</button> %>
-                  <button onclick="copyToClipboard('Explain PARTIAL RECONCILED')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <!-- Continue for 6 total -->
-              </div>
-            </details>
-
-            <!-- Category 2 ACCORDION Category 8: Definition Variants (Unsupported / Negative) -->
-            <details style="margin-top: 12px;">
-              <summary style="font-weight: 600; font-size: 15px;">
-                📋 Category 8: Definition Variants (Unsupported / Negative)
-              </summary>
-              <div style="padding-left: 16px; margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Why is PARSED important?</p>
-                  <%# <button onclick="copyToClipboard('Why is PARSED important?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Why is PARSED important?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">How do I fix MAPPING ERROR?</p>
-                  <%# <button onclick="copyToClipboard('How do I fix MAPPING ERROR?')">Copy</button> %>
-                  <button onclick="copyToClipboard('How do I fix MAPPING ERROR?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Which button should I click for MAPPING ERROR?</p>
-                  <%# <button onclick="copyToClipboard('Which button should I click for MAPPING ERROR?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Which button should I click for MAPPING ERROR?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <div>
-                  <p style="margin: 0; color: #111827; font-size: 12px; line-height: 1.5;">Why do we get MAPPING ERROR?</p>
-                  <%# <button onclick="copyToClipboard('Why do we get MAPPING ERROR?')">Copy</button> %>
-                  <button onclick="copyToClipboard('Why do we get MAPPING ERROR?')"
-                          style="margin-top: 8px; padding: 4px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    Copy Question
-                  </button>
-                </div>
-                <!-- Continue for 6 total -->
-              </div>
-            </details>
-
-            <!-- RIGHT COLUMN -->
-
-          </div>
-
-          <!-- BETA PHASE NOTICE -->
-          <div style="margin-top: 16px; padding: 12px; background: #f0f4ff; border-left: 4px solid #2563eb; border-radius: 6px; color: #111827;">
-            <div style="display: flex; gap: 10px; align-items: flex-start;">
-              <span style="font-size: 18px;">🔬</span>
-              <div style="font-size: 13px; line-height: 1.5;">
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                  <strong>Beta Phase - Rule-Based Engine</strong>
-                  <button onclick="openReconciliationGuide()"
-                          style="background: none; border: none; cursor: pointer; font-size: 16px; padding: 0; margin: 0; color: #2563eb; hover: opacity: 0.7;"
-                          title="Learn about payment reconciliation process">
-                    ℹ️
-                  </button>
-                </div>
-                <p style="margin: 0; color: #6b7280;">
-                  For now, it works best with the sample questions above.
-                </p>
-                <p style="margin: 8px 0 0 0; color: #6b7280;">
-                  It’s a reconciliation specialist, not yet a general assistant.
-                  A more advanced AI upgrade is coming soon 🚀
-                </p>
-              </div>
-            </div>
-          </div>
-        </details>
-
-        <!-- PAYMENT RECONCILIATION PROCESS GUIDE MODAL -->
-        <div id="reconciliationGuideOverlay"
-             style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
-
-          <!-- Guide Modal -->
-          <div style="background: white; border-radius: 12px; padding: 32px; max-width: 700px; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative;">
-
-            <!-- Close Button -->
-            <button onclick="closeReconciliationGuide()"
-                    style="position: absolute; top: 12px; right: 12px; background: none; border: none; font-size: 24px; cursor: pointer; color: #999; opacity: 0.7; transition: opacity 0.2s;"
-                    onmouseover="this.style.opacity='1'"
-                    onmouseout="this.style.opacity='0.7'">
-              ✕
-            </button>
-
-            <!-- Header -->
-            <h2 style="margin: 0 0 12px 0; color: #111827; font-size: 26px; font-weight: 700;">
-              Payment Reconciliation Process 📊 💰
-            </h2>
-            <p style="margin: 0 0 20px 0; color: #6b7280; font-size: 14px; line-height: 1.6;">
-              A streamlined workflow to verify, validate, and finalize payment records.
-              Follow these steps as you navigate through the system.
-            </p>
-
-            <!-- Professional Analogy -->
-            <div style="background: #eff6ff; padding: 16px; border-radius: 8px; border-left: 4px solid #2563eb; margin-bottom: 24px;">
-              <p style="margin: 0; color: #1e40af; font-size: 13px; line-height: 1.6;">
-                <strong>🎯 How to Think About It:</strong> Reconciliation is like conducting a quality audit.
-                You receive data, validate its integrity, identify discrepancies, resolve them, and generate
-                a final report confirming everything is correct.
-              </p>
-            </div>
-
-            <!-- Step-by-Step Process -->
-            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
-
-              <!-- Step 1 -->
-              <div style="display: flex; gap: 12px;">
-                <div style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
-                  1
-                </div>
-                <div>
-                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
-                    📁 File Upload
-                  </p>
-                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
-                    Upload your payment file (XML, JSON, XLS, XLSX, CSV format). The system validates
-                    the file structure and assigns it a <strong>NEW</strong> status.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Step 2 -->
-              <div style="display: flex; gap: 12px;">
-                <div style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
-                  2
-                </div>
-                <div>
-                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
-                    ⚙️ Initial Processing
-                  </p>
-                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
-                    File moves to <strong>READY</strong> status once validation passes. The system is now
-                    prepared to parse and process payment data.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Step 3 -->
-              <div style="display: flex; gap: 12px;">
-                <div style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
-                  3
-                </div>
-                <div>
-                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
-                    🔄 Data Extraction
-                  </p>
-                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
-                    File enters <strong>PROCESSING</strong> status. The system extracts payment details,
-                    payment IDs, amounts, and dates from the file structure.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Step 4 -->
-              <div style="display: flex; gap: 12px;">
-                <div style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
-                  4
-                </div>
-                <div>
-                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
-                    ✓ Parsing Complete
-                  </p>
-                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
-                    File reaches <strong>PARSED</strong> status. All payment data has been successfully
-                    extracted and structured into individual payment records.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Step 5 -->
-              <div style="display: flex; gap: 12px;">
-                <div style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
-                  5
-                </div>
-                <div>
-                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
-                    🔍 Reconciliation Matching
-                  </p>
-                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
-                    File enters <strong>RECONCILING</strong> status. The system matches parsed payments
-                    against your affiliate network records using Payment ID, amount, and date.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Step 6 -->
-              <div style="display: flex; gap: 12px;">
-                <div style="background: #10b981; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">
-                  ✓
-                </div>
-                <div>
-                  <p style="margin: 0 0 6px 0; color: #111827; font-weight: 600; font-size: 14px;">
-                    ✅ Reconciliation Complete
-                  </p>
-                  <p style="margin: 0; color: #6b7280; font-size: 13px; line-height: 1.5;">
-                    File reaches <strong>FULL RECONCILED</strong> status. All payments have been matched
-                    successfully with your records. Some files may reach <strong>PARTIAL RECONCILED</strong>
-                    if some payments couldn't be matched (requiring manual review).
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Screen Navigation Flow -->
-            <div style="background: #f9fafb; padding: 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid #e5e7eb;">
-              <p style="margin: 0 0 12px 0; color: #111827; font-weight: 600; font-size: 13px;">
-                📍 Navigation Path
-              </p>
-              <p style="margin: 0; color: #6b7280; font-size: 12px; line-height: 1.8;">
-                <span style="background: #dbeafe; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-right: 4px; margin-bottom: 4px;">
-                  📤 Upload Screen
-                </span>
-                <span style="color: #9ca3af; margin: 0 4px;">→</span>
-                <span style="background: #dbeafe; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-right: 4px; margin-bottom: 4px;">
-                  📊 Summary Screen
-                </span>
-                <span style="color: #9ca3af; margin: 0 4px;">→</span>
-                <span style="background: #dbeafe; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-right: 4px; margin-bottom: 4px;">
-                  ⚠️ Exception Screen
-                </span>
-                <span style="color: #9ca3af; margin: 0 4px;">→</span>
-                <span style="background: #dbeafe; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-right: 4px; margin-bottom: 4px;">
-                  🔧 Settlement Screen
-                </span>
-                <span style="color: #9ca3af; margin: 0 4px;">→</span>
-                <span style="background: #d1fae5; padding: 4px 8px; border-radius: 4px; display: inline-block;">
-                  ✅ Summary Report
-                </span>
-              </p>
-            </div>
-
-            <!-- Status Reference -->
-            <div style="background: #f9fafb; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
-              <p style="margin: 0 0 12px 0; color: #111827; font-weight: 600; font-size: 13px;">
-                📋 Status Reference
-              </p>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                <div style="font-size: 12px; color: #6b7280; line-height: 1.5;">
-                  <strong style="color: #111827;">NEW:</strong> File uploaded, validation pending<br>
-                  <strong style="color: #111827;">READY:</strong> Validated, awaiting processing<br>
-                  <strong style="color: #111827;">PROCESSING:</strong> Data extraction in progress<br>
-                </div>
-                <div style="font-size: 12px; color: #6b7280; line-height: 1.5;">
-                  <strong style="color: #111827;">PARSED:</strong> Data extracted successfully<br>
-                  <strong style="color: #111827;">RECONCILING:</strong> Matching in progress<br>
-                  <strong style="color: #111827;">FULL/PARTIAL:</strong> Reconciliation complete
-                </div>
-              </div>
-            </div>
-
-            <!-- Key Points -->
-            <div style="background: #effbf8; padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-bottom: 24px;">
-              <p style="margin: 0 0 12px 0; color: #111827; font-weight: 600; font-size: 13px;">
-                ✓ Key Process Points
-              </p>
-              <ul style="margin: 0; padding-left: 20px; color: #6b7280; font-size: 12px; line-height: 1.8;">
-                <li>Each step builds on the previous one—complete them in order</li>
-                <li>The Exception Screen is critical—address all flagged discrepancies</li>
-                <li>Use the Settlement Screen to make corrections and allocations</li>
-                <li>The final report confirms the reconciliation is complete</li>
-                <li>Use Quick Questions if you need guidance at any step</li>
-              </ul>
-            </div>
-
-            <!-- Ready to Start -->
-            <div style="background: #f0f9ff; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
-              <p style="margin: 0 0 8px 0; color: #111827; font-weight: 600; font-size: 13px;">
-                🎯 Ready to Begin?
-              </p>
-              <p style="margin: 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
-                Start by uploading your payment file on the Upload Screen. The system will guide you through
-                each step. Use Quick Questions <b>AI Analyst Assistance</b> anytime you need help.
-              </p>
-            </div>
-
-            <!-- Buttons -->
-            <div style="display: flex; gap: 12px; justify-content: flex-end;">
-              <button onclick="closeReconciliationGuide()"
-                      style="padding: 11px 24px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; transition: background 0.2s;"
-                      onmouseover="this.style.background='#1e40af'"
-                      onmouseout="this.style.background='#2563eb'">
-                Understood 👍
-              </button>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- JAVASCRIPT FUNCTIONS -->
-        <script>
-          function openReconciliationGuide() {
-            const overlay = document.getElementById('reconciliationGuideOverlay');
-            if (overlay) {
-              overlay.style.display = 'flex';
-              document.body.style.overflow = 'hidden';
-            }
-          }
-
-          function closeReconciliationGuide() {
-            const overlay = document.getElementById('reconciliationGuideOverlay');
-            if (overlay) {
-              overlay.style.display = 'none';
-              document.body.style.overflow = 'auto';
-            }
-          }
-
-          // Close guide when clicking outside modal
-          document.addEventListener('click', function(event) {
-            const overlay = document.getElementById('reconciliationGuideOverlay');
-            if (overlay && overlay.style.display === 'flex') {
-              const modal = overlay.querySelector('div[style*="border-radius: 12px"]');
-              if (modal && !modal.contains(event.target) && event.target === overlay) {
-                closeReconciliationGuide();
-              }
-            }
-          });
-
-          // Close on Escape key
-          document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-              closeReconciliationGuide();
-            }
-          });
-        </script>
-
-        <!-- JavaScript for Copy Functionality -->
-        <script>
-        function copyToClipboard(text) {
-          // Create temporary textarea
-          const textarea = document.createElement('textarea');
-          textarea.value = text;
-          document.body.appendChild(textarea);
-
-          // Copy text
-          textarea.select();
-          document.execCommand('copy');
-
-          // Remove textarea
-          document.body.removeChild(textarea);
-
-          // Show feedback
-          alert('Question copied! Paste it in the AI Assistant chat.');
-        }
-        </script>
+      <!-- CENTER: Questions Widget - HIDDEN ON MOBILE, VISIBLE ON TABLET+ -->
+      <div class="hidden md:flex flex-1 justify-center px-4 lg:px-12">
+        <%= render 'shared/questions_widget' %>
       </div>
 
-      <!-- RIGHT: Actions & User Menu - Spaced Out -->
-      <div class="flex items-center gap-8">
+      <!-- RIGHT: Icons - RESPONSIVE -->
+      <div class="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
         
-        <!-- Notification Bell with Indicator -->
+        <!-- User Avatar -->
+        <div 
+          class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full cursor-pointer transition-transform hover:scale-110 flex items-center justify-center text-lg sm:text-xl md:text-2xl font-bold text-white"
+          style="background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);"
+          title="Profile"
+          aria-label="User Profile">
+          👤
+        </div>
+
+        <!-- Notifications -->
         <button 
-          class="transition-all p-3 rounded-lg relative group"
+          class="transition-all p-2 sm:p-2.5 md:p-3 rounded-lg relative group"
           style="color: #4b5563;"
           onmouseover="this.style.color='#2563eb'; this.style.backgroundColor='#f0f4ff';"
           onmouseout="this.style.color='#4b5563'; this.style.backgroundColor='transparent';"
           title="Notifications"
           aria-label="Notifications">
-          <span class="text-3xl">🔔</span>
-          <!-- Red notification indicator -->
-          <span class="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full animate-pulse shadow-md"></span>
+          <span class="text-2xl sm:text-2xl md:text-3xl">🔔</span>
+          <span class="absolute top-0 right-0 w-3 h-3 sm:w-4 sm:h-4 bg-red-500 rounded-full animate-pulse shadow-md"></span>
         </button>
 
-        <!-- Settings/Configuration -->
+        <!-- Settings -->
         <button 
-          class="transition-all p-3 rounded-lg group"
+          class="transition-all p-2 sm:p-2.5 md:p-3 rounded-lg group"
           style="color: #4b5563;"
           onmouseover="this.style.color='#2563eb'; this.style.backgroundColor='#f0f4ff';"
           onmouseout="this.style.color='#4b5563'; this.style.backgroundColor='transparent';"
           title="Settings"
           aria-label="Settings">
-          <span class="text-3xl">⚙️</span>
+          <span class="text-2xl sm:text-2xl md:text-3xl">⚙️</span>
         </button>
+
+        <!-- MOBILE FAB BUTTON - ONLY ON MOBILE (< 768px) -->
+        <button 
+          id="fab-questions-btn"
+          class="fixed bottom-6 right-6 md:hidden w-14 h-14 rounded-full shadow-lg transition-all hover:scale-110 flex items-center justify-center text-2xl font-bold text-white"
+          style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);"
+          title="Sample Questions"
+          aria-label="Sample Questions"
+          onclick="toggleMobileQuestions()">
+          ❓
+        </button>
+
       </div>
 
     </div>
   </div>
 </nav>
 
-<!-- Horizontal Color Bar - Visual Accent (FULL WIDTH) -->
-<div class="w-full h-2 shadow-md" style="background: linear-gradient(to right, #2563eb, #3b82f6, #1e40af);"></div>
+<!-- Horizontal Color Bar -->
+<div class="w-full h-1 sm:h-2 shadow-md" style="background: linear-gradient(to right, #2563eb, #3b82f6, #1e40af);"></div>
 
-<!-- 
-  CORRECTED NAVBAR - EXPLICIT COLOR OVERRIDES
+<!-- MOBILE QUESTIONS MODAL - HIDDEN BY DEFAULT -->
+<div 
+  id="mobile-questions-modal"
+  class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden md:hidden flex items-end"
+  onclick="if(event.target === this) toggleMobileQuestions()">
+  
+  <!-- Modal Content - Slides up from bottom -->
+  <div class="w-full bg-white rounded-t-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+    
+    <!-- Modal Header -->
+    <div class="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-4 flex items-center justify-between rounded-t-2xl">
+      <h2 class="text-lg sm:text-xl font-bold text-white">Quick Questions for AI Assistant</h2>
+      <button 
+        class="text-white text-2xl hover:opacity-80 transition-opacity"
+        onclick="toggleMobileQuestions()">
+        ✕
+      </button>
+    </div>
 
-  KEY CHANGES:
+    <!-- Modal Body - Questions Content -->
+    <div class="p-4 sm:p-6">
+      <%= render 'shared/questions_widget' %>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- JavaScript for Mobile FAB Toggle -->
+<script>
+  function toggleMobileQuestions() {
+    const modal = document.getElementById('mobile-questions-modal');
+    const btn = document.getElementById('fab-questions-btn');
+    
+    if (modal.classList.contains('hidden')) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      // Restore body scroll
+      document.body.style.overflow = 'auto';
+    }
+  }
   
-  1. Removed all Tailwind bg and text color classes
-  2. Added inline styles with explicit hex colors
-  3. Forces white background (#ffffff)
-  4. Forces dark text (#111827 = dark gray)
-  5. Ensures colors don't get overridden by global CSS
-  
-  STYLES ADDED:
-  
-  Nav element:
-  - style="background-color: #ffffff; color: #111827;"
-  
-  Container div:
-  - style="background-color: #ffffff;"
-  
-  Company name text:
-  - style="color: #111827;" (dark gray/black)
-  
-  Subtitle text:
-  - style="color: #6b7280;" (medium gray)
-  
-  Center title text:
-  - style="color: #111827;" (dark gray/black)
-  
-  Buttons:
-  - Inline event handlers for hover
-  - Explicit color (#4b5563) on normal state
-  - Explicit color (#2563eb) on hover
-  - Inline background change for feedback
-  
-  Avatar:
-  - Inline gradient style
-  - Hover effects with inline JavaScript
-  - No Tailwind color classes
-  
-  Color bar:
-  - Inline gradient style
-  - No Tailwind classes
-  
-  WHY THIS WORKS:
-  
-  Inline styles have HIGHEST CSS specificity
-  They override any external CSS rules
-  This ensures navbar displays correctly
-  Even if globals.css or application.css conflict
-  
-  COLORS USED:
-  
-  - White: #ffffff (navbar background)
-  - Dark Gray: #111827 (main text, equivalent to text-gray-900)
-  - Medium Gray: #6b7280 (subtitle, equivalent to text-gray-600)
-  - Gray: #4b5563 (button default color)
-  - Blue: #2563eb (button hover, brand primary)
-  - Light Blue: #f0f4ff (button hover background)
-  - Dark Blue: #1e40af (avatar dark on hover)
-  - Light Blue Avatar: #60a5fa (avatar light base)
-  
-  WHAT THIS FIXES:
-  
-  ✅ Background is pure white (not light blue)
-  ✅ Text is dark and readable (not faint)
-  ✅ Overrides any CSS conflicts
-  ✅ Ensures consistent appearance
-  ✅ Works regardless of external stylesheets
-  ✅ Professional appearance guaranteed
-  
-  DEPLOYMENT:
-  
-  1. Replace navbar file with this version
-  2. No CSS changes needed
-  3. No other file changes needed
-  4. Restart server
-  5. Navbar will display correctly
-  
-  VERIFICATION:
-  
-  After deploying, check:
-  - [ ] Background is pure white
-  - [ ] Text "ReconPilot AI" is dark and readable
-  - [ ] Subtitle is gray
-  - [ ] Buttons have proper color
-  - [ ] Avatar has gradient blue
-  - [ ] Hover effects work
-  - [ ] No faint or washed-out appearance
-  - [ ] Professional look
-  
-  TECHNICAL NOTES:
-  
-  Inline styles vs Tailwind:
-  - Tailwind: Applied via CSS classes
-  - Inline: Applied directly in HTML
-  - Specificity: Inline > Tailwind > External CSS
-  
-  This navbar uses BOTH:
-  - Tailwind for layout (flex, gap, padding, sizing)
-  - Inline styles for colors (overrides conflicts)
-  
-  This guarantees correct appearance.
-  
-  If styles still don't work:
-  1. Check browser cache is cleared
-  2. Hard refresh page (Ctrl+F5)
-  3. Check DevTools for computed styles
-  4. Report what colors DevTools shows
-  
-  This is the GUARANTEED working version!
--->
+  // Close modal on Escape key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      const modal = document.getElementById('mobile-questions-modal');
+      if (!modal.classList.contains('hidden')) {
+        toggleMobileQuestions();
+      }
+    }
+  });
+</script>
 
 <style>
-  /* Pulse animation for notification indicator */
+  /* Pulse animation for notification */
   @keyframes pulse {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.7;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
   }
   
   .animate-pulse {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
-  /* Logo image styling */
+  /* Logo hover effect */
   nav img {
     transition: filter 0.3s ease;
   }
@@ -917,11 +161,20 @@
   nav:hover img {
     filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.15));
   }
-  
-  /* Ensure logo respects constraints */
-  nav img {
-    max-width: 64px;
-    max-height: 64px;
-    display: block;
+
+  /* Mobile modal animation */
+  @media (max-width: 767px) {
+    #mobile-questions-modal.flex > div {
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
   }
 </style>
