@@ -1,49 +1,51 @@
+<% @page_title = "Transactions" %>
 <div class="min-h-screen bg-gray-100">
-  <div class="container mx-auto px-4 py-8">
-    <!-- PROFESSIONAL HORIZONTAL HEADER -->
+  <div class="w-full px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
+
+    <!-- HEADER -->
     <%= render 'shared/header' %>
 
     <!-- Transaction Summary Table -->
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
+        <table class="w-full text-sm" style="min-width: 700px;">
           <thead>
             <tr class="bg-gradient-to-r from-blue-600 to-blue-700">
-              <th class="px-6 py-4 text-left font-semibold text-white">MID</th>
-              <th class="px-6 py-4 text-left font-semibold text-white">Merchant</th>
-              <th class="px-6 py-4 text-right font-semibold text-white">Paid Sales</th>
-              <th class="px-6 py-4 text-right font-semibold text-white">Paid Commission</th>
-              <th class="px-6 py-4 text-right font-semibold text-white">Declined Sales</th>
-              <th class="px-6 py-4 text-right font-semibold text-white">Declined Comm</th>
-              <th class="px-6 py-4 text-right font-semibold text-white">Missing Sales</th>
-              <th class="px-6 py-4 text-right font-semibold text-white">Missing Comm</th>
-              <th class="px-6 py-4 text-right font-semibold text-white">Total</th>
+              <th class="px-3 sm:px-4 py-3 text-left font-semibold text-white text-xs sm:text-sm">MID</th>
+              <th class="px-3 sm:px-4 py-3 text-left font-semibold text-white text-xs sm:text-sm">Merchant</th>
+              <th class="px-3 sm:px-4 py-3 text-left font-semibold text-white text-xs sm:text-sm">Paid Sales</th>
+              <th class="px-3 sm:px-4 py-3 text-left font-semibold text-white text-xs sm:text-sm">Paid Commission</th>
+              <th class="px-3 sm:px-4 py-3 text-left font-semibold text-white text-xs sm:text-sm">Declined Sales</th>
+              <th class="px-3 sm:px-4 py-3 text-left font-semibold text-white text-xs sm:text-sm">Declined Commission</th>
+              <th class="px-3 sm:px-4 py-3 text-left font-semibold text-white text-xs sm:text-sm">Missing Sales</th>
+              <th class="px-3 sm:px-4 py-3 text-left font-semibold text-white text-xs sm:text-sm">Missing Commission</th>
+              <th class="px-3 sm:px-4 py-3 text-left font-semibold text-white text-xs sm:text-sm">Total</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
             <% @transactions.group_by(&:mid).each do |mid, txns| %>
               <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 font-semibold text-gray-900"><%= mid %></td>
-                <td class="px-6 py-4 text-gray-900"><%= txns.first.merchant_name %></td>
-                <td class="px-6 py-4 text-right text-gray-600">
+                <td class="px-3 sm:px-4 py-3 font-semibold text-gray-900 text-xs sm:text-sm"><%= mid %></td>
+                <td class="px-3 sm:px-4 py-3 text-gray-900 text-xs sm:text-sm"><%= txns.first.merchant_name %></td>
+                <td class="px-3 sm:px-4 py-3 text-right text-gray-600 text-xs sm:text-sm">
                   <%= number_to_currency(txns.select { |t| t.transaction_type == 'paid_sales' }.sum(&:amount)) %>
                 </td>
-                <td class="px-6 py-4 text-right text-gray-600">
+                <td class="px-3 sm:px-4 py-3 text-right text-gray-600 text-xs sm:text-sm">
                   <%= number_to_currency(txns.select { |t| t.transaction_type == 'paid_commission' }.sum(&:amount)) %>
                 </td>
-                <td class="px-6 py-4 text-right text-gray-600">
+                <td class="px-3 sm:px-4 py-3 text-right text-gray-600 text-xs sm:text-sm">
                   <%= number_to_currency(txns.select { |t| t.transaction_type == 'declined_sales' }.sum(&:amount)) %>
                 </td>
-                <td class="px-6 py-4 text-right text-gray-600">
+                <td class="px-3 sm:px-4 py-3 text-right text-gray-600 text-xs sm:text-sm">
                   <%= number_to_currency(txns.select { |t| t.transaction_type == 'declined_commission' }.sum(&:amount)) %>
                 </td>
-                <td class="px-6 py-4 text-right text-gray-600">
+                <td class="px-3 sm:px-4 py-3 text-right text-gray-600 text-xs sm:text-sm">
                   <%= number_to_currency(txns.select { |t| t.transaction_type == 'missing_sales' }.sum(&:amount)) %>
                 </td>
-                <td class="px-6 py-4 text-right text-gray-600">
+                <td class="px-3 sm:px-4 py-3 text-right text-gray-600 text-xs sm:text-sm">
                   <%= number_to_currency(txns.select { |t| t.transaction_type == 'missing_commission' }.sum(&:amount)) %>
                 </td>
-                <td class="px-6 py-4 text-right font-semibold text-gray-900">
+                <td class="px-3 sm:px-4 py-3 text-right font-semibold text-gray-900 text-xs sm:text-sm">
                   <%= number_to_currency(txns.sum(&:amount)) %>
                 </td>
               </tr>
@@ -51,26 +53,26 @@
           </tbody>
           <tfoot class="bg-gray-100 border-t-2 border-gray-300">
             <tr>
-              <td colspan="2" class="px-6 py-4 font-bold text-gray-900">TOTAL</td>
-              <td class="px-6 py-4 text-right font-bold text-gray-900">
+              <td colspan="2" class="px-3 sm:px-4 py-3 font-bold text-gray-900 text-xs sm:text-sm">TOTAL</td>
+              <td class="px-3 sm:px-4 py-3 text-right font-bold text-gray-900 text-xs sm:text-sm">
                 <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'paid_sales' }.sum(&:amount)) %>
               </td>
-              <td class="px-6 py-4 text-right font-bold text-gray-900">
+              <td class="px-3 sm:px-4 py-3 text-right font-bold text-gray-900 text-xs sm:text-sm">
                 <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'paid_commission' }.sum(&:amount)) %>
               </td>
-              <td class="px-6 py-4 text-right font-bold text-gray-900">
+              <td class="px-3 sm:px-4 py-3 text-right font-bold text-gray-900 text-xs sm:text-sm">
                 <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'declined_sales' }.sum(&:amount)) %>
               </td>
-              <td class="px-6 py-4 text-right font-bold text-gray-900">
+              <td class="px-3 sm:px-4 py-3 text-right font-bold text-gray-900 text-xs sm:text-sm">
                 <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'declined_commission' }.sum(&:amount)) %>
               </td>
-              <td class="px-6 py-4 text-right font-bold text-gray-900">
+              <td class="px-3 sm:px-4 py-3 text-right font-bold text-gray-900 text-xs sm:text-sm">
                 <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'missing_sales' }.sum(&:amount)) %>
               </td>
-              <td class="px-6 py-4 text-right font-bold text-gray-900">
+              <td class="px-3 sm:px-4 py-3 text-right font-bold text-gray-900 text-xs sm:text-sm">
                 <%= number_to_currency(@transactions.select { |t| t.transaction_type == 'missing_commission' }.sum(&:amount)) %>
               </td>
-              <td class="px-6 py-4 text-right font-bold text-gray-900">
+              <td class="px-3 sm:px-4 py-3 text-right font-bold text-gray-900 text-xs sm:text-sm">
                 <%= number_to_currency(@transactions.sum(&:amount)) %>
               </td>
             </tr>
@@ -79,43 +81,48 @@
       </div>
     </div>
 
-    <!-- Summary Stats -->
-    <div class="grid grid-cols-4 gap-4 mb-8">
-      <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-gray-600 text-sm mb-2">Tenancy Fee</p>
-        <p class="text-2xl font-bold text-blue-600">£690.0</p>
+    <!-- Spacer between table and stats -->
+    <div style="height: 20px;"></div>
+
+    <!-- Summary Stats — 2 cols on mobile, 4 on desktop -->
+    <style>
+      @media (min-width: 768px) {
+        .stats-grid { grid-template-columns: repeat(4, 1fr) !important; }
+      }
+    </style>
+    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px;">
+      <div style="background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: clamp(12px, 3vw, 24px);">
+        <p style="font-size: 12px; color: #6b7280; margin-bottom: 6px;">Tenancy Fee</p>
+        <p style="font-size: clamp(18px, 4vw, 24px); font-weight: 700; color: #2563eb; margin: 0;">£690.0</p>
       </div>
-      <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-gray-600 text-sm mb-2">Unmatched</p>
-        <p class="text-2xl font-bold text-orange-600">£264.64</p>
+      <div style="background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: clamp(12px, 3vw, 24px);">
+        <p style="font-size: 12px; color: #6b7280; margin-bottom: 6px;">Unmatched</p>
+        <p style="font-size: clamp(18px, 4vw, 24px); font-weight: 700; color: #ea580c; margin: 0;">£264.64</p>
       </div>
-      <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-gray-600 text-sm mb-2">Total Transactions</p>
-        <p class="text-2xl font-bold text-purple-600"><%= @transactions.count %></p>
+      <div style="background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: clamp(12px, 3vw, 24px);">
+        <p style="font-size: 12px; color: #6b7280; margin-bottom: 6px;">Total Transactions</p>
+        <p style="font-size: clamp(18px, 4vw, 24px); font-weight: 700; color: #9333ea; margin: 0;"><%= @transactions.count %></p>
       </div>
-      <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-gray-600 text-sm mb-2">Deposit Amount</p>
-        <p class="text-2xl font-bold text-green-600"><%= number_to_currency(@payment_file.deposit_amount) %></p>
+      <div style="background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: clamp(12px, 3vw, 24px);">
+        <p style="font-size: 12px; color: #6b7280; margin-bottom: 6px;">Deposit Amount</p>
+        <p style="font-size: clamp(18px, 4vw, 24px); font-weight: 700; color: #16a34a; margin: 0;"><%= number_to_currency(@payment_file.deposit_amount) %></p>
       </div>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="flex gap-4">
-      <%= link_to 'Download Parsed', '#', class: 'px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium' %>
-      
-      <!-- If has errors, show View Missing -->
-      <%# if @payment_file.has_errors? %>
-        <div class="relative group">
-          <%= link_to 'View Missing', missing_payment_file_path(@payment_file), class: 'px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded font-medium' %>
-          <span class="absolute -top-8 left-0 bg-red-600 text-white px-2 py-1 rounded text-xs whitespace-nowrap">
-            <%= @payment_file.error_count %> Errors
-          </span>
-        </div>
-      <%# end %>
-      
-      <!-- Back button -->
-      <%= link_to '← Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
+    <!-- Action Buttons — wrap on mobile -->
+    <div class="flex flex-wrap gap-3">
+      <%= link_to 'Download Parsed', '#',
+          class: 'px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium text-sm' %>
+
+      <%= link_to missing_payment_file_path(@payment_file),
+          style: 'display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #ef4444; color: white; border-radius: 6px; font-weight: 600; font-size: 14px; text-decoration: none;' do %>
+        <span style="background: rgba(0,0,0,0.2); border-radius: 4px; padding: 1px 6px; font-size: 11px; font-weight: 700;"><%= @payment_file.error_count %> Errors</span>
+        View Missing
+      <% end %>
+
+      <%= link_to '← Back to Files', payment_files_path,
+          class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium text-sm' %>
     </div>
-    </div>
+
   </div>
-</div> 
+</div>

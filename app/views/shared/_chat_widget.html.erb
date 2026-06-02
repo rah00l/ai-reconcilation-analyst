@@ -209,6 +209,7 @@
     const chatMinimized = document.getElementById('chat-widget-minimized');
     chatWidget.style.display = 'none';
     chatMinimized.classList.remove('hidden');
+    chatMinimized.classList.remove('force-hidden');
     chatMinimized.style.cssText = 'display:block !important; position:fixed !important; bottom:20px !important; right:20px !important; z-index:9999 !important;';
   }
 
@@ -216,6 +217,7 @@
     const chatWidget = document.getElementById('chat-widget');
     const chatMinimized = document.getElementById('chat-widget-minimized');
     chatMinimized.classList.add('hidden');
+    chatMinimized.classList.add('force-hidden');
     chatMinimized.style.display = 'none';
     chatWidget.style.display = 'flex';
     const input = document.getElementById('chat-input');
@@ -384,12 +386,15 @@
     #chat-widget {
       display: none;
     }
-    #chat-widget-minimized {
+    #chat-widget-minimized:not(.force-hidden) {
       display: block !important;
       position: fixed !important;
       bottom: 20px !important;
       right: 20px !important;
       z-index: 9999 !important;
+    }
+    #chat-widget-minimized.force-hidden {
+      display: none !important;
     }
   }
 

@@ -1,56 +1,90 @@
 <!-- REUSABLE HEADER PARTIAL WITH SCREEN NAME -->
-<div class="bg-white border-b border-gray-200 px-6 py-4 mb-8">
-  
-  <!-- Main Header Row -->
-  <div class="flex items-center justify-between gap-8">
-    
-    <!-- Left: Back Link + Screen Name -->
-    <div class="flex items-center gap-8 flex-shrink-0">
-      <!-- Back Link -->
-      <%= link_to '← Back', payment_files_path, 
-          class: 'text-blue-600 hover:text-blue-700 font-medium text-sm transition whitespace-nowrap' %>
-      
-      <!-- Divider -->
-      <div class="w-px h-6 bg-gray-300"></div>
-      
-      <!-- Screen Name -->
-      <div class="text-lg font-bold text-gray-900 uppercase tracking-wide whitespace-nowrap">
+<!-- Responsive: stacks on mobile, horizontal on desktop -->
+<div class="bg-white border-b border-gray-200 px-3 sm:px-4 md:px-6 py-3 sm:py-4 mb-4 sm:mb-6 md:mb-8 rounded-lg shadow-sm">
+
+  <!-- MOBILE LAYOUT (< 768px): stacked -->
+  <div class="md:hidden">
+    <!-- Row 1: Back + Screen Name -->
+    <div class="flex items-center gap-3" style="margin-bottom: 10px;">
+      <%= link_to '← Back', payment_files_path,
+          style: 'color: #2563eb; font-weight: 600; font-size: 13px; white-space: nowrap; flex-shrink: 0; text-decoration: none;' %>
+      <div class="w-px h-5 bg-gray-300 flex-shrink-0"></div>
+      <div style="font-size: 15px; font-weight: 800; color: #111827; text-transform: uppercase; letter-spacing: 0.05em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        <%= @page_title || action_name.titleize %>
+      </div>
+    </div>
+    <!-- Row 2: Filename -->
+    <p style="font-size: 11px; color: #6b7280; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 12px; padding: 0 2px;">
+      <%= @payment_file.filename %>
+    </p>
+    <!-- Row 3: Info pills — 2x2 grid -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+      <div class="bg-gray-50 rounded px-3 py-2">
+        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Region</p>
+        <p style="font-size: 14px; font-weight: 700; color: #111827; text-transform: uppercase;"><%= @payment_file.region || 'N/A' %></p>
+      </div>
+      <div class="bg-gray-50 rounded px-3 py-2">
+        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Network</p>
+        <p class="text-sm font-bold text-gray-900 truncate"><%= truncate(@payment_file.affiliate_network, length: 18) %></p>
+      </div>
+      <div class="bg-gray-50 rounded px-3 py-2">
+        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide mb-1">Status</p>
+        <%= render 'shared/status_badge', status: @payment_file.status %>
+      </div>
+      <div class="bg-gray-50 rounded px-3 py-2">
+        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Amount</p>
+        <p class="text-sm font-bold text-purple-600"><%= number_to_currency(@transactions.sum(&:amount)) %></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESKTOP LAYOUT (768px+): single horizontal row -->
+  <div class="hidden md:flex items-center justify-between gap-8">
+
+    <!-- Left: Back + Screen Name -->
+    <div class="flex items-center flex-shrink-0" style="gap: 16px;">
+      <%= link_to '← Back', payment_files_path,
+          style: 'color: #2563eb; font-weight: 600; font-size: 14px; white-space: nowrap; text-decoration: none;' %>
+      <div style="width: 1px; height: 24px; background: #d1d5db; flex-shrink: 0;"></div>
+      <div style="font-size: 17px; font-weight: 800; color: #111827; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">
         <%= @page_title || action_name.titleize %>
       </div>
     </div>
 
-    <!-- Center: Filename (Flexible) -->
+    <!-- Center: Filename -->
     <div class="flex-1 min-w-0 px-4">
       <h1 class="text-sm font-bold text-gray-900 truncate">
         <%= @payment_file.filename %>
       </h1>
     </div>
 
-    <!-- Right: Info Items (Fixed Width) -->
-    <div class="flex items-center gap-8 flex-shrink-0">
-      
-      <!-- Region -->
-      <div class="text-right">
-        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Region</p>
-        <p class="text-sm font-bold text-gray-900"><%= @payment_file.region || 'N/A' %></p>
+    <!-- Right: Info Items -->
+    <div class="flex items-center flex-shrink-0" style="gap: 28px;">
+
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px;">
+        <p style="font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Region</p>
+        <p style="font-size: 13px; font-weight: 700; color: #111827; text-transform: uppercase;"><%= @payment_file.region || 'N/A' %></p>
       </div>
 
-      <!-- Network -->
-      <div class="text-right">
-        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Network</p>
-        <p class="text-sm font-bold text-gray-900"><%= truncate(@payment_file.affiliate_network, length: 20) %></p>
+      <div style="width: 1px; height: 32px; background: #e5e7eb; flex-shrink: 0;"></div>
+
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px;">
+        <p style="font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Network</p>
+        <p style="font-size: 13px; font-weight: 700; color: #111827;"><%= truncate(@payment_file.affiliate_network, length: 22) %></p>
       </div>
 
-      <!-- Status -->
-      <div class="text-right">
-        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Status</p>
+      <div style="width: 1px; height: 32px; background: #e5e7eb; flex-shrink: 0;"></div>
+
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+        <p style="font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Status</p>
         <%= render 'shared/status_badge', status: @payment_file.status %>
       </div>
 
-      <!-- Amount -->
-      <div class="text-right">
-        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Amount</p>
-        <p class="text-sm font-bold text-purple-600"><%= number_to_currency(@transactions.sum(&:amount)) %></p>
+      <div style="width: 1px; height: 32px; background: #e5e7eb; flex-shrink: 0;"></div>
+
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px;">
+        <p style="font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Amount</p>
+        <p style="font-size: 14px; font-weight: 700; color: #9333ea;"><%= number_to_currency(@transactions.sum(&:amount)) %></p>
       </div>
 
     </div>
