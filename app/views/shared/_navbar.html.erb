@@ -1,74 +1,81 @@
 <!-- RESPONSIVE NAVBAR -->
 <!-- Works at: Mobile (320px), Tablet (640px), Desktop (1024px+) -->
 
-<nav class="w-full border-b-4 border-blue-600 shadow-lg sticky top-0 z-40" style="background-color: #ffffff; color: #111827;">
-  <div class="w-full px-3 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5" style="background-color: #ffffff;">
-    <div class="flex items-center justify-between h-auto gap-4 sm:gap-6 md:gap-8">
+<nav id="rp-navbar" style="width: 100%; background: linear-gradient(110deg, #1245a8 0%, #1a3baa 40%, #2d259e 75%, #3b1fa0 100%); color: #ffffff; position: relative; overflow: hidden; border-bottom: 4px solid #3b82f6; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+  <!-- Decorative background blobs -->
+  <span aria-hidden="true" style="position:absolute;right:-40px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(74,222,188,0.18) 0%,rgba(74,222,188,0) 70%);pointer-events:none;"></span>
+  <span aria-hidden="true" style="position:absolute;left:33%;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.07) 0%,rgba(255,255,255,0) 70%);pointer-events:none;"></span>
+  <span aria-hidden="true" style="position:absolute;right:220px;top:10px;width:8px;height:8px;border-radius:2px;background:rgba(74,222,188,0.4);transform:rotate(30deg);pointer-events:none;"></span>
+  <span aria-hidden="true" style="position:absolute;right:280px;bottom:12px;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.25);pointer-events:none;"></span>
 
-      <!-- LEFT: Logo & Branding — links to home -->
-      <a href="/" class="flex items-center gap-2 sm:gap-3 md:gap-5 flex-shrink-0 no-underline hover:opacity-90 transition-opacity" style="text-decoration: none;">
-        <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex-shrink-0 overflow-hidden">
-          <img
-            src="/logo.svg"
-            alt="ReconPilot AI Logo"
-            class="w-full h-full object-contain drop-shadow-lg"
-            title="ReconPilot AI - AI Payment Platform"
-          >
-        </div>
-        <div class="flex flex-col gap-0">
-          <span class="text-xl sm:text-2xl md:text-3xl font-bold leading-tight" style="color: #111827;">ReconPilot AI</span>
-          <span class="text-xs sm:text-sm md:text-base font-semibold" style="color: #6b7280;">AI Payment Platform</span>
+  <div id="rp-nav-inner" style="background: transparent; width: 100%; padding: 14px 16px; box-sizing: border-box;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+
+      <!-- LEFT: Banner Branding — links to home -->
+      <a href="/" id="rp-brand-link" style="display: flex; align-items: center; text-decoration: none; flex-shrink: 0; min-width: 0; opacity: 1; transition: opacity 0.2s;"
+         onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+        <span id="rp-accent-bar" aria-hidden="true" style="width: 3px; height: 48px; border-radius: 2px; background: #2dd4bf; margin-right: 10px; flex-shrink: 0; display: block;"></span>
+        <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+          <span id="rp-eyebrow" style="font-size: 10px; font-weight: 600; letter-spacing: 3px; color: #67e8f9; text-transform: uppercase; line-height: 1;">AI Payment Platform</span>
+          <span id="rp-title" style="font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px; line-height: 1.15;">ReconPilot AI</span>
+          <span id="rp-tagline" style="font-size: 10px; color: #bfdbfe; font-weight: 400; line-height: 1; margin-top: 1px; white-space: nowrap;">Smart · Cloud-native · Real-time</span>
         </div>
       </a>
 
-      <!-- RIGHT: Icons (all breakpoints) -->
-      <div class="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
+      <!-- RIGHT: Icons -->
+      <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
 
         <!-- User Avatar -->
-        <div
-          class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full cursor-pointer transition-transform hover:scale-110 flex items-center justify-center text-lg sm:text-xl md:text-2xl font-bold text-white"
-          style="background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);"
-          title="Profile"
-          aria-label="User Profile">
-          👤
-        </div>
+        <div id="rp-icon-user"
+          style="width: 36px; height: 36px; border-radius: 50%; cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; font-size: 16px; color: white; background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%); flex-shrink: 0;"
+          onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"
+          title="Profile" aria-label="User Profile">👤</div>
 
-        <!-- Quick Questions Icon — desktop only, top-right -->
-        <button
-          id="nav-questions-btn"
-          class="flex transition-all p-2 sm:p-2.5 md:p-3 rounded-lg items-center justify-center"
-          style="color: #4b5563;"
-          onmouseover="this.style.color='#2563eb'; this.style.backgroundColor='#f0f4ff';"
-          onmouseout="this.style.color='#4b5563'; this.style.backgroundColor='transparent';"
+        <!-- Quick Questions -->
+        <button id="nav-questions-btn"
+          style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; border: none; background: transparent; cursor: pointer; color: #fca5a5; font-size: 20px; transition: all 0.2s; flex-shrink: 0;"
+          onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='rgba(255,255,255,0.15)';"
+          onmouseout="this.style.color='#fca5a5'; this.style.backgroundColor='transparent';"
           onclick="window.innerWidth < 768 ? toggleMobileQuestions() : toggleNavQuestions()"
-          title="Quick Questions for AI Assistant"
-          aria-label="Quick Questions">
-          <span class="text-2xl sm:text-2xl md:text-3xl">❓</span>
-        </button>
+          title="Quick Questions for AI Assistant" aria-label="Quick Questions">❓</button>
 
-        <!-- Payment Reconciliation Guide — all breakpoints -->
-        <button
-          id="nav-guide-btn"
-          class="transition-all p-2 sm:p-2.5 md:p-3 rounded-lg flex items-center justify-center"
-          style="color: #4b5563;"
-          onmouseover="this.style.color='#2563eb'; this.style.backgroundColor='#f0f4ff';"
-          onmouseout="this.style.color='#4b5563'; this.style.backgroundColor='transparent';"
+        <!-- Guide -->
+        <button id="nav-guide-btn"
+          style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; border: none; background: transparent; cursor: pointer; color: #93c5fd; font-size: 20px; transition: all 0.2s; flex-shrink: 0;"
+          onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='rgba(255,255,255,0.15)';"
+          onmouseout="this.style.color='#93c5fd'; this.style.backgroundColor='transparent';"
           onclick="toggleGuideModal()"
-          title="Payment Reconciliation Guide"
-          aria-label="Payment Reconciliation Guide">
-          <span class="text-2xl sm:text-2xl md:text-3xl">ℹ️</span>
-        </button>
-
-
-
-
-
-        <!-- MOBILE FAB removed — ❓ now visible in navbar on all breakpoints -->
+          title="Payment Reconciliation Guide" aria-label="Payment Reconciliation Guide">ℹ️</button>
 
       </div>
     </div>
   </div>
 </nav>
+
+<style>
+  /* Navbar responsive scaling — pure CSS media queries, no Tailwind dependency */
+  @media (min-width: 1024px) {
+    #rp-nav-inner      { padding: 32px 40px !important; }
+    #rp-accent-bar     { width: 4px !important; height: 84px !important; margin-right: 16px !important; }
+    #rp-eyebrow        { font-size: 12px !important; letter-spacing: 4px !important; }
+    #rp-title          { font-size: 36px !important; }
+    #rp-tagline        { font-size: 13px !important; }
+    #rp-icon-user      { width: 48px !important; height: 48px !important; font-size: 22px !important; }
+    #nav-questions-btn { width: 48px !important; height: 48px !important; font-size: 26px !important; }
+    #nav-guide-btn     { width: 48px !important; height: 48px !important; font-size: 26px !important; }
+  }
+  @media (min-width: 640px) and (max-width: 1023px) {
+    #rp-nav-inner      { padding: 20px 24px !important; }
+    #rp-accent-bar     { width: 3px !important; height: 62px !important; margin-right: 14px !important; }
+    #rp-eyebrow        { font-size: 11px !important; }
+    #rp-title          { font-size: 28px !important; }
+    #rp-tagline        { font-size: 11px !important; }
+    #rp-icon-user      { width: 42px !important; height: 42px !important; font-size: 18px !important; }
+    #nav-questions-btn { width: 42px !important; height: 42px !important; font-size: 22px !important; }
+    #nav-guide-btn     { width: 42px !important; height: 42px !important; font-size: 22px !important; }
+  }
+</style>
+
 
 <!-- Horizontal Color Bar -->
 <div class="w-full h-1 sm:h-2 shadow-md" style="background: linear-gradient(to right, #2563eb, #3b82f6, #1e40af);"></div>
