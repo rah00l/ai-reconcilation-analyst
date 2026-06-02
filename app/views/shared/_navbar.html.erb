@@ -5,8 +5,8 @@
   <div class="w-full px-3 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5" style="background-color: #ffffff;">
     <div class="flex items-center justify-between h-auto gap-4 sm:gap-6 md:gap-8">
 
-      <!-- LEFT: Logo & Branding -->
-      <div class="flex items-center gap-2 sm:gap-3 md:gap-5 flex-shrink-0">
+      <!-- LEFT: Logo & Branding — links to home -->
+      <a href="/" class="flex items-center gap-2 sm:gap-3 md:gap-5 flex-shrink-0 no-underline hover:opacity-90 transition-opacity">
         <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex-shrink-0 overflow-hidden">
           <img
             src="/logo.svg"
@@ -19,7 +19,7 @@
           <span class="text-xl sm:text-2xl md:text-3xl font-bold leading-tight" style="color: #111827;">ReconPilot AI</span>
           <span class="text-xs sm:text-sm md:text-base font-semibold" style="color: #6b7280;">AI Payment Platform</span>
         </div>
-      </div>
+      </a>
 
       <!-- RIGHT: Icons (all breakpoints) -->
       <div class="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
@@ -36,34 +36,49 @@
         <!-- Quick Questions Icon — desktop only, top-right -->
         <button
           id="nav-questions-btn"
-          class="flex transition-all p-2 sm:p-2.5 md:p-3 rounded-lg items-center justify-center"
+          class="hidden md:flex transition-all p-2 sm:p-2.5 md:p-3 rounded-lg items-center justify-center"
           style="color: #4b5563;"
           onmouseover="this.style.color='#2563eb'; this.style.backgroundColor='#f0f4ff';"
           onmouseout="this.style.color='#4b5563'; this.style.backgroundColor='transparent';"
-          onclick="window.innerWidth < 768 ? toggleMobileQuestions() : toggleNavQuestions()"
+          onclick="toggleNavQuestions()"
           title="Quick Questions for AI Assistant"
           aria-label="Quick Questions">
           <span class="text-2xl sm:text-2xl md:text-3xl">❓</span>
         </button>
 
-        <!-- Payment Reconciliation Guide — all breakpoints -->
+        <!-- Notifications -->
         <button
-          id="nav-guide-btn"
-          class="transition-all p-2 sm:p-2.5 md:p-3 rounded-lg flex items-center justify-center"
+          class="transition-all p-2 sm:p-2.5 md:p-3 rounded-lg relative group"
           style="color: #4b5563;"
           onmouseover="this.style.color='#2563eb'; this.style.backgroundColor='#f0f4ff';"
           onmouseout="this.style.color='#4b5563'; this.style.backgroundColor='transparent';"
-          onclick="toggleGuideModal()"
-          title="Payment Reconciliation Guide"
-          aria-label="Payment Reconciliation Guide">
-          <span class="text-2xl sm:text-2xl md:text-3xl">ℹ️</span>
+          title="Notifications"
+          aria-label="Notifications">
+          <span class="text-2xl sm:text-2xl md:text-3xl">🔔</span>
+          <span class="absolute top-0 right-0 w-3 h-3 sm:w-4 sm:h-4 bg-red-500 rounded-full animate-pulse shadow-md"></span>
         </button>
 
+        <!-- Settings -->
+        <button
+          class="transition-all p-2 sm:p-2.5 md:p-3 rounded-lg group"
+          style="color: #4b5563;"
+          onmouseover="this.style.color='#2563eb'; this.style.backgroundColor='#f0f4ff';"
+          onmouseout="this.style.color='#4b5563'; this.style.backgroundColor='transparent';"
+          title="Settings"
+          aria-label="Settings">
+          <span class="text-2xl sm:text-2xl md:text-3xl">⚙️</span>
+        </button>
 
-
-
-
-        <!-- MOBILE FAB removed — ❓ now visible in navbar on all breakpoints -->
+        <!-- MOBILE FAB — bottom-right bubble, mobile only (< 768px) -->
+        <button
+          id="fab-questions-btn"
+          class="fixed bottom-6 right-6 md:hidden w-14 h-14 rounded-full shadow-lg transition-all hover:scale-110 flex items-center justify-center text-2xl font-bold text-white"
+          style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); z-index: 40;"
+          title="Quick Questions"
+          aria-label="Quick Questions"
+          onclick="toggleMobileQuestions()">
+          ❓
+        </button>
 
       </div>
     </div>
@@ -198,164 +213,7 @@
   </div>
 </div>
 
-<!-- PAYMENT RECONCILIATION GUIDE MODAL — clean card design, responsive -->
-<div
-  id="guide-modal"
-  class="fixed inset-0 hidden items-center justify-center"
-  style="z-index: 9999; background: rgba(15, 23, 42, 0.12); backdrop-filter: blur(3px);"
-  onclick="if(event.target === this) toggleGuideModal()">
-
-  <div style="
-    width: calc(100vw - 24px);
-    max-width: 620px;
-    max-height: 88vh;
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06);
-    overflow-y: auto;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    border: 1px solid #e5e7eb;
-  ">
-
-    <!-- Header — clean white with blue left accent -->
-    <div style="
-      padding: 18px 20px 14px 20px;
-      border-bottom: 1px solid #f3f4f6;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: #ffffff;
-      border-radius: 16px 16px 0 0;
-      z-index: 1;
-    ">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <div style="width: 4px; height: 36px; background: #2563eb; border-radius: 4px; flex-shrink: 0;"></div>
-        <div>
-          <p style="font-size: 15px; font-weight: 700; color: #111827; margin: 0; line-height: 1.3;">Payment Reconciliation Guide</p>
-          <p style="font-size: 11px; color: #6b7280; margin: 0; margin-top: 2px;">How the reconciliation process works</p>
-        </div>
-      </div>
-      <button onclick="toggleGuideModal()" style="
-        background: #f9fafb;
-        border: 1px solid #e5e7eb;
-        cursor: pointer;
-        color: #6b7280;
-        font-size: 14px;
-        padding: 4px 9px;
-        border-radius: 6px;
-        line-height: 1.4;
-        flex-shrink: 0;
-        margin-left: 10px;
-      " title="Close">✕</button>
-    </div>
-
-    <!-- Body -->
-    <div style="padding: 16px 20px 20px 20px; overflow-x: hidden; box-sizing: border-box;">
-
-      <!-- Overview -->
-      <p style="font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 8px 0;">Overview</p>
-      <p style="font-size: 12px; color: #374151; line-height: 1.6; margin: 0 0 20px 0; padding: 10px 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e5e7eb;">
-        The system processes uploaded payment files through a multi-stage pipeline — from initial validation through to full reconciliation against your affiliate network records.
-      </p>
-
-      <!-- Divider -->
-      <div style="border-top: 1px solid #f3f4f6; margin-bottom: 16px;"></div>
-
-      <!-- Status Lifecycle -->
-      <p style="font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 10px 0;">Status Lifecycle</p>
-      <div style="display: flex; flex-direction: column; gap: 1px; margin-bottom: 20px; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;">
-
-        <div class="guide-row">
-          <span class="guide-pill" style="background:#eff6ff; color:#1e40af; border-color:#bfdbfe;">New</span>
-          <span class="guide-row-text">File uploaded and queued — awaiting validation.</span>
-        </div>
-        <div class="guide-row" style="border-top: 1px solid #f3f4f6;">
-          <span class="guide-pill" style="background:#eff6ff; color:#1e40af; border-color:#bfdbfe;">Ready</span>
-          <span class="guide-row-text">Validated and ready to be parsed by the engine.</span>
-        </div>
-        <div class="guide-row" style="border-top: 1px solid #f3f4f6;">
-          <span class="guide-pill" style="background:#fefce8; color:#854d0e; border-color:#fde68a;">Processing</span>
-          <span class="guide-row-text">Currently being parsed and matched against records.</span>
-        </div>
-        <div class="guide-row" style="border-top: 1px solid #f3f4f6;">
-          <span class="guide-pill" style="background:#f0fdf4; color:#166534; border-color:#bbf7d0;">Parsed</span>
-          <span class="guide-row-text">Parsed successfully — data extracted and viewable.</span>
-        </div>
-        <div class="guide-row" style="border-top: 1px solid #f3f4f6;">
-          <span class="guide-pill" style="background:#f0fdf4; color:#166534; border-color:#bbf7d0;">Partial Reconciled</span>
-          <span class="guide-row-text">Some payments matched — remaining records need review.</span>
-        </div>
-        <div class="guide-row" style="border-top: 1px solid #f3f4f6;">
-          <span class="guide-pill" style="background:#f0fdf4; color:#166534; border-color:#bbf7d0;">Full Reconciled</span>
-          <span class="guide-row-text">All payments matched — reconciliation complete.</span>
-        </div>
-
-      </div>
-
-      <!-- Divider -->
-      <div style="border-top: 1px solid #f3f4f6; margin-bottom: 16px;"></div>
-
-      <!-- Available Actions -->
-      <p style="font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 10px 0;">Available Actions</p>
-      <div style="display: flex; flex-direction: column; gap: 1px; margin-bottom: 20px; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;">
-
-        <div class="guide-row">
-          <span class="guide-dot" style="background:#16a34a;"></span>
-          <span class="guide-action-label" style="color:#166534;">Parse</span>
-          <span class="guide-row-text">Triggers parsing for NEW or READY files.</span>
-        </div>
-        <div class="guide-row" style="border-top: 1px solid #f3f4f6;">
-          <span class="guide-dot" style="background:#16a34a;"></span>
-          <span class="guide-action-label" style="color:#166534;">Display</span>
-          <span class="guide-row-text">View data for PARSED or PARTIAL RECONCILED files.</span>
-        </div>
-        <div class="guide-row" style="border-top: 1px solid #f3f4f6;">
-          <span class="guide-dot" style="background:#2563eb;"></span>
-          <span class="guide-action-label" style="color:#1e40af;">Summary</span>
-          <span class="guide-row-text">View reconciliation summary for FULL RECONCILED files.</span>
-        </div>
-        <div class="guide-row" style="border-top: 1px solid #f3f4f6;">
-          <span class="guide-dot" style="background:#dc2626;"></span>
-          <span class="guide-action-label" style="color:#991b1b;">Remove</span>
-          <span class="guide-row-text">Delete the file record. Not available during PROCESSING.</span>
-        </div>
-
-      </div>
-
-      <!-- Divider -->
-      <div style="border-top: 1px solid #f3f4f6; margin-bottom: 16px;"></div>
-
-      <!-- Mapping Errors -->
-      <p style="font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 8px 0;">Mapping Errors</p>
-      <p style="font-size: 12px; color: #374151; line-height: 1.6; margin: 0; padding: 10px 12px; background: #fffbeb; border-radius: 8px; border: 1px solid #fde68a;">
-        If a payment ID cannot be matched to a network record, a mapping error is raised.
-        Check that the affiliate network ID in the file matches your registered records.
-        The system does not retry automatically — re-upload the corrected file to reprocess.
-      </p>
-
-    </div>
-  </div>
-</div>
-
 <script>
-  // ── Desktop ❓ dropdown ─────────────────────────────────
-  // ── Guide modal ────────────────────────────────────
-  function toggleGuideModal() {
-    const modal = document.getElementById('guide-modal');
-    if (modal.classList.contains('hidden')) {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    } else {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      document.body.style.overflow = 'auto';
-    }
-  }
-
   // ── Desktop ❓ dropdown ─────────────────────────────────
   function toggleNavQuestions() {
     const dropdown = document.getElementById('nav-questions-dropdown');
@@ -414,8 +272,6 @@
       if (dropdown && !dropdown.classList.contains('hidden')) toggleNavQuestions();
       const modal = document.getElementById('mobile-questions-modal');
       if (modal && !modal.classList.contains('hidden')) toggleMobileQuestions();
-      const guideModal = document.getElementById('guide-modal');
-      if (guideModal && !guideModal.classList.contains('hidden')) toggleGuideModal();
     }
   });
 
@@ -503,53 +359,5 @@
       from { transform: translateY(100%); }
       to   { transform: translateY(0); }
     }
-  }
-
-  /* ── Guide modal — clean card rows ── */
-  .guide-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    background: #ffffff;
-  }
-  .guide-row:hover { background: #f9fafb; }
-
-  .guide-pill {
-    flex-shrink: 0;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 20px;
-    border: 1px solid;
-    white-space: nowrap;
-    min-width: 70px;
-    text-align: center;
-  }
-
-  .guide-dot {
-    flex-shrink: 0;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-  }
-
-  .guide-action-label {
-    flex-shrink: 0;
-    font-size: 12px;
-    font-weight: 600;
-    min-width: 58px;
-  }
-
-  .guide-row-text {
-    font-size: 12px;
-    color: #6b7280;
-    line-height: 1.4;
-  }
-
-  @media (max-width: 400px) {
-    .guide-row { padding: 8px 10px; gap: 8px; }
-    .guide-pill { font-size: 10px; min-width: 58px; }
-    .guide-row-text { font-size: 11px; }
   }
 </style>
