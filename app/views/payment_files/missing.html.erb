@@ -1,36 +1,37 @@
+<% @page_title = "Missing" %>
 <div class="min-h-screen bg-gray-100">
-  <div class="container mx-auto px-4 py-8">
+  <div class="w-full px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
     <!-- PROFESSIONAL HORIZONTAL HEADER -->
     <%= render 'shared/header' %>
 
     <!-- Missing Transactions Table -->
     <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
+        <table class="w-full text-sm" style="min-width: 640px;">
           <thead>
             <tr class="bg-gradient-to-r from-red-600 to-red-700">
-              <th class="px-6 py-4 text-left font-semibold text-white">MID</th>
-              <th class="px-6 py-4 text-left font-semibold text-white">Merchant</th>
-              <th class="px-6 py-4 text-right font-semibold text-white">Amount</th>
-              <th class="px-6 py-4 text-left font-semibold text-white">Error Reason</th>
-              <th class="px-6 py-4 text-left font-semibold text-white">Date</th>
-              <th class="px-6 py-4 text-left font-semibold text-white">Actions</th>
+              <th class="px-3 sm:px-4 md:px-6 py-3 text-left font-semibold text-white text-xs sm:text-sm">MID</th>
+              <th class="px-3 sm:px-4 md:px-6 py-3 text-left font-semibold text-white text-xs sm:text-sm">Merchant</th>
+              <th class="px-3 sm:px-4 md:px-6 py-3 text-left font-semibold text-white text-xs sm:text-sm">Amount</th>
+              <th class="px-3 sm:px-4 md:px-6 py-3 text-left font-semibold text-white text-xs sm:text-sm">Error Reason</th>
+              <th class="px-3 sm:px-4 md:px-6 py-3 text-left font-semibold text-white text-xs sm:text-sm">Date</th>
+              <th class="px-3 sm:px-4 md:px-6 py-3 text-left font-semibold text-white text-xs sm:text-sm">Actions</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
             <% if @transactions.any? %>
               <% @transactions.each do |txn| %>
                 <tr class="bg-red-50 hover:bg-red-100">
-                  <td class="px-6 py-4 font-semibold text-gray-900"><%= txn.mid %></td>
-                  <td class="px-6 py-4 text-gray-900"><%= txn.merchant_name %></td>
-                  <td class="px-6 py-4 text-right font-semibold text-red-600"><%= number_to_currency(txn.amount) %></td>
-                  <td class="px-6 py-4 text-gray-700">
+                  <td class="px-3 sm:px-4 md:px-6 py-3 font-semibold text-gray-900 text-xs sm:text-sm"><%= txn.mid %></td>
+                  <td class="px-3 sm:px-4 md:px-6 py-3 text-gray-900 text-xs sm:text-sm"><%= txn.merchant_name %></td>
+                  <td class="px-3 sm:px-4 md:px-6 py-3 font-semibold text-red-600 text-xs sm:text-sm"><%= number_to_currency(txn.amount) %></td>
+                  <td class="px-3 sm:px-4 md:px-6 py-3 text-gray-700">
                     <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-semibold">
                       <%= txn.error_reason %>
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-gray-600"><%= txn.created_at.strftime('%Y-%m-%d') %></td>
-                  <td class="px-6 py-4 text-sm space-x-2">
+                  <td class="px-3 sm:px-4 md:px-6 py-3 text-gray-600 text-xs sm:text-sm"><%= txn.created_at.strftime('%Y-%m-%d') %></td>
+                  <td class="px-3 sm:px-4 md:px-6 py-3 text-xs sm:text-sm space-x-2">
                     <%= link_to 'Resolve', '#', class: 'text-green-500 hover:text-green-700 font-medium' %>
                     <%= link_to 'Delete', '#', class: 'text-red-500 hover:text-red-700 font-medium' %>
                   </td>
@@ -50,10 +51,13 @@
 
     
     <!-- Bottom Navigation Buttons -->
-    <div class="flex gap-4 mt-8">
-      <%= link_to '← Back to Review', display_payment_file_path(@payment_file), class: 'px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium' %>
-      <%= link_to 'Next: Settlement →', tenancy_payment_file_path(@payment_file), class: 'px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded font-medium' %>
-      <%= link_to '← Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
+    <div class="flex flex-wrap gap-3 mt-6">
+      <%= link_to '← Back to Review', display_payment_file_path(@payment_file),
+          style: 'display:inline-flex; align-items:center; padding:8px 16px; background:#3b82f6; color:white; border-radius:6px; font-weight:600; font-size:13px; text-decoration:none; white-space:nowrap;' %>
+      <%= link_to 'Next: Settlement →', tenancy_payment_file_path(@payment_file),
+          style: 'display:inline-flex; align-items:center; padding:8px 16px; background:#16a34a; color:white; border-radius:6px; font-weight:600; font-size:13px; text-decoration:none; white-space:nowrap;' %>
+      <%= link_to '← Back to Files', payment_files_path,
+          style: 'display:inline-flex; align-items:center; padding:8px 16px; background:#6b7280; color:white; border-radius:6px; font-weight:600; font-size:13px; text-decoration:none; white-space:nowrap;' %>
     </div>
   </div>
 </div>
