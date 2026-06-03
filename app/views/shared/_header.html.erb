@@ -1,9 +1,9 @@
 <!-- REUSABLE HEADER PARTIAL WITH SCREEN NAME -->
 <!-- Responsive: stacks on mobile, horizontal on desktop -->
-<div class="bg-white border-b border-gray-200 px-3 sm:px-4 md:px-6 py-3 sm:py-4 mb-4 sm:mb-6 md:mb-8 rounded-lg shadow-sm">
+<div class="bg-white border-b border-gray-200 px-3 sm:px-4 md:px-6 py-3 sm:py-4 rounded-lg shadow-sm" style="margin-bottom: 24px;">
 
-  <!-- MOBILE LAYOUT (< 768px): stacked -->
-  <div class="md:hidden">
+  <!-- MOBILE/TABLET LAYOUT (< 1024px): stacked -->
+  <div class="lg:hidden">
     <!-- Row 1: Back + Screen Name -->
     <div class="flex items-center gap-3" style="margin-bottom: 10px;">
       <%= link_to '← Back', payment_files_path,
@@ -25,7 +25,7 @@
       </div>
       <div class="bg-gray-50 rounded px-3 py-2">
         <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Network</p>
-        <p class="text-sm font-bold text-gray-900 truncate"><%= truncate(@payment_file.affiliate_network, length: 18) %></p>
+        <p class="text-sm font-bold text-gray-900"><%= @payment_file.affiliate_network %></p>
       </div>
       <div class="bg-gray-50 rounded px-3 py-2">
         <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide mb-1">Status</p>
@@ -38,8 +38,8 @@
     </div>
   </div>
 
-  <!-- DESKTOP LAYOUT (768px+): single horizontal row -->
-  <div class="hidden md:flex items-center justify-between gap-8">
+  <!-- DESKTOP LAYOUT (1024px+): single horizontal row -->
+  <div class="hidden lg:flex items-center justify-between gap-8">
 
     <!-- Left: Back + Screen Name -->
     <div class="flex items-center flex-shrink-0" style="gap: 16px;">
@@ -70,7 +70,7 @@
 
       <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px;">
         <p style="font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Network</p>
-        <p style="font-size: 13px; font-weight: 700; color: #111827;"><%= truncate(@payment_file.affiliate_network, length: 22) %></p>
+        <p style="font-size: 13px; font-weight: 700; color: #111827;"><%= @payment_file.affiliate_network %></p>
       </div>
 
       <div style="width: 1px; height: 32px; background: #e5e7eb; flex-shrink: 0;"></div>

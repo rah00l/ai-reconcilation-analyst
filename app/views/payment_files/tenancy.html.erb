@@ -1,179 +1,157 @@
-<div class="min-h-screen bg-gray-50">
-  <div class="container mx-auto px-4 py-8">
-    <!-- PROFESSIONAL HORIZONTAL HEADER -->
+<% @page_title = "Settlement" %>
+<div class="min-h-screen" style="background:#e8edf2;">
+  <div class="container mx-auto px-4 pt-4 pb-10 sm:pt-6 md:py-8">
     <%= render 'shared/header' %>
 
-    <!-- Merchant Transaction Table (NEW) -->
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-      <div class="p-4 bg-gray-50 border-b">
-        <h2 class="text-lg font-bold text-gray-900">Tenancy Transactions</h2>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden" style="margin-bottom: 24px;">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="font-bold text-gray-900 text-base">Tenancy Transactions</h2>
       </div>
-      
       <div class="overflow-x-auto">
-        <table class="w-full text-sm border-collapse">
+        <div style="padding: 0 16px;">
+        <table class="w-full text-sm" style="min-width:640px; border-collapse:collapse;">
           <thead>
-            <tr class="bg-gray-100 border-b-2 border-gray-300">
-              <th class="px-4 py-3 text-left font-semibold text-gray-900">Affiliate Network</th>
-              <th class="px-4 py-3 text-left font-semibold text-gray-900">Merchant</th>
-              <th class="px-4 py-3 text-left font-semibold text-gray-900">Tenancy Tranx</th>
-              <th class="px-4 py-3 text-left font-semibold text-gray-900">Mapped Campaign</th>
-              <th class="px-4 py-3 text-right font-semibold text-gray-900">Campaign Amount</th>
-              <th class="px-4 py-3 text-right font-semibold text-gray-900">Paid Amount</th>
-              <th class="px-4 py-3 text-left font-semibold text-gray-900">Tenancy Type</th>
-              <th class="px-4 py-3 text-left font-semibold text-gray-900">Agg Tranx ID</th>
-              <th class="px-4 py-3 text-right font-semibold text-gray-900">Tenancy Split</th>
-              <th class="px-4 py-3 text-left font-semibold text-gray-900">Action</th>
+            <tr class="bg-gray-50 border-b border-gray-200">
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide" style="white-space:nowrap;">Merchant <span class="text-red-400">*</span></th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide" style="white-space:nowrap;">Tenancy Tranx</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide" style="white-space:nowrap;">Mapped Campaign <span class="text-red-400">*</span></th>
+              <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wide" style="white-space:nowrap;">Campaign Amt <span class="text-red-400">*</span></th>
+              <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wide" style="white-space:nowrap;">Paid Amount <span class="text-red-400">*</span></th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide" style="white-space:nowrap;">Tenancy Type <span class="text-red-400">*</span></th>
             </tr>
           </thead>
           <tbody>
-            <!-- Row 1 -->
-            <tr class="border-b hover:bg-gray-50">
-              <td class="px-4 py-3 text-gray-900">Commission Junction - UK</td>
-              <td class="px-4 py-3 text-gray-900">George at ASDA</td>
-              <td class="px-4 py-3 text-gray-900">WL37017Q42025B</td>
-              <td class="px-4 py-3 text-gray-900">
-                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+              <td class="px-4 py-4 font-medium text-gray-900" style="white-space:nowrap;">George at ASDA</td>
+              <td class="px-4 py-4 text-gray-600" style="white-space:nowrap;">WL37017Q42025B</td>
+              <td class="px-4 py-4">
+                <select class="w-full px-2 py-1.5 border border-gray-300 rounded-md text-gray-900 text-sm bg-white focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none">
                   <option>George at ASDA-14608-WL37017Q42025B-1500.0</option>
                 </select>
               </td>
-              <td class="px-4 py-3 text-right text-gray-900 font-semibold">1500.00</td>
-              <td class="px-4 py-3 text-right">
-                <input type="text" value="1500.00" disabled class="w-24 px-2 py-1 border rounded bg-gray-50 text-right text-gray-900" />
+              <td class="px-4 py-4 text-right font-semibold text-gray-900">1500.00</td>
+              <td class="px-4 py-4 text-right">
+                <input type="text" value="1500.00" class="w-24 px-2 py-1.5 border border-gray-300 rounded-md text-right text-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none" />
               </td>
-              <td class="px-4 py-3">
-                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+              <td class="px-4 py-4">
+                <select class="w-full px-2 py-1.5 border border-gray-300 rounded-md text-gray-900 text-sm bg-white focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none">
                   <option>Tenancy</option>
                 </select>
               </td>
-              <td class="px-4 py-3 text-gray-900">3682911214</td>
-              <td class="px-4 py-3 text-right text-gray-900"></td>
-              <td class="px-4 py-3 text-right"></td>
             </tr>
-
-            <!-- Row 2 -->
-            <tr class="border-b hover:bg-gray-50">
-              <td class="px-4 py-3 text-gray-900">Commission Junction - UK</td>
-              <td class="px-4 py-3 text-gray-900">Sainsburys Groceries Online</td>
-              <td class="px-4 py-3 text-gray-900">Browser Adjustment (advertiser: 1024283)</td>
-              <td class="px-4 py-3 text-gray-900">
-                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+              <td class="px-4 py-4 font-medium text-gray-900" style="white-space:nowrap;">Sainsburys Groceries Online</td>
+              <td class="px-4 py-4 text-gray-500 text-xs leading-relaxed">Browser Adjustment<br>(advertiser: 1024283)</td>
+              <td class="px-4 py-4">
+                <select class="w-full px-2 py-1.5 border border-gray-300 rounded-md text-gray-900 text-sm bg-white focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none">
                   <option>Sainsburys Groceries Online-8966-WL29432Q42023-2500.0</option>
                 </select>
               </td>
-              <td class="px-4 py-3 text-right text-gray-900 font-semibold">2500.00</td>
-              <td class="px-4 py-3 text-right">
-                <input type="text" value="1.03" disabled class="w-24 px-2 py-1 border rounded bg-gray-50 text-right text-gray-900" />
+              <td class="px-4 py-4 text-right font-semibold text-gray-900">2500.00</td>
+              <td class="px-4 py-4 text-right">
+                <input type="text" value="1.03" class="w-24 px-2 py-1.5 border border-gray-300 rounded-md text-right text-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none" />
               </td>
-              <td class="px-4 py-3">
-                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+              <td class="px-4 py-4">
+                <select class="w-full px-2 py-1.5 border border-gray-300 rounded-md text-gray-900 text-sm bg-white focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none">
                   <option>Tenancy</option>
                 </select>
               </td>
-              <td class="px-4 py-3 text-gray-900">0</td>
-              <td class="px-4 py-3 text-right text-gray-900">95 : 5</td>
-              <td class="px-4 py-3 text-right"></td>
             </tr>
-
-            <!-- Row 3 -->
-            <tr class="border-b hover:bg-gray-50">
-              <td class="px-4 py-3 text-gray-900">Commission Junction - UK</td>
-              <td class="px-4 py-3 text-gray-900">Argos</td>
-              <td class="px-4 py-3 text-gray-900">Browser Adjustment (advertiser: 1024283)</td>
-              <td class="px-4 py-3 text-gray-900">
-                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-4 py-4 font-medium text-gray-900" style="white-space:nowrap;">Argos</td>
+              <td class="px-4 py-4 text-gray-500 text-xs leading-relaxed">Browser Adjustment<br>(advertiser: 1024283)</td>
+              <td class="px-4 py-4">
+                <select class="w-full px-2 py-1.5 border border-gray-300 rounded-md text-gray-900 text-sm bg-white focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none">
                   <option>Argos-10840-WL34738Q22024-4500.0</option>
                 </select>
               </td>
-              <td class="px-4 py-3 text-right text-gray-900 font-semibold">4500.00</td>
-              <td class="px-4 py-3 text-right">
-                <input type="text" value="84.46" disabled class="w-24 px-2 py-1 border rounded bg-gray-50 text-right text-gray-900" />
+              <td class="px-4 py-4 text-right font-semibold text-gray-900">4500.00</td>
+              <td class="px-4 py-4 text-right">
+                <input type="text" value="84.46" class="w-24 px-2 py-1.5 border border-gray-300 rounded-md text-right text-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none" />
               </td>
-              <td class="px-4 py-3">
-                <select disabled class="w-full px-2 py-1 border rounded bg-gray-50 text-gray-900">
+              <td class="px-4 py-4">
+                <select class="w-full px-2 py-1.5 border border-gray-300 rounded-md text-gray-900 text-sm bg-white focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none">
                   <option>Tenancy</option>
                 </select>
               </td>
-              <td class="px-4 py-3 text-gray-900">0</td>
-              <td class="px-4 py-3 text-right text-gray-900">95 : 5</td>
-              <td class="px-4 py-3 text-right"></td>
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
-      
-      <div class="p-4 border-t">
-        <button disabled class="px-4 py-2 bg-gray-300 text-gray-700 rounded font-medium cursor-not-allowed">
+      <div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
+        <button class="px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md text-sm font-medium hover:bg-gray-100 transition-colors">
           ADD MORE ITEM
         </button>
       </div>
     </div>
 
-    <!-- Fee Summary Panel (RIGHT SIDE) -->
-    <div class="grid grid-cols-3 gap-8 mb-8">
-      <!-- Empty left column for alignment -->
-      <div></div>
-      <div></div>
-      
-      <!-- Right column - Fee Summary -->
-      <div class="bg-white rounded-lg shadow-lg p-6">
-        <h2 class="text-lg font-bold text-gray-900 mb-4">Fee Calculation</h2>
-        
-        <div class="space-y-3 text-sm">
-          <div class="flex justify-between items-center border-b pb-2">
-            <p class="text-gray-600">Tenancy Fee / BMG</p>
-            <p class="text-gray-900">
-              <span class="text-gray-500">(1500.00)</span>
-              <span class="font-semibold ml-4">1500.00</span>
-            </p>
+    <!-- Fee Calculation — own white card, right-aligned -->
+    <div style="margin-bottom: 24px; display:flex; justify-content:flex-end;">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 w-full md:w-2/5">
+        <div class="px-6 py-4 border-b border-gray-100">
+          <h2 class="font-bold text-gray-900 text-base">Fee Calculation</h2>
+        </div>
+        <div style="padding: 20px 24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
+            <span class="text-gray-600 text-sm">Tenancy Fee / BMG</span>
+            <span class="text-sm text-gray-900">
+              <span class="text-gray-400 mr-3">(1500.00)</span>
+              <span class="font-semibold">1500.00</span>
+            </span>
           </div>
-          
-          <div class="flex justify-between items-center border-b pb-2">
-            <p class="text-gray-600">Remaining Bonus</p>
-            <p class="text-gray-900">
-              <span class="text-gray-500">(-0.03)</span>
-              <input type="text" value="-0.03" disabled class="w-20 px-2 py-1 border rounded bg-gray-50 text-right" />
-            </p>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
+            <span class="text-gray-600 text-sm">Remaining Bonus</span>
+            <span class="flex items-center gap-3">
+              <span class="text-gray-400 text-sm">(-0.03)</span>
+              <input type="text" value="-0.03" class="w-20 px-2 py-1.5 border border-gray-300 rounded-md text-right text-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none" />
+            </span>
           </div>
-          
-          <div class="flex justify-between items-center border-b pb-2">
-            <p class="text-gray-600">VAT</p>
-            <input type="text" value="0.00" disabled class="w-20 px-2 py-1 border rounded bg-gray-50 text-right" />
+          <div style="display:flex; justify-content:space-between; align-items:center; padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
+            <span class="text-gray-600 text-sm">VAT</span>
+            <input type="text" value="0.00" class="w-20 px-2 py-1.5 border border-gray-300 rounded-md text-right text-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-400 outline-none" />
           </div>
-          
-          <div class="flex justify-between items-center border-b pb-2">
-            <p class="text-gray-600">Unmatched Error</p>
-            <p class="text-gray-900 font-semibold">106.07</p>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
+            <span class="text-gray-600 text-sm">Unmatched Error</span>
+            <span class="font-semibold text-gray-900 text-sm">106.07</span>
           </div>
-          
-          <div class="flex justify-between items-center bg-gray-100 p-3 rounded font-bold">
-            <p class="text-gray-900">Total Amount:</p>
-            <p class="text-gray-900">1606.04</p>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 12px; background:#f9fafb; border-radius:8px; padding: 12px 16px;">
+            <span class="font-bold text-gray-900">Total Amount:</span>
+            <span class="font-bold text-gray-900">1606.04</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="flex gap-4 mb-8">
-      <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium">
-        TRAN RECONCILE
-      </button>
-      <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium">
-        FULL RECONCILE
-      </button>
-      <button class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium">
-        SAVE
-      </button>
-      <button class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium">
-        DOWNLOAD
-      </button>
+    <!-- Action buttons — own white card -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 px-6 py-5" style="margin-bottom: 24px;">
+      <div class="flex flex-wrap gap-3 justify-between items-center">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <button style="display:inline-flex;align-items:center;padding:9px 20px;background:#3b82f6;color:white;border-radius:6px;font-weight:600;font-size:13px;border:none;cursor:pointer;white-space:nowrap;"
+                  onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">TRAN RECONCILE</button>
+          <button style="display:inline-flex;align-items:center;padding:9px 20px;background:#3b82f6;color:white;border-radius:6px;font-weight:600;font-size:13px;border:none;cursor:pointer;white-space:nowrap;"
+                  onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">FULL RECONCILE</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <button style="display:inline-flex;align-items:center;padding:9px 20px;background:#6b7280;color:white;border-radius:6px;font-weight:600;font-size:13px;border:none;cursor:pointer;white-space:nowrap;"
+                  onmouseover="this.style.background='#4b5563'" onmouseout="this.style.background='#6b7280'">SAVE</button>
+          <button style="display:inline-flex;align-items:center;padding:9px 20px;background:#6b7280;color:white;border-radius:6px;font-weight:600;font-size:13px;border:none;cursor:pointer;white-space:nowrap;"
+                  onmouseover="this.style.background='#4b5563'" onmouseout="this.style.background='#6b7280'">DOWNLOAD</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Navigation Buttons -->
-    <div class="flex gap-4">
-      <%= link_to '← Back: Review', display_payment_file_path(@payment_file), class: 'px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium' %>
-      <%= link_to 'Summary →', summary_payment_file_path(@payment_file), class: 'px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded font-medium' %>
-      <%= link_to '← Back to Files', payment_files_path, class: 'px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium' %>
+    <!-- Navigation — own white card -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 px-6 py-5">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <%= link_to '← Back: Review', display_payment_file_path(@payment_file),
+            style: 'display:inline-flex;align-items:center;padding:9px 20px;background:#3b82f6;color:white;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;white-space:nowrap;' %>
+        <%= link_to 'Summary →', summary_payment_file_path(@payment_file),
+            style: 'display:inline-flex;align-items:center;padding:9px 20px;background:#16a34a;color:white;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;white-space:nowrap;' %>
+        <%= link_to '← Back to Files', payment_files_path,
+            style: 'display:inline-flex;align-items:center;padding:9px 20px;background:#6b7280;color:white;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;white-space:nowrap;' %>
+      </div>
     </div>
+
   </div>
 </div>
