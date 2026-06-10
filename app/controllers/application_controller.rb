@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   # HTTP Basic Authentication
   # Skip for health check endpoint and API endpoints
-  before_action :authenticate_user!, unless: :skip_auth?
+  # before_action :authenticate_user!, unless: :skip_auth?
 
   private
 
