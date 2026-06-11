@@ -2,27 +2,21 @@
 
 > AI Analyst Assistant for Affiliate Payment Reconciliation — powered by Anthropic Claude API with RAG architecture.
 
-[![Live on Railway](https://img.shields.io/badge/Live%20Demo-Railway-6B21A8?style=flat&logo=railway&logoColor=white)](https://reconpilot.up.railway.app)
-[![Deploy Status](https://img.shields.io/badge/deploy-live-brightgreen?style=flat)](https://reconpilot.up.railway.app)
+[![Live on Railway](https://img.shields.io/badge/Live%20Demo-Railway-6B21A8?style=flat&logo=railway&logoColor=white)](https://reconpilot-ai.up.railway.app)
+[![Deploy Status](https://img.shields.io/badge/deploy-live-brightgreen?style=flat)](https://reconpilot-ai.up.railway.app)
 [![Ruby on Rails](https://img.shields.io/badge/Rails-7.x-CC0000?style=flat&logo=rubyonrails&logoColor=white)](https://rubyonrails.org)
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
 [![Docker](https://img.shields.io/badge/Docker-multi--service-2496ED?style=flat&logo=docker&logoColor=white)](https://docker.com)
 [![Anthropic Claude](https://img.shields.io/badge/LLM-Anthropic%20Claude-6B21A8?style=flat)](https://anthropic.com)
+[![CI](https://github.com/rah00l/ai-reconcilation-analyst/actions/workflows/ci.yml/badge.svg)](https://github.com/rah00l/ai-reconcilation-analyst/actions/workflows/ci.yml)
 
 ---
 
 ## Demo
 
-<!-- Replace the line below with your actual GIF path once uploaded to the repo -->
-<!-- Example: ![ReconPilot Demo](demo/reconpilot-demo.gif) -->
+![ReconPilot AI Demo](demo/reconpilot-demo.gif)
 
-> 📁 Add your GIF here: place `reconpilot-demo.gif` inside a `/demo` folder in this repo,
-> then replace this block with:
-> ```
-> ![ReconPilot AI Demo](demo/reconpilot-demo.gif)
-> ```
-
-🔗 **[View Live App →](https://reconpilot.up.railway.app)**
+🔗 **[View Live App →](https://reconpilot-ai.up.railway.app)**
 
 ---
 
@@ -32,7 +26,7 @@ ReconPilot is the **AI capability layer** built on top of a production affiliate
 
 - **Ask questions** — *"Show discrepancies for October"* / *"Which affiliates have unmatched transactions?"*
 - **Surface discrepancies** — AI reasons over reconciliation rules and flags mismatches
-- **Audit-trail explanations** — get plain-language summaries of why a transaction is flagged
+- **Audit-trail explanations** — plain-language summaries of why a transaction is flagged
 - **Follow-up suggestions** — chatbot proactively suggests next actions based on context
 - **Session continuity** — multi-turn conversation maintains context across queries
 
@@ -96,8 +90,12 @@ ReconPilot is the AI extension of a production reconciliation platform built dur
 
 ```bash
 # Clone the repo
-git clone https://github.com/rah00l/reconpilot.git
-cd reconpilot
+git clone https://github.com/rah00l/ai-reconcilation-analyst.git
+cd ai-reconcilation-analyst
+
+# Copy environment variables
+cp .env.example .env
+# Add your ANTHROPIC_API_KEY to .env
 
 # Start all services with Docker
 docker-compose up --build
