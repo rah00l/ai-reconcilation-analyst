@@ -8,7 +8,7 @@
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
 [![Docker](https://img.shields.io/badge/Docker-multi--service-2496ED?style=flat&logo=docker&logoColor=white)](https://docker.com)
 [![Anthropic Claude](https://img.shields.io/badge/LLM-Anthropic%20Claude-6B21A8?style=flat)](https://anthropic.com)
-[![CI](https://github.com/rah00l/ai-reconcilation-analyst/actions/workflows/ci.yml/badge.svg)](https://github.com/rah00l/ai-reconcilation-analyst/actions/workflows/ci.yml)
+[![Deployed on Railway](https://img.shields.io/badge/Deployed%20on-Railway-6B21A8?style=flat&logo=railway&logoColor=white)](https://github.com/rah00l/ai-reconcilation-analyst/deployments/fabulous-trust%20%2F%20production)
 
 ---
 
@@ -36,17 +36,17 @@ ReconPilot is the **AI capability layer** built on top of a production affiliate
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                    Railway (Cloud)                   │
+│                    Railway (Cloud)                  │
 │                                                     │
-│  ┌──────────────────┐    ┌─────────────────────┐   │
-│  │  Rails 7.x App   │───▶│  Sinatra AI Engine  │   │
-│  │  (Web + UI)      │    │  (Reasoning Layer)  │   │
-│  └──────────────────┘    └─────────┬───────────┘   │
-│           │                        │               │
-│  ┌────────▼──────┐        ┌────────▼───────────┐   │
-│  │  PostgreSQL   │        │  Anthropic Claude  │   │
-│  │  (Data Store) │        │  API  (LLM)        │   │
-│  └───────────────┘        └────────────────────┘   │
+│  ┌──────────────────┐    ┌─────────────────────┐    │
+│  │  Rails 7.x App   │───▶│  Sinatra AI Engine  │    │
+│  │  (Web + UI)      │    │  (Reasoning Layer)  │    │
+│  └──────────────────┘    └─────────┬───────────┘    │
+│           │                        │                │
+│  ┌────────▼──────┐        ┌────────▼───────────┐    │
+│  │  PostgreSQL   │        │  Anthropic Claude  │    │
+│  │  (Data Store) │        │  API  (LLM)        │    │
+│  └───────────────┘        └────────────────────┘    │
 └─────────────────────────────────────────────────────┘
 ```
 
