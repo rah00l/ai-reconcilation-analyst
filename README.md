@@ -1,211 +1,115 @@
-# AI Reconciliation Analyst
+# ReconPilot AI
 
-AI-powered explanation layer for payment reconciliation workflows. Accounting teams ask questions about system states and errors directly within the reconciliation UI and receive intelligent, grounded explanations in real-time.
+> AI Analyst Assistant for Affiliate Payment Reconciliation — powered by Anthropic Claude API with RAG architecture.
+
+[![Live on Railway](https://img.shields.io/badge/Live%20Demo-Railway-6B21A8?style=flat&logo=railway&logoColor=white)](https://reconpilot.up.railway.app)
+[![Deploy Status](https://img.shields.io/badge/deploy-live-brightgreen?style=flat)](https://reconpilot.up.railway.app)
+[![Ruby on Rails](https://img.shields.io/badge/Rails-7.x-CC0000?style=flat&logo=rubyonrails&logoColor=white)](https://rubyonrails.org)
+[![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
+[![Docker](https://img.shields.io/badge/Docker-multi--service-2496ED?style=flat&logo=docker&logoColor=white)](https://docker.com)
+[![Anthropic Claude](https://img.shields.io/badge/LLM-Anthropic%20Claude-6B21A8?style=flat)](https://anthropic.com)
+
+---
+
+## Demo
+
+<!-- Replace the line below with your actual GIF path once uploaded to the repo -->
+<!-- Example: ![ReconPilot Demo](demo/reconpilot-demo.gif) -->
+
+> 📁 Add your GIF here: place `reconpilot-demo.gif` inside a `/demo` folder in this repo,
+> then replace this block with:
+> ```
+> ![ReconPilot AI Demo](demo/reconpilot-demo.gif)
+> ```
+
+🔗 **[View Live App →](https://reconpilot.up.railway.app)**
+
+---
 
 ## What It Does
 
-- **Explains system states** — What does "PARSED" mean? Why is this status showing?
-- **Clarifies errors** — What caused "Mapping Error - Payment ID Not Found"?
-- **Guides workflow** — What happens after "READY"? Can we proceed?
-- **Answers follow-ups** — Does this block reconciliation? Who owns this?
+ReconPilot is the **AI capability layer** built on top of a production affiliate payment reconciliation platform. It enables accounting and operations teams to interact with reconciliation data in natural language — replacing hours of manual report analysis with a conversational AI interface.
+
+- **Ask questions** — *"Show discrepancies for October"* / *"Which affiliates have unmatched transactions?"*
+- **Surface discrepancies** — AI reasons over reconciliation rules and flags mismatches
+- **Audit-trail explanations** — get plain-language summaries of why a transaction is flagged
+- **Follow-up suggestions** — chatbot proactively suggests next actions based on context
+- **Session continuity** — multi-turn conversation maintains context across queries
+
+---
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────┐
-│     Accounting User (Browser)               │
-│     ↓ Types in chat widget                  │
-├─────────────────────────────────────────────┤
-│  Rails 7.1 App (Hotwire + Tailwind)         │
-│  ├─ Stimulus Chat Controller                │
-│  ├─ Turbo Streams (real-time updates)       │
-│  └─ Engine Client (HTTP calls)              │
-│     ↓ POST to /analyze                      │
-├─────────────────────────────────────────────┤
-│  AI Analyst Engine (Sinatra API)            │
-│  ├─ Deterministic intent resolution         │
-│  ├─ Knowledge eligibility gates             │
-│  ├─ Template-based explanations             │
-│  └─ Context-aware follow-up projection      │
-│     ↓ Returns JSON contract                 │
-├─────────────────────────────────────────────┤
-│  Turbo Stream Response                      │
-│  └─ Renders structured chat bubble          │
-└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│                    Railway (Cloud)                   │
+│                                                     │
+│  ┌──────────────────┐    ┌─────────────────────┐   │
+│  │  Rails 7.x App   │───▶│  Sinatra AI Engine  │   │
+│  │  (Web + UI)      │    │  (Reasoning Layer)  │   │
+│  └──────────────────┘    └─────────┬───────────┘   │
+│           │                        │               │
+│  ┌────────▼──────┐        ┌────────▼───────────┐   │
+│  │  PostgreSQL   │        │  Anthropic Claude  │   │
+│  │  (Data Store) │        │  API  (LLM)        │   │
+│  └───────────────┘        └────────────────────┘   │
+└─────────────────────────────────────────────────────┘
 ```
 
-## Quick Start
+Each service is independently containerised with **Docker** and deployable separately.
 
-### Prerequisites
-- Docker & Docker Compose (no local Ruby needed)
-- Git
+---
 
-### Run Locally
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Web Application | Ruby on Rails 7.x |
+| AI Reasoning Engine | Sinatra + Python + FastAPI |
+| LLM | Anthropic Claude API |
+| RAG Pipeline (Phase 2) | LangChain + ChromaDB + OpenAI Embeddings |
+| Database | PostgreSQL |
+| Frontend | Tailwind CSS (fully responsive) |
+| Containerisation | Docker (multi-service) |
+| Deployment | Railway |
+
+---
+
+## Roadmap
+
+- [x] **Phase 1** — Rule-based reconciliation engine (live)
+- [x] **Phase 1** — Anthropic Claude API chatbot with session continuity
+- [x] **Phase 1** — Multi-service Docker architecture deployed on Railway
+- [ ] **Phase 2** — LangChain + ChromaDB vector database pipeline
+- [ ] **Phase 2** — OpenAI Embeddings for semantic search over reconciliation data
+- [ ] **Phase 3** — Role-based access for accounting vs operations teams
+
+---
+
+## Background
+
+ReconPilot is the AI extension of a production reconciliation platform built during the **Intelliswift / Incentive Networks (Tenerity)** engagement. The domain expertise — reconciliation rules, transaction matching, affiliate payment flows — was developed over 3+ years of production work and forms the knowledge base for AI-assisted reasoning in this system.
+
+---
+
+## Local Setup
 
 ```bash
-# Clone
-git clone <repo-url>
-cd ai-reconciliation-analyst
+# Clone the repo
+git clone https://github.com/rah00l/reconpilot.git
+cd reconpilot
 
-# Start services
-docker compose up
+# Start all services with Docker
+docker-compose up --build
 
-# Visit
-http://localhost:3000
-
-# Engine also available at
-http://localhost:4567/analyze
+# App runs at http://localhost:3000
 ```
 
-### Development
+> Requires Docker and a valid `ANTHROPIC_API_KEY` in your `.env` file.
 
-```bash
-# Build image
-docker build -t ai-reconciliation-analyst:latest .
+---
 
-# Run with seed data
-docker run --rm -p 3000:3000 ai-reconciliation-analyst:latest
-```
+## Author
 
-## Stack
-
-- **Backend:** Rails 7.1 · Ruby 3.2 · SQLite
-- **Frontend:** Hotwire (Stimulus JS + Turbo) · Tailwind CSS
-- **Engine:** Sinatra API (v1.0.0 · deterministic reasoning)
-- **Deployment:** Docker · Docker Compose · Render.com (production ready)
-
-## Project Structure
-
-```
-app/
-├── controllers/      # Rails controllers
-├── models/          # Data models
-├── views/           # HTML templates
-└── javascript/      # Stimulus JS
-config/
-├── database.yml     # PostgreSQL config
-├── puma.rb         # Server config (production-ready)
-└── environments/   # Dev/test/prod settings
-db/
-├── migrate/        # Migrations
-├── seeds.rb        # Sample data
-└── schema.rb       # Current schema
-Dockerfile          # Container image
-docker-compose.yml  # Services orchestration
-```
-
-## Dependencies
-
-### Gems
-- **rails 7.1.x** — Web framework
-- **tailwindcss-rails** — Styling framework
-- **httparty** — HTTP client for engine calls
-- **dotenv-rails** — Environment management
-
-### External
-- **ai-analyst-engine:v1.0.0** — Reasoning engine (separate repo)
-  - Port: 4567
-  - Endpoint: `POST /analyze`
-  - Returns: ExplanationContract JSON
-
-  ## Features
-
-  - ✅ Real-time chat with Hotwire Turbo Streams
-  - ✅ PostgreSQL backend (production-ready)
-  - ✅ HTTP Basic Auth + environment-based config
-  - ✅ Independent AI reasoning engine (reusable)
-  - ✅ Docker containerized (dev ≈ prod)
-  - ✅ Health checks for monitoring
-  - ✅ Ready for Railway.app deployment
-
-  ## Environment Setup
-
-  ```bash
-  # Copy template
-  cp .env.example .env
-
-  # Required variables
-  RAILS_ENV=production
-  SECRET_KEY_BASE=<generated>
-  RAILS_MASTER_KEY=<generated>
-  HTTP_AUTH_USER=<username>
-  HTTP_AUTH_PASSWORD=<password>
-  ENGINE_URL=http://engine:4567
-  DATABASE_URL=postgresql://...  # Railway provides
-  ```
-
-## Testing
-
-### Manual Testing
-```bash
-# Start services
-docker compose up
-
-# Test chat endpoint (from another terminal)
-curl -X POST http://localhost:3000/chat \
-  -H "Content-Type: application/json" \
-  -d '{"question":"What does PARSED mean?"}'
-
-# Expected: Explanation contract JSON
-```
-
-## Deployment
-
-### Render.com
-1. Connect GitHub repo
-2. Set environment variables (from .env)
-3. Deploy — automatically runs `docker-compose up`
-
-### Manual Deployment
-```bash
-# Build production image
-docker build -t ai-reconciliation-analyst:v1.0.0 .
-
-# Push to registry
-docker tag ai-reconciliation-analyst:v1.0.0 myregistry/ai-reconciliation-analyst:v1.0.0
-docker push myregistry/ai-reconciliation-analyst:v1.0.0
-
-# Deploy with docker-compose
-docker compose -f docker-compose.yml up -d
-```
-
-## Design Principles
-
-1. **Deterministic first** — Engine uses rules, not LLM, for auditability
-2. **Graceful fallback** — LLM only when engine can't answer (future enhancement)
-3. **Minimal and fast** — Zero local setup, 2-3 min deploy time
-4. **Read-only** — UI doesn't mutate reconciliation state
-5. **Self-contained** — Engine is independent, can be swapped
-
-## Security
-
-- **No secrets in code** — All credentials via environment variables
-- **HTTP Basic Auth** — Built-in Rails authentication
-- **.gitignore** — Protects `.env`, `config/master.key`, `credentials.yml.enc`
-- **Connection pooling** — PostgreSQL pool=5 for concurrency
-- **HTTPS ready** — Enforced in production.rb
-
-## Performance
-
-- **Threads** — Configurable via RAILS_MAX_THREADS (default: 3)
-- **Database** — PostgreSQL with connection pool (default: 5)
-- **Caching** — Ready for Redis integration
-- **Scaling** — Horizontal (container replicas) + Vertical (thread scaling)
-
-## Related
-
-- **Engine Repo:** [ai-analyst-engine](https://github.com/rah00l/ai-analyst-engine)
-  - Pure reasoning logic, no UI, reusable
-  - Powered by deterministic intent resolution + knowledge gates
-  - Can be used standalone or integrated into any application
-
-## License
-
-MIT
-
-## Support
-
-For issues, feature requests, or questions:
-1. Check [TASK-SUMMARIES](./docs/TASK-SUMMARIES.md) for architecture decisions
-2. Review [docker-compose.yml](./docker-compose.yml) for service configuration
-3. Check [.env.example](./.env.example) for required environment variables
+**Rahul Patil** — Senior Software Engineer / AI Engineer
+[LinkedIn](https://linkedin.com/in/rahulpatil2387) · [GitHub](https://github.com/rah00l) · [Blog](https://rah00l.github.io)
