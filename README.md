@@ -8,6 +8,7 @@
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
 [![Docker](https://img.shields.io/badge/Docker-multi--service-2496ED?style=flat&logo=docker&logoColor=white)](https://docker.com)
 [![Anthropic Claude](https://img.shields.io/badge/LLM-Anthropic%20Claude-6B21A8?style=flat)](https://anthropic.com)
+[![OpenAI Embeddings](https://img.shields.io/badge/Embeddings-OpenAI-412991?style=flat&logo=openai&logoColor=white)](https://openai.com)
 [![Deployed on Railway](https://img.shields.io/badge/Deployed%20on-Railway-6B21A8?style=flat&logo=railway&logoColor=white)](https://github.com/rah00l/ai-reconcilation-analyst/deployments/fabulous-trust%20%2F%20production)
 
 ---
@@ -57,6 +58,8 @@ ReconPilot is the **AI capability layer** built on top of a production affiliate
 
 Each service is independently containerised with **Docker** and deployable separately.
 
+> **Note:** The FastAPI AI Engine shown above is maintained in a separate repository — [reconpilot-ai-engine](https://github.com/rah00l/reconpilot-ai-engine) <!-- ⚠️ CONFIRM ACTUAL REPO NAME/URL --> — and deployed as its own Railway service. This repo (the Rails web app) calls it over HTTP. See **Related Repositories** below.
+
 ---
 
 ## AI Engine — RAG Pipeline
@@ -103,6 +106,19 @@ The AI Analyst Assistant uses **Retrieval-Augmented Generation (RAG)** to answer
 | Containerisation | Docker (multi-service) |
 | Deployment | Railway |
 | Evaluation | Automated 10-question retrieval harness |
+
+---
+
+## Related Repositories
+
+This project is split across two independently deployed repositories:
+
+| Repository | Description |
+|---|---|
+| **ai-reconcilation-analyst** (this repo) | Rails 7.2 web application — UI, payment file upload/validation, reconciliation views, chat widget frontend |
+| **[reconpilot-ai-engine](https://github.com/rah00l/reconpilot-ai-engine)** <!-- ⚠️ CONFIRM ACTUAL REPO NAME/URL --> | Python/FastAPI RAG reasoning engine — chunking, embeddings, ChromaDB retrieval, grounded generation, eval harness |
+
+Both services are deployed independently on Railway within the same project and communicate over HTTP. This separation was intentional — it let Phase 2 AI development happen on a dedicated branch/repo without risking the live, already-deployed Sinatra-based reconciliation service.
 
 ---
 
@@ -159,6 +175,8 @@ docker-compose up --build
 ```
 
 > Requires Docker and a valid `ANTHROPIC_API_KEY` in your `.env` file.
+>
+> **Note:** This repo alone runs the web app and reconciliation features. For full AI Analyst Assistant functionality, also clone and run **[reconpilot-ai-engine](https://github.com/rah00l/reconpilot-ai-engine)** <!-- ⚠️ CONFIRM ACTUAL REPO NAME/URL --> — see that repo's README for its own setup steps.
 
 ---
 
