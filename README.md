@@ -35,22 +35,60 @@ ReconPilot is the **AI capability layer** built on top of a production affiliate
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                    Railway (Cloud)                  │
-│                                                     │
-│  ┌──────────────────┐    ┌─────────────────────┐    │
-│  │  Rails 7.x App   │───▶│  Sinatra AI Engine  │    │
-│  │  (Web + UI)      │    │  (Reasoning Layer)  │    │
-│  └──────────────────┘    └─────────┬───────────┘    │
-│           │                        │                │
-│  ┌────────▼──────┐        ┌────────▼───────────┐    │
-│  │  PostgreSQL   │        │  Anthropic Claude  │    │
-│  │  (Data Store) │        │  API  (LLM)        │    │
-│  └───────────────┘        └────────────────────┘    │
-└─────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│                      Railway (Cloud)                         │
+│                                                              │
+│  ┌──────────────────┐    ┌──────────────────────────────┐    │
+│  │  Rails 7.x App   │───▶│  FastAPI AI Engine (RAG)     │    │
+│  │  (Web + UI)      │    │  Python 3.11                 │    │
+│  └──────────────────┘    │                              │    │
+│           │               │  ┌────────────────────────┐ │    │
+│  ┌────────▼──────┐       │  │ 8 Handbook Docs (55    │ │    │
+│  │  PostgreSQL   │       │  │ chunks) → ChromaDB     │ │    │
+│  │  (Data Store) │       │  │ vector store           │ │    │
+│  └───────────────┘       │  └────────────────────────┘ │    │
+│                          │  ┌────────────────────────┐ │    │
+│                          │  │ OpenAI Embeddings +    │ │    │
+│                          │  │ GPT-4o (grounded)      │ │    │
+│                          │  └────────────────────────┘ │    │
+│                          └──────────────────────────────┘    │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 Each service is independently containerised with **Docker** and deployable separately.
+
+---
+
+## AI Engine — RAG Pipeline
+
+The AI Analyst Assistant uses **Retrieval-Augmented Generation (RAG)** to answer natural language questions about payment reconciliation. Unlike a simple chatbot, every answer is grounded in a curated knowledge base — the system retrieves the most relevant documentation before generating a response, and cites its sources.
+
+### How it works
+
+1. **8 handbook documents** (55 chunks) cover: file statuses, bucket classification, missing reason codes, tenancy settlement rules, reconciliation lifecycle, reconcile buttons, commission adjustments, and file upload validations
+2. **Chunk enrichment** — section titles are prepended to each chunk for improved embedding quality
+3. **OpenAI `text-embedding-3-small`** generates 1536-dimension vectors for each chunk
+4. **ChromaDB** stores vectors with cosine similarity indexing
+5. At query time: question is embedded → top-3 chunks retrieved by semantic similarity → grounded prompt assembled → GPT-4o generates a cited answer
+6. **Confidence gate** — if the best retrieval distance exceeds 0.7, the system refuses to answer rather than hallucinating
+
+### Key design decisions
+
+- **RAG is used for prose documentation, not transactional data.** We investigated real production CSVs across four separate batches and confirmed that all transactional fields are closed enums, numeric facts, or deterministic strings — SQL/tool-calling is the correct approach there, not RAG.
+- **Raw SDK implementation over LangChain** — direct OpenAI + ChromaDB calls for full pipeline transparency. LangChain refactor is a planned future enhancement.
+- **No reranking** — at 55 chunks, the corpus is smaller than a typical rerank candidate pool. The technique solves a problem that structurally cannot occur at this scale.
+- **Document-structure-aware chunking** — since we author the docs ourselves, chunk boundaries are designed at authoring time (one concept per `##` section), not computed algorithmically.
+
+### Evaluation results
+
+| Metric | Result |
+|--------|--------|
+| Test questions | 10 paraphrased queries |
+| Retrieval accuracy (correct top-1) | 10/10 |
+| Best retrieval distance | 0.20 (direct match with enrichment) |
+| Paraphrased question avg distance | 0.40–0.55 |
+| False refusals | 0/10 |
+| Off-topic rejection (confidence gate) | Working — verified on 4 test cases |
 
 ---
 
@@ -58,14 +96,26 @@ Each service is independently containerised with **Docker** and deployable separ
 
 | Layer | Technology |
 |---|---|
-| Web Application | Ruby on Rails 7.x |
-| AI Reasoning Engine | Sinatra + Python + FastAPI |
+| Web Application | Ruby on Rails 7.2, PostgreSQL, Tailwind CSS |
+| AI Engine | Python 3.11, FastAPI, OpenAI GPT-4o |
+| RAG Pipeline | ChromaDB (vector store), OpenAI `text-embedding-3-small` |
 | LLM | Anthropic Claude API |
-| RAG Pipeline (Phase 2) | LangChain + ChromaDB + OpenAI Embeddings |
-| Database | PostgreSQL |
-| Frontend | Tailwind CSS (fully responsive) |
 | Containerisation | Docker (multi-service) |
 | Deployment | Railway |
+| Evaluation | Automated 10-question retrieval harness |
+
+---
+
+## Phase 2 — Completed
+
+Phase 2 replaced the original rule-based Sinatra engine with a RAG-powered FastAPI engine:
+
+| Milestone | Description | Status |
+|-----------|------------|--------|
+| 2A | FastAPI scaffold with health/info/ready/analyze endpoints | ✅ Complete |
+| 2B | RAG pipeline — 8 docs, 55 chunks, ChromaDB, grounded prompts, source citations | ✅ Complete |
+| 2C | Automated eval harness (10/10), confidence gate fallback (0.7 threshold) | ✅ Complete |
+| 2D | Rails integration, engine swap, production deployment | ✅ Complete |
 
 ---
 
@@ -74,8 +124,13 @@ Each service is independently containerised with **Docker** and deployable separ
 - [x] **Phase 1** — Rule-based reconciliation engine (live)
 - [x] **Phase 1** — Anthropic Claude API chatbot with session continuity
 - [x] **Phase 1** — Multi-service Docker architecture deployed on Railway
-- [ ] **Phase 2** — LangChain + ChromaDB vector database pipeline
-- [ ] **Phase 2** — OpenAI Embeddings for semantic search over reconciliation data
+- [x] **Phase 2** — Rule-based engine upgraded to RAG-powered AI assistant
+- [x] **Phase 2** — ChromaDB vector store + OpenAI embeddings for semantic search over reconciliation handbook docs
+- [x] **Phase 2** — Automated eval harness with grounded, source-cited answers and confidence-gate fallback
+- [ ] **Phase 3** — Query routing (RAG vs SQL vs rule-based, automatic)
+- [ ] **Phase 3** — Transaction-level lookups via tool-calling
+- [ ] **Phase 3** — LangChain refactor for pipeline orchestration
+- [ ] **Phase 3** — pgvector migration (ChromaDB → PostgreSQL)
 - [ ] **Phase 3** — Role-based access for accounting vs operations teams
 
 ---
