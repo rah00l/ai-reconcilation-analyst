@@ -37,4 +37,4 @@ EXPOSE 3000
 ENTRYPOINT ["bundle", "exec"]
 
 # Default command
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD bash -c "bin/rails tailwindcss:watch & bin/rails server -b 0.0.0.0"
