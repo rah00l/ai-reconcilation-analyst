@@ -37,17 +37,28 @@ class EngineClient
 
   def self.parse_response(response)
     if response.success?
-      # Engine wraps response in { result: {...} }
       data = JSON.parse(response.body, symbolize_names: true)
-      result = data[:result]
 
-      # Map engine response to chat format
-      {
-        explanation: format_explanation(result),
-        follow_ups: extract_follow_ups(result),
-        confidence: extract_confidence(result),
-        status: extract_status(result)
-      }
+      # New RAG engine returns explanation at top level (no :result wrapper)
+      if data[:explanation].present? && data[:result].nil?
+        {
+          result: data[:explanation],
+          explanation: data[:explanation],
+          follow_ups: [],
+          confidence: 0.85,
+          status: "success",
+          sources: data[:sources] || []
+        }
+      else
+        # Legacy Sinatra engine format (nested under :result)
+        result = data[:result]
+        {
+          explanation: format_explanation(result),
+          follow_ups: extract_follow_ups(result),
+          confidence: extract_confidence(result),
+          status: extract_status(result)
+        }
+      end
     else
       {
         explanation: "The engine encountered an error.",
