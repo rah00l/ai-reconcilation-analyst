@@ -27,7 +27,7 @@
           onmouseover="this.style.background='#fef3c7'"
           onmouseout="this.style.background='#fffbeb'"
           title="View beta phase details">
-          🛠️ BETA
+          🧠 BETA
         </button>
       </div>
       <p class="text-xs sm:text-sm text-gray-600">Manage and reconcile payment files from affiliate networks</p>
@@ -227,9 +227,9 @@
       z-index: 1;
     ">
       <div style="display: flex; align-items: center; gap: 10px;">
-        <div style="width: 4px; height: 36px; background: #f59e0b; border-radius: 4px; flex-shrink: 0;"></div>
+        <div style="width: 4px; height: 36px; background: #10b981; border-radius: 4px; flex-shrink: 0;"></div>
         <div>
-          <p style="font-size: 15px; font-weight: 700; color: #111827; margin: 0; line-height: 1.3;">Beta Phase — Rule-Based Engine</p>
+          <p style="font-size: 15px; font-weight: 700; color: #111827; margin: 0; line-height: 1.3;">AI-Powered Engine — RAG Pipeline</p>
           <p style="font-size: 11px; color: #6b7280; margin: 0; margin-top: 2px;">Current capabilities and what's coming next</p>
         </div>
       </div>
@@ -252,12 +252,16 @@
 
       <!-- Current Phase -->
       <p style="font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 8px 0;">Current Phase</p>
-      <div style="padding: 12px; background: #fffbeb; border-radius: 10px; border: 1px solid #fde68a; margin-bottom: 16px;">
-        <p style="font-size: 13px; font-weight: 600; color: #92400e; margin: 0 0 6px 0;">🛠️ Rule-Based Engine</p>
-        <p style="font-size: 12px; color: #78350f; margin: 0; line-height: 1.6;">
-          The current engine uses a structured rule-based approach to match and reconcile payments.
-          It works best with the sample questions provided — use the ❓ button to browse them.
-          It is a reconciliation specialist, not a general-purpose assistant.
+      <div style="padding: 12px; background: #ecfdf5; border-radius: 10px; border: 1px solid #a7f3d0; margin-bottom: 16px;">
+        <p style="font-size: 13px; font-weight: 600; color: #065f46; margin: 0 0 6px 0;">🧪 AI-Powered Engine — RAG Pipeline</p>
+        <p style="font-size: 12px; color: #047857; margin: 0; line-height: 1.6;">
+          The engine uses Retrieval-Augmented Generation (RAG) to answer your questions.
+          It searches a curated knowledge base of reconciliation documentation, retrieves
+          the most relevant content, and generates grounded, cited answers.
+        </p>
+        <p style="font-size: 12px; color: #047857; margin: 8px 0 0 0; line-height: 1.6;">
+          Ask anything about reconciliation statuses, file processing, tenancy settlement,
+          missing transactions, or commission adjustments — in your own words. ✅
         </p>
       </div>
 
@@ -267,23 +271,19 @@
       <div style="display: flex; flex-direction: column; gap: 1px; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; margin-bottom: 16px;">
         <div class="beta-row">
           <span class="beta-check">✓</span>
-          <span class="beta-row-text">File upload and automatic validation (XML, JSON, XLS, XLSX, CSV)</span>
+          <span class="beta-row-text">Natural language questions — ask in your own words, not just exact phrases</span>
         </div>
         <div class="beta-row" style="border-top: 1px solid #f3f4f6;">
           <span class="beta-check">✓</span>
-          <span class="beta-row-text">Multi-stage reconciliation pipeline (New → Ready → Processing → Parsed → Reconciled)</span>
+          <span class="beta-row-text">8 handbook topics: statuses, buckets, missing reasons, tenancy rules, lifecycle, reconcile buttons, commissions, file validations</span>
         </div>
         <div class="beta-row" style="border-top: 1px solid #f3f4f6;">
           <span class="beta-check">✓</span>
-          <span class="beta-row-text">Payment matching against affiliate network records</span>
+          <span class="beta-row-text">Source citations — every answer shows which document it came from</span>
         </div>
         <div class="beta-row" style="border-top: 1px solid #f3f4f6;">
           <span class="beta-check">✓</span>
-          <span class="beta-row-text">AI assistant for reconciliation status questions</span>
-        </div>
-        <div class="beta-row" style="border-top: 1px solid #f3f4f6;">
-          <span class="beta-check">✓</span>
-          <span class="beta-row-text">Full and partial reconciliation summaries</span>
+          <span class="beta-row-text">Confidence gate — gracefully refuses off-topic or unanswerable questions</span>
         </div>
       </div>
 
