@@ -176,7 +176,7 @@ docker-compose up --build
 
 > Requires Docker and a valid `ANTHROPIC_API_KEY` in your `.env` file.
 >
-> **Note:** This repo alone runs the web app and reconciliation features. For full AI Analyst Assistant functionality, also clone and run **[reconpilot-ai-engine](https://github.com/rah00l/reconpilot-ai-engine)** <!-- ⚠️ CONFIRM ACTUAL REPO NAME/URL --> — see that repo's README for its own setup steps.
+> **Note:** This repo alone runs the web app and reconciliation features. For full AI Analyst Assistant functionality, also clone and run **[reconpilot-ai-engine](https://github.com/rah00l/ai-analyst-engine)** <!-- ⚠️ CONFIRM ACTUAL REPO NAME/URL --> — see that repo's README for its own setup steps.
 
 ---
 
