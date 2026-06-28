@@ -42,15 +42,15 @@ ReconPilot is the **AI capability layer** built on top of a production affiliate
 │  │  Rails 7.x App   │───▶│  FastAPI AI Engine (RAG)     │    │
 │  │  (Web + UI)      │    │  Python 3.11                 │    │
 │  └──────────────────┘    │                              │    │
-│           │               │  ┌────────────────────────┐ │    │
-│  ┌────────▼──────┐       │  │ 8 Handbook Docs (55    │ │    │
-│  │  PostgreSQL   │       │  │ chunks) → ChromaDB     │ │    │
-│  │  (Data Store) │       │  │ vector store           │ │    │
-│  └───────────────┘       │  └────────────────────────┘ │    │
-│                          │  ┌────────────────────────┐ │    │
-│                          │  │ OpenAI Embeddings +    │ │    │
-│                          │  │ GPT-4o (grounded)      │ │    │
-│                          │  └────────────────────────┘ │    │
+│           │              │  ┌────────────────────────┐  │    │
+│  ┌────────▼──────┐       │  │ 8 Handbook Docs (55    │  │    │
+│  │  PostgreSQL   │       │  │ chunks) → ChromaDB     │  │    │
+│  │  (Data Store) │       │  │ vector store           │  │    │
+│  └───────────────┘       │  └────────────────────────┘  │    │
+│                          │  ┌────────────────────────┐  │    │
+│                          │  │ OpenAI Embeddings +    │  │    │
+│                          │  │ GPT-4o (grounded)      │  │    │
+│                          │  └────────────────────────┘  │    │
 │                          └──────────────────────────────┘    │
 └──────────────────────────────────────────────────────────────┘
 ```
