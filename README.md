@@ -58,7 +58,7 @@ ReconPilot is the **AI capability layer** built on top of a production affiliate
 
 Each service is independently containerised with **Docker** and deployable separately.
 
-> **Note:** The FastAPI AI Engine shown above is maintained in a separate repository — [reconpilot-ai-engine](https://github.com/rah00l/reconpilot-ai-engine) <!-- ⚠️ CONFIRM ACTUAL REPO NAME/URL --> — and deployed as its own Railway service. This repo (the Rails web app) calls it over HTTP. See **Related Repositories** below.
+> **Note:** The FastAPI AI Engine shown above is maintained in a separate repository — [reconpilot-ai-engine](https://github.com/rah00l/ai-analyst-engine/tree/phase2/integration) <!-- ⚠️ CONFIRM ACTUAL REPO NAME/URL --> — and deployed as its own Railway service. This repo (the Rails web app) calls it over HTTP. See **Related Repositories** below.
 
 ---
 
