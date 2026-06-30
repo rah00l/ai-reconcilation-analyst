@@ -116,7 +116,7 @@ This project is split across two independently deployed repositories:
 | Repository | Description |
 |---|---|
 | **ai-reconcilation-analyst** (this repo) | Rails 7.2 web application — UI, payment file upload/validation, reconciliation views, chat widget frontend |
-| **[reconpilot-ai-engine](https://github.com/rah00l/reconpilot-ai-engine)** <!-- ⚠️ CONFIRM ACTUAL REPO NAME/URL --> | Python/FastAPI RAG reasoning engine — chunking, embeddings, ChromaDB retrieval, grounded generation, eval harness |
+| **[reconpilot-ai-engine](https://github.com/rah00l/ai-analyst-engine/tree/phase2/integration)** <!-- ⚠️ CONFIRM ACTUAL REPO NAME/URL --> | Python/FastAPI RAG reasoning engine — chunking, embeddings, ChromaDB retrieval, grounded generation, eval harness |
 
 Both services are deployed independently on Railway within the same project and communicate over HTTP. This separation was intentional — it let Phase 2 AI development happen on a dedicated branch/repo without risking the live, already-deployed Sinatra-based reconciliation service.
 
